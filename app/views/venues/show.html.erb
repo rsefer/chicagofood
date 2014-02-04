@@ -1,0 +1,85 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @venue.name %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @venue.url %>
+</p>
+
+<p>
+  <strong>Typeid:</strong>
+  <%= @venue.typeid %>
+</p>
+
+<p>
+  <strong>Yelpid:</strong>
+  <%= @venue.yelpid %>
+</p>
+
+<p>Rating: <%= number_with_precision(@venue.ratings.average('rating'), precision: 2) %> / 5 (<%= @venue.ratings.count %>)</p>
+<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
+<p>My Rating: <%= @venue.ratings.where(raterid: current_user.id).sum('rating') %></p>
+<% end %>
+
+<h2>Ratings</h2>
+<% @venue.ratings.each do |rating| %>
+  <p>
+    <strong>Rater:</strong>
+    <% if !rating.raterid.blank? %>
+    <%= User.find(rating.raterid).email %>
+    <% end %>
+  </p>
+ 
+  <p>
+    <strong>Rating:</strong>
+    <%= rating.rating %>
+  </p>
+<% end %>
+
+<h2>Comments</h2>
+<% @venue.comments.each do |comment| %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= User.find(comment.commenterid).email %>
+  </p>
+ 
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
+<% end %>
+
+<% if user_signed_in? %>
+	<p>Commenting as <%= current_user.email %>.</p>
+	<%= form_for([@venue, @venue.comments.build]) do |f| %>
+	<p>
+	  <%= f.label :body %><br />
+	  <%= f.text_area :body %>
+	</p>
+	<p>
+	  <%= f.submit %>
+	</p>
+	<% end %>
+	<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
+	Has Rated<br>
+	<% else %>
+		<%= form_for([@venue, @venue.ratings.build]) do |f| %>
+		<p>
+		  <%= f.label :rating %><br />
+		  <%= f.text_field :rating %>
+		</p>
+		<p>
+		  <%= f.submit %>
+		</p>
+		<% end %>
+	<% end %>
+<% else %>
+<p>You must be <%= link_to "signed in", new_user_session_path %> to comment.</p>
+<% end %>
+
+<%= link_to 'Edit', edit_venue_path(@venue) %> |
+<%= link_to 'Back', venues_path %>

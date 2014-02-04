@@ -1,0 +1,111 @@
+@import "partials/mixins";
+@import "bootstrap-mods";
+
+/* Main Style */
+
+$green: #5cb85c;
+$red: #d9534f;
+
+body {
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0px 0px 15px 0px;
+	font-family: 'brandon-grotesque', sans-serif;
+}
+
+h1 {
+	margin-top: 0px;
+}
+
+img {
+	max-width: 100%;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.green { color: $green; }
+.red   { color: $red; }
+
+.spread {
+	font-size: 12px;
+	letter-spacing: 1px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.currency {
+	letter-spacing: 1px;
+}
+
+.pad {
+	padding: 2em 0px;
+}
+
+p.lead.halfbottom {
+	margin-bottom: 10px;
+}
+
+hr.halfbottom {
+	margin: 10px 0px;
+}
+
+section {
+	color: #000000;
+	background: #ffffff;
+	padding: 1em 0px;
+}
+
+footer #footer-logo {
+	max-width: 100px;
+}
+
+#footer-nav {
+	margin-bottom: 1em;
+}
+
+#footer-nav a {
+	color: #ffffff;
+}
+
+#footer-nav ul li {
+	display: inline;
+}
+
+#footer-nav ul li:after {
+	content: '\2022';
+	margin: 0px 0.5em;
+}
+
+#footer-nav ul li:last-child:after {
+	content: '';
+	margin: 0px;
+}
+
+#client-edit .clientimage {
+	margin-top: 15px;
+}
+
+#monthlyRevenueChart {
+	width: 100%;
+	min-height: 300px;
+}
+
+.chart a.canvasjs-chart-credit {
+	display: none !important;
+}
+
+.doicons i {
+	vertical-align: middle;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+	
+	body {
+	}
+	
+}
