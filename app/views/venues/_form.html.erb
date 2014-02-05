@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :typeid %><br>
-    <%= collection_select(:venue, 'typeid', Venuetype.all, :id, :name, { :class => 'form-control' }) %>
+    <%= collection_select(:venue, 'typeid', Venuetype.all, :id, :name, { :include_blank => 'None' }, { :class => 'form-control' }) %>
   </div>
   <div class="field">
     <%= f.label :yelpid %><br>
@@ -45,7 +45,11 @@
   </div>
   <div class="field">
     <%= f.label :state %><br>
-    <%= f.text_field :state %>
+    <% if @venue.state.blank? %>
+    <%= select(:venue, 'state', us_states, { :class => 'form-control', :selected => 'IL' }) %>
+    <% else %>
+    <%= select(:venue, 'state', us_states, { :class => 'form-control' }) %>
+    <% end %>
   </div>
   <!--<div class="field">
     <%= f.label :zipcode %><br>

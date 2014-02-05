@@ -7,12 +7,13 @@
 					<%= search_field(:search, :q, :class => 'form-control input-lg input-huge', :placeholder => 'mexican byob wicker park', :autofocus => true) %>
 				</form>
 				<hr>
+				<h3 class="text-center">Full List</h3>
 				<div class="row">
 					<div class="col-sm-6">
-						<%= link_to venues_path, { :class => 'btn btn-lg btn-block btn-success' } do %><i class="fa fa-cutlery left"></i>Eat<% end %>
+						<a href="/venuetypes/1" class="btn btn-lg btn-block btn-success"><i class="fa fa-cutlery left"></i>Food</a>
 					</div>
 					<div class="col-sm-6">
-						<%= link_to venues_path, { :class => 'btn btn-lg btn-block btn-success' } do %><i class="fa fa-beer left"></i>Drink<% end %>
+						<a href="/venuetypes/2" class="btn btn-lg btn-block btn-success"><i class="fa fa-beer left"></i>Drink</a>
 					</div>
 				</div>
 				<hr>
