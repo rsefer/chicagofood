@@ -23,3 +23,8 @@
   -moz-border-radius-bottomright: $radius;
   border-bottom-right-radius: $radius;
 }
+@mixin image-round() {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}

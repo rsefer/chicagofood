@@ -60,6 +60,13 @@ section {
 	padding: 1em 0px;
 }
 
+img.user-avatar-thumb {
+	vertical-align: middle;
+	max-width: 32px;
+	margin-right: 12px;
+	@include image-round();
+}
+
 footer #footer-logo {
 	max-width: 100px;
 }

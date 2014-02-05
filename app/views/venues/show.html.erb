@@ -35,7 +35,7 @@
   </p>
  
   <p>
-    <strong>Rating:</strong>
+    <strong>Rating:</strong
     <%= rating.rating %>
   </p>
 <% end %>
@@ -43,8 +43,8 @@
 <h2>Comments</h2>
 <% @venue.comments.each do |comment| %>
   <p>
-    <strong>Commenter:</strong>
-    <%= User.find(comment.commenterid).email %>
+    <img class="user-avatar-thumb" src="<%= User.find(comment.commenterid).avatar %>">
+    <%= User.find(comment.commenterid).fullname %>
   </p>
  
   <p>
@@ -54,7 +54,7 @@
 <% end %>
 
 <% if user_signed_in? %>
-	<p>Commenting as <%= current_user.email %>.</p>
+	<p>Commenting as <%= current_user.fullname %>.</p>
 	<%= form_for([@venue, @venue.comments.build]) do |f| %>
 	<p>
 	  <%= f.label :body %><br />
