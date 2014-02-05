@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140204234326) do
+ActiveRecord::Schema.define(version: 20140205175330) do
 
   create_table "comments", force: true do |t|
     t.integer  "commenterid"
@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(version: 20140204234326) do
   end
 
   add_index "comments", ["venue_id"], name: "index_comments_on_venue_id"
+
+  create_table "neighborhoods", force: true do |t|
+    t.string   "name"
+    t.integer  "parentneighborhoodid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "ratings", force: true do |t|
     t.integer  "raterid"
@@ -60,6 +67,18 @@ ActiveRecord::Schema.define(version: 20140204234326) do
     t.string   "url"
     t.integer  "typeid"
     t.integer  "yelpid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zipcode"
+    t.integer  "neighborhoodid"
+  end
+
+  create_table "venuetypes", force: true do |t|
+    t.string   "name"
+    t.integer  "parenttypeid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

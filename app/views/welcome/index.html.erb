@@ -1,8 +1,12 @@
 <section id="home-main">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
-				<h2>I would like to...</h2>
+			<div class="col-sm-6 col-sm-offset-3">
+				<form method="get">
+					<h2 class="text-center">I would like...</h2>
+					<%= search_field(:search, :q, :class => 'form-control input-lg input-huge', :placeholder => 'mexican byob wicker park', :autofocus => true) %>
+				</form>
+				<hr>
 				<div class="row">
 					<div class="col-sm-6">
 						<%= link_to venues_path, { :class => 'btn btn-lg btn-block btn-success' } do %><i class="fa fa-cutlery left"></i>Eat<% end %>
@@ -11,6 +15,7 @@
 						<%= link_to venues_path, { :class => 'btn btn-lg btn-block btn-success' } do %><i class="fa fa-beer left"></i>Drink<% end %>
 					</div>
 				</div>
+				<hr>
 				<%= link_to new_venue_path, { :class => 'btn btn-lg btn-block btn-success' } do %><i class="fa fa-plus left"></i>Add a new Venue<% end %>
 			</div>
 		</div>

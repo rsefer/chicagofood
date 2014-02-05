@@ -1,24 +1,27 @@
-<h1>Listing venues</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Rating</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @venues.each do |venue| %>
-      <tr>
-        <td><%= link_to venue do %><%= venue.name %><% end %></td>
-        <td><%= venue.typeid %></td>
-        <td><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Venue', new_venue_path %>
+<section id="">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th>Name</th>
+				      <th>Type</th>
+				      <th>Rating</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <% @venues.each do |venue| %>
+			      <tr>
+			        <td><%= link_to venue do %><%= venue.name %><% end %></td>
+			        <td><%= Venuetype.find(venue.typeid).name %></td>
+			        <td><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
+			      </tr>
+				    <% end %>
+				  </tbody>
+				</table>
+				<%= link_to 'New Venue', new_venue_path %>
+			</div>
+		</div>
+	</div>
+</section>

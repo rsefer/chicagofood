@@ -1,0 +1,25 @@
+<%= form_for(@venuetype) do |f| %>
+  <% if @venuetype.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@venuetype.errors.count, "error") %> prohibited this venuetype from being saved:</h2>
+
+      <ul>
+      <% @venuetype.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :parenttypeid %><br>
+    <%= f.number_field :parenttypeid %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

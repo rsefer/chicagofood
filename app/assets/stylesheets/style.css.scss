@@ -46,6 +46,13 @@ ul {
 	padding: 2em 0px;
 }
 
+.input-huge,
+.btn-huge {
+	height: 64px;
+	padding: 16px 26px;
+	font-size: 24px;
+}
+
 p.lead.halfbottom {
 	margin-bottom: 10px;
 }
@@ -64,7 +71,7 @@ img.user-avatar-thumb {
 	vertical-align: middle;
 	max-width: 32px;
 	margin-right: 12px;
-	@include image-round();
+	@include image-circle();
 }
 
 footer #footer-logo {

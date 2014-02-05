@@ -1,31 +1,74 @@
-<p id="notice"><%= notice %></p>
+<section id="">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h2><%= @venue.name %></h2>
+				<div class="row">
+					<div class="col-sm-6">
+						<p><%= @venue.url %></p>
+						<p><%= Venuetype.find(@venue.typeid).name %></p>
+						<p>Yelp: <%= @venue.yelpid %></p>
+						<p><%= Neighborhood.find(@venue.neighborhoodid).name %></p>
+						<% if !@venue.street.blank? %>
+						<p><%= @venue.street %><br><%= @venue.city %>, <%= @venue.state %></p>
+						<% end %>
+						<p>Rating: <%= number_with_precision(@venue.ratings.average('rating'), precision: 2) %> / 5 (<%= @venue.ratings.count %>)</p>
+						<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
+						<p>My Rating: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><%= @venue.ratings.where(raterid: current_user.id).sum('rating') %></p>
+						<% end %>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 col-sm-offset-3">
+						<h2>Comments</h2>
+						<% @venue.comments.each do |comment| %>
+						<div class="comment">
+							<div class="comment-user-info">
+								<img class="user-avatar-thumb" src="<%= User.find(comment.commenterid).avatar %>">
+						    <%= User.find(comment.commenterid).fullname %>
+							</div>
+							<div class="well well-sm">
+								<%= comment.body %>
+							</div>
+						</div>
+						<% end %>
+						
+						<% if user_signed_in? %>
+							<p>Commenting as <%= current_user.fullname %>.</p>
+							<%= form_for([@venue, @venue.comments.build]) do |f| %>
+								<%= f.text_area :body, :class => 'form-control' %>
+							  <%= f.submit %>
+							<% end %>
+							<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
+							Has Rated<br>
+							<% else %>
+								<%= form_for([@venue, @venue.ratings.build]) do |f| %>
+								<p>
+								  <%= f.label :rating %><br />
+								  <%= f.text_field :rating %>
+								</p>
+								<p>
+								  <%= f.submit %>
+								</p>
+								<% end %>
+							<% end %>
+						<% else %>
+						<p>You must be <%= link_to "signed in", new_user_session_path %> to comment.</p>
+						<% end %>
+						
+						
+						<%= link_to 'Edit', edit_venue_path(@venue) %> |
+						<%= link_to 'Back', venues_path %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
-<p>
-  <strong>Name:</strong>
-  <%= @venue.name %>
-</p>
 
-<p>
-  <strong>Url:</strong>
-  <%= @venue.url %>
-</p>
 
-<p>
-  <strong>Typeid:</strong>
-  <%= @venue.typeid %>
-</p>
-
-<p>
-  <strong>Yelpid:</strong>
-  <%= @venue.yelpid %>
-</p>
-
-<p>Rating: <%= number_with_precision(@venue.ratings.average('rating'), precision: 2) %> / 5 (<%= @venue.ratings.count %>)</p>
-<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
-<p>My Rating: <%= @venue.ratings.where(raterid: current_user.id).sum('rating') %></p>
-<% end %>
-
-<h2>Ratings</h2>
+<!--<h2>Ratings</h2>
 <% @venue.ratings.each do |rating| %>
   <p>
     <strong>Rater:</strong>
@@ -38,48 +81,4 @@
     <strong>Rating:</strong
     <%= rating.rating %>
   </p>
-<% end %>
-
-<h2>Comments</h2>
-<% @venue.comments.each do |comment| %>
-  <p>
-    <img class="user-avatar-thumb" src="<%= User.find(comment.commenterid).avatar %>">
-    <%= User.find(comment.commenterid).fullname %>
-  </p>
- 
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
-<% end %>
-
-<% if user_signed_in? %>
-	<p>Commenting as <%= current_user.fullname %>.</p>
-	<%= form_for([@venue, @venue.comments.build]) do |f| %>
-	<p>
-	  <%= f.label :body %><br />
-	  <%= f.text_area :body %>
-	</p>
-	<p>
-	  <%= f.submit %>
-	</p>
-	<% end %>
-	<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
-	Has Rated<br>
-	<% else %>
-		<%= form_for([@venue, @venue.ratings.build]) do |f| %>
-		<p>
-		  <%= f.label :rating %><br />
-		  <%= f.text_field :rating %>
-		</p>
-		<p>
-		  <%= f.submit %>
-		</p>
-		<% end %>
-	<% end %>
-<% else %>
-<p>You must be <%= link_to "signed in", new_user_session_path %> to comment.</p>
-<% end %>
-
-<%= link_to 'Edit', edit_venue_path(@venue) %> |
-<%= link_to 'Back', venues_path %>
+<% end %>-->
