@@ -69,9 +69,16 @@ section {
 
 img.user-avatar-thumb {
 	vertical-align: middle;
-	max-width: 32px;
+	max-height: 32px;
 	margin-right: 12px;
 	@include image-circle();
+}
+
+nav.navbar {
+	margin: 0px;
+	background: none;
+	border: none;
+	border-radius: 0px;
 }
 
 footer #footer-logo {

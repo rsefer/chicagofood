@@ -21,52 +21,60 @@ end
 				<div class="row">
 					<div class="col-sm-6">
 						<% if !@venue.url.blank? %>
-						<p><a href="<%= @venue.url %>"><%= @venue.url %></a></p>
+							<p><a href="<%= @venue.url %>"><%= @venue.url %></a></p>
 						<% end %>
 						<p><%= Venuetype.find(@venue.typeid).name %></p>
 						<% if !@venue.yelpid.blank? %>
-						<p><a href="<%= @yelpSearch['url'] %>">Yelp Rating: <%= @yelpSearch['rating'] %> / 5</a><br><span class="red"><%= render_stars(@yelpSearch['rating']) %></span></p>
-						<!--<%= @yelpSearch %>-->
+							<p><a href="<%= @yelpSearch['url'] %>">Yelp Rating: <%= @yelpSearch['rating'] %> / 5</a><br><span class="red"><%= render_stars(@yelpSearch['rating']) %></span></p>
+							<!--<%= @yelpSearch %>-->
 						<% end %>
 						<% if !@venue.ratings.empty? %>
-						<p>Rating:<br>
-						<%= render_stars(@venue.ratings.average('rating')) %>
-						</p>
+							<p>Rating:<br>
+							<%= render_stars(@venue.ratings.average('rating')) %>
+							</p>
 						<% end %>
-						<p>My Rating:<br>
-						<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
-						<%= render_stars(@venue.ratings.where(raterid: current_user.id).sum('rating')) %>
-						<% @thisRating = @venue.ratings.where(raterid: current_user.id).first %>
-						<%= form_for(@thisRating) do |f| %>
-							<p>
-							  <%= f.label :rating %><br />
-							  <%= f.text_field :rating, :class => 'form-control' %>
-							</p>
-							<p>
-							  <%= f.submit %>
-							</p>
-							<% end %>						<% else %>
-						<%= render_stars(0) %>
-							<%= form_for([@venue, @venue.ratings.build]) do |f| %>
-							<p>
-							  <%= f.label :rating %><br />
-							  <%= f.text_field :rating %>
-							</p>
-							<p>
-							  <%= f.submit %>
-							</p>
+						<% if user_signed_in? %>
+							<p>My Rating:<br>
+							<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
+								<%= render_stars(@venue.ratings.where(raterid: current_user.id).sum('rating')) %>
+								<% @thisRating = @venue.ratings.where(raterid: current_user.id).first %>
+								<%= form_for(@thisRating) do |f| %>
+									<p>
+									  <%= f.label :rating %><br />
+									  <%= f.text_field :rating, :class => 'form-control' %>
+									</p>
+									<p>
+									  <%= f.submit %>
+									</p>
+								<% end %>
+							<% else %>
+								<%= render_stars(0) %>
+								<%= form_for([@venue, @venue.ratings.build]) do |f| %>
+								<p>
+								  <%= f.label :rating %><br />
+								  <%= f.text_field :rating %>
+								</p>
+								<p>
+								  <%= f.submit %>
+								</p>
+								<% end %>
 							<% end %>
-						<% end %>
 						</p>
+						<% end %>
 						<% if !@venue.neighborhoodid.blank? %>
 						<p><%= Neighborhood.find(@venue.neighborhoodid).name %></p>
 						<% end %>
 						<% if !@venue.street.blank? %>
+							<address>
 							<% if current_user.hasaddress %>
-							<p><a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.fulladdress_withname)%>/"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a></p>
+							<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.fulladdress_withname)%>/"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
 							<% else %>
-							<p><a href="http://maps.google.com/maps?q=<%= to_url(@venue.fulladdress_withname)%>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a></p>
+							<a href="http://maps.google.com/maps?q=<%= to_url(@venue.fulladdress_withname)%>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
 							<% end %>
+							</address>
+						<% end %>
+						<% if @venue.byob %>
+						<p><i class="fa fa-beer left"></i>BYOB</p>
 						<% end %>
 					</div>
 				</div>
@@ -80,8 +88,8 @@ end
 						    <%= User.find(comment.commenterid).fullname %>
 							</div>
 							<div class="well well-sm">
-								<%= comment.body %>
 								<%= link_to comment_path(comment), method: :delete, data: { confirm: "Are you sure you would like to this comment?" } do %><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><% end %>
+								<%= simple_format(comment.body) %>
 							</div>
 						</div>
 						<% end %>
@@ -91,19 +99,6 @@ end
 							<%= form_for([@venue, @venue.comments.build]) do |f| %>
 								<%= f.text_area :body, :class => 'form-control' %>
 							  <%= f.submit %>
-							<% end %>
-							<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
-							Has Rated<br>
-							<% else %>
-								<%= form_for([@venue, @venue.ratings.build]) do |f| %>
-								<p>
-								  <%= f.label :rating %><br />
-								  <%= f.text_field :rating %>
-								</p>
-								<p>
-								  <%= f.submit %>
-								</p>
-								<% end %>
 							<% end %>
 						<% else %>
 						<p>You must be <%= link_to "signed in", new_user_session_path %> to comment.</p>
