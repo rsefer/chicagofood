@@ -7,7 +7,33 @@ module ApplicationHelper
 	end
 	
 	def to_url(string)
-		string.gsub(' ', '+').gsub(',', '')
+		string.gsub(' ', '+').gsub(',', '').gsub('#', '')
+	end
+	
+	def render_stars(float)
+		if float >= 4.8
+			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>'.html_safe
+		elsif float >= 4.3
+			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i>'.html_safe
+		elsif float >= 3.8
+			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i>'.html_safe
+		elsif float >= 3.3
+			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i>'.html_safe
+		elsif float >= 2.8
+			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+		elsif float >= 2.3
+			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+		elsif float >= 1.8
+			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+		elsif float >= 1.3
+			'<i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+		elsif float >= 0.8
+			'<i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+		elsif float >= 0.3
+			'<i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+		else
+			'<i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+		end
 	end
 	
 	def us_states

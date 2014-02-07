@@ -12,9 +12,25 @@ class User < ActiveRecord::Base
   
   def fullname
 		if !self.firstname.blank? && !self.lastname.blank?
-			self.firstname +  " " + self.lastname
+			self.firstname + " " + self.lastname
 		else
 			self.email
+		end
+	end
+	
+	def hasaddress
+		if !self.street.blank? && !self.city.blank?
+			true
+		else
+			false
+		end
+	end
+	
+	def fulladdress
+		if !self.state.blank?
+			self.street + " " + self.city + ", " + self.state
+		else
+			self.street + " " + self.city
 		end
 	end
   

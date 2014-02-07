@@ -13,19 +13,19 @@
 
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, { :class => 'form-control' } %>
   </div>
   <div class="field">
     <%= f.label :url %><br>
-    <%= f.text_field :url %>
+    <%= f.text_field :url, { :class => 'form-control' } %>
   </div>
   <div class="field">
-    <%= f.label :typeid %><br>
-    <%= collection_select(:venue, 'typeid', Venuetype.all, :id, :name, { :include_blank => 'None' }, { :class => 'form-control' }) %>
+    <%= f.label :typeid ,'Type' %><br>
+    <%= collection_select(:venue, 'typeid', Venuetype.all, :id, :name, {},{ :class => 'form-control' }) %>
   </div>
   <div class="field">
     <%= f.label :yelpid %><br>
-    <%= f.number_field :yelpid %>
+    <%= f.text_field :yelpid, { :class => 'form-control' } %>
   </div>
   <div class="field">
     <%= f.label :neighborhoodid %><br>
@@ -33,22 +33,22 @@
   </div>
   <div class="field">
     <%= f.label :street %><br>
-    <%= f.text_field :street %>
+    <%= f.text_field :street, { :class => 'form-control' } %>
   </div>
   <div class="field">
     <%= f.label :city %><br>
     <% if @venue.state == '' %>
     <%= f.text_field :city, :value => 'Chicago' %>
     <% else %>
-     <%= f.text_field :city %>
+     <%= f.text_field :city, { :class => 'form-control' } %>
     <% end %>
   </div>
   <div class="field">
     <%= f.label :state %><br>
     <% if @venue.state.blank? %>
-    <%= select(:venue, 'state', us_states, { :class => 'form-control', :selected => 'IL' }) %>
+    <%= select(:venue, 'state', us_states, { :selected => 'IL' }, { :class => 'form-control' }) %>
     <% else %>
-    <%= select(:venue, 'state', us_states, { :class => 'form-control' }) %>
+    <%= select(:venue, 'state', us_states, {}, { :class => 'form-control' }) %>
     <% end %>
   </div>
   <!--<div class="field">

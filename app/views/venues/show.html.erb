@@ -1,24 +1,72 @@
+<%
+if !@venue.yelpid.blank?
+	#http://parabuzzle.github.io/yelp4rails/
+	yelp_keys = {
+		:consumer_key => ENV['YELP_CONSUMER_KEY'],
+		:consumer_secret => ENV['YELP_CONSUMER_SECRET'],
+		:token => ENV['YELP_TOKEN'],
+		:token_secret => ENV['YELP_TOKEN_SECRET']
+	}
+	@yelpSearch = YelpApi.new(yelp_keys).search_by_business_id(@venue.yelpid)
+end
+%>
 <section id="">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
 				<h2><%= @venue.name %></h2>
+				<%= link_to 'Edit', edit_venue_path(@venue) %> |
+				<%= link_to 'Delete', venue_path(@venue), title: 'Delete', method: :delete, data: { confirm: "Are you sure you would like to delete #{@venue.name}?" } %> |
+				<%= link_to 'Back', venues_path %>
 				<div class="row">
 					<div class="col-sm-6">
 						<% if !@venue.url.blank? %>
 						<p><a href="<%= @venue.url %>"><%= @venue.url %></a></p>
 						<% end %>
 						<p><%= Venuetype.find(@venue.typeid).name %></p>
-						<p>Yelp: <%= @venue.yelpid %></p>
+						<% if !@venue.yelpid.blank? %>
+						<p><a href="<%= @yelpSearch['url'] %>">Yelp Rating: <%= @yelpSearch['rating'] %> / 5</a><br><span class="red"><%= render_stars(@yelpSearch['rating']) %></span></p>
+						<!--<%= @yelpSearch %>-->
+						<% end %>
+						<% if !@venue.ratings.empty? %>
+						<p>Rating:<br>
+						<%= render_stars(@venue.ratings.average('rating')) %>
+						</p>
+						<% end %>
+						<p>My Rating:<br>
+						<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
+						<%= render_stars(@venue.ratings.where(raterid: current_user.id).sum('rating')) %>
+						<% @thisRating = @venue.ratings.where(raterid: current_user.id).first %>
+						<%= form_for(@thisRating) do |f| %>
+							<p>
+							  <%= f.label :rating %><br />
+							  <%= f.text_field :rating, :class => 'form-control' %>
+							</p>
+							<p>
+							  <%= f.submit %>
+							</p>
+							<% end %>						<% else %>
+						<%= render_stars(0) %>
+							<%= form_for([@venue, @venue.ratings.build]) do |f| %>
+							<p>
+							  <%= f.label :rating %><br />
+							  <%= f.text_field :rating %>
+							</p>
+							<p>
+							  <%= f.submit %>
+							</p>
+							<% end %>
+						<% end %>
+						</p>
 						<% if !@venue.neighborhoodid.blank? %>
 						<p><%= Neighborhood.find(@venue.neighborhoodid).name %></p>
 						<% end %>
 						<% if !@venue.street.blank? %>
-						<p><a href="http://maps.google.com/maps?q=<%= to_url(@venue.fulladdress_withname)%>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a></p>
-						<% end %>
-						<p>Rating: <%= number_with_precision(@venue.ratings.average('rating'), precision: 2) %> / 5 (<%= @venue.ratings.count %>)</p>
-						<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
-						<p>My Rating: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><%= @venue.ratings.where(raterid: current_user.id).sum('rating') %></p>
+							<% if current_user.hasaddress %>
+							<p><a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.fulladdress_withname)%>/"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a></p>
+							<% else %>
+							<p><a href="http://maps.google.com/maps?q=<%= to_url(@venue.fulladdress_withname)%>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a></p>
+							<% end %>
 						<% end %>
 					</div>
 				</div>
@@ -33,6 +81,7 @@
 							</div>
 							<div class="well well-sm">
 								<%= comment.body %>
+								<%= link_to comment_path(comment), method: :delete, data: { confirm: "Are you sure you would like to this comment?" } do %><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><% end %>
 							</div>
 						</div>
 						<% end %>
@@ -59,31 +108,9 @@
 						<% else %>
 						<p>You must be <%= link_to "signed in", new_user_session_path %> to comment.</p>
 						<% end %>
-						
-						
-						<%= link_to 'Edit', edit_venue_path(@venue) %> |
-						<%= link_to venue_path(@venue), title: 'Delete', method: :delete, data: { confirm: "Are you sure you would like to delete #{@venue.name}?" } do %><i class="fa fa-fw fa-2x fa-trash-o text-danger"></i><% end %> | 
-						<%= link_to 'Back', venues_path %>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-
-
-
-<!--<h2>Ratings</h2>
-<% @venue.ratings.each do |rating| %>
-  <p>
-    <strong>Rater:</strong>
-    <% if !rating.raterid.blank? %>
-    <%= User.find(rating.raterid).email %>
-    <% end %>
-  </p>
- 
-  <p>
-    <strong>Rating:</strong
-    <%= rating.rating %>
-  </p>
-<% end %>-->

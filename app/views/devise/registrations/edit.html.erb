@@ -17,10 +17,23 @@
   <% end %>
 
   <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-  <%= f.password_field :password, :autocomplete => "off" %></div>
+  <%= f.password_field :password, :autocomplete => 'off' %></div>
 
   <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+  <%= f.password_field :password_confirmation, :autocomplete => 'off' %></div>
+  
+  <div class="field">
+    <%= f.label :street %><br>
+    <%= f.text_field :street, { :class => 'form-control' } %>
+  </div>
+  <div class="field">
+    <%= f.label :city %><br>
+    <%= f.text_field :city, { :class => 'form-control' } %>
+  </div>
+  <div class="field">
+    <%= f.label :state %><br>
+    <%= select(:user, 'state', us_states, { :include_blank => 'None' }, { :class => 'form-control' }) %>
+  </div>
   
   <div><%= f.label :avatar %><br />
   <%= f.file_field :avatar %>

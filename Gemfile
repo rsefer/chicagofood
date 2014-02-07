@@ -46,3 +46,5 @@ end
 
 gem 'devise'
 gem 'carrierwave'
+gem 'yelp4rails'
+gem 'figaro'

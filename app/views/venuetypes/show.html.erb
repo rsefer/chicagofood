@@ -1,14 +1,27 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= pluralize_without_count(2, @venuetype.name) %>
-</p>
-
-<p>
-  <strong>Parenttypeid:</strong>
-  <%= @venuetype.parenttypeid %>
-</p>
-
-<%= link_to 'Edit', edit_venuetype_path(@venuetype) %> |
-<%= link_to 'Back', venuetypes_path %>
+<section id="venuetype-<%= @venuetype.id %>">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h2><%= pluralize_without_count(2, @venuetype.name) %></h2>
+				<h3><%= @venuetype.parenttypeid %></h3>
+				<%
+					scopeTop = Venue.where(typeid: @venuetype.id)
+					scope2nd = Venue.where(typeid: Venuetype.where(parenttypeid: @venuetype.id))
+					
+					if (scope2nd.empty?)
+						scopeTotal = scopeTop
+					else
+						scopeTotal = scopeTop + scope2nd
+					end
+					
+					scopeTotal.each do |venue| %>
+				<div>
+					<%= link_to venue do %><%= venue.name %><% end %>
+				</div>
+				<% end %>
+				<%= link_to 'Edit', edit_venuetype_path(@venuetype) %> |
+				<%= link_to 'Back', venuetypes_path %>
+			</div>
+		</div>
+	</div>
+</section>

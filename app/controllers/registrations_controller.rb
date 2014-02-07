@@ -4,8 +4,8 @@ class RegistrationsController < Devise::RegistrationsController
     account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
 
     if account_update_params[:password].blank?
-      account_update_params.delete("password")
-      account_update_params.delete("password_confirmation")
+      account_update_params.delete('password')
+      account_update_params.delete('password_confirmation')
     end
 
     @user = User.find(current_user.id)
@@ -20,7 +20,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
   
   def resource_params
-    params.require(:user).permit(:firstname, :lastname, :email, :password, :password_confirmation, :avatar, :avatar_cache)
+    params.require(:user).permit(:firstname, :lastname, :email, :password, :password_confirmation, :avatar, :avatar_cache, :street, :city, :state)
   end
   
   private :resource_params

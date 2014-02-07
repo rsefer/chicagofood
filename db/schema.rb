@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140205175330) do
+ActiveRecord::Schema.define(version: 20140207040146) do
 
   create_table "comments", force: true do |t|
     t.integer  "commenterid"
@@ -57,6 +57,9 @@ ActiveRecord::Schema.define(version: 20140205175330) do
     t.string   "avatar"
     t.string   "firstname"
     t.string   "lastname"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
@@ -66,7 +69,7 @@ ActiveRecord::Schema.define(version: 20140205175330) do
     t.string   "name"
     t.string   "url"
     t.integer  "typeid"
-    t.integer  "yelpid"
+    t.string   "yelpid"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "street"

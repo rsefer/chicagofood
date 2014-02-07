@@ -18,6 +18,19 @@
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
   
+  <div class="field">
+    <%= f.label :street %><br>
+    <%= f.text_field :street, { :class => 'form-control' } %>
+  </div>
+  <div class="field">
+    <%= f.label :city %><br>
+    <%= f.text_field :city, :value => 'Chicago' %>
+  </div>
+  <div class="field">
+    <%= f.label :state %><br>
+    <%= select(:user, 'state', us_states, { :selected => 'IL', :include_blank => 'None' }, { :class => 'form-control' }) %>
+  </div>
+  
   <div><%= f.label :avatar %><br />
   <%= f.file_field :avatar %>
   <%= f.hidden_field :avatar_cache %>

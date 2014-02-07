@@ -1,6 +1,10 @@
-<h1>Editing venue</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @venue %> |
-<%= link_to 'Back', venues_path %>
+<section id="venue-edit">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<%= render :partial => 'form' %>
+				<%= link_to 'Show', @venue %> | <%= link_to 'Back', venues_path %>
+			</div>
+		</div>
+	</div>
+</section>

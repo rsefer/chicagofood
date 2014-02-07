@@ -1,8 +1,9 @@
 Chicagofood::Application.routes.draw do
 	
   resources :neighborhoods
-
   resources :venuetypes
+  resources :ratings
+  resources :comments
 
   resources :venues do
   	resources :comments

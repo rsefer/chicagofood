@@ -4,7 +4,7 @@ class Venue < ActiveRecord::Base
 	
 	def fulladdress
 		if !self.street.blank?
-			self.street +  " " + self.city + ", " + self.state
+			self.street + " " + self.city + ", " + self.state
 		end
 	end
 	

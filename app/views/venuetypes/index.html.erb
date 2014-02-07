@@ -1,29 +1,15 @@
-<h1>Listing venuetypes</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Parenttypeid</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @venuetypes.each do |venuetype| %>
-      <tr>
-        <td><%= venuetype.name %></td>
-        <td><%= venuetype.parenttypeid %></td>
-        <td><%= link_to 'Show', venuetype %></td>
-        <td><%= link_to 'Edit', edit_venuetype_path(venuetype) %></td>
-        <td><%= link_to 'Destroy', venuetype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Venuetype', new_venuetype_path %>
+<section id="venuetype">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h2>Venue Types</h2>
+				<% @venuetypes.each do |venuetype| %>
+	      <div>
+	      <%= link_to venuetype do %><%= pluralize_without_count(2, venuetype.name) %><% end %></td>
+	      </div>
+	    <% end %>
+	    <%= link_to 'New Venuetype', new_venuetype_path %>
+			</div>
+		</div>
+	</div>
+</section>
