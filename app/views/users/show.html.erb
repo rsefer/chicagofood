@@ -1,0 +1,10 @@
+<section id="user-show">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1><%= @user.fullname %></h1>
+				<% if @user.id == current_user.id %><%= link_to 'Edit Profile', edit_user_registration_path %><% end %>
+			</div>
+		</div>
+	</div>
+</section>

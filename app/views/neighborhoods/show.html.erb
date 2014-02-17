@@ -1,14 +1,40 @@
-<p id="notice"><%= notice %></p>
+<section id="neighborhoods-single">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1><%= @neighborhood.name %></h1>
+				<p>
+				  <strong>Parent:</strong>
+				  <%= Neighborhood.where(id: @neighborhood.parentneighborhoodid).name %>
+				</p>
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th>Name</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+					<%
+						scopeTop = Venue.where(neighborhoodid: @neighborhood.id)
+						scope2nd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))
+						
+						if (scope2nd.empty?)
+							scopeTotal = scopeTop
+						else
+							scopeTotal = scopeTop + scope2nd
+						end
+						
+						scopeTotal.each do |venue| %>
+				      <tr>
+				        <td><%= link_to venue do %><%= venue.name %><% end %></td>
+				      </tr>
+				    <% end %>
+				  </tbody>
+				</table>
+				<%= link_to 'Edit', edit_neighborhood_path(@neighborhood) %> |
+				<%= link_to 'Back', neighborhoods_path %>
+			</div>
+		</div>
+	</div>
+</section>
 
-<p>
-  <strong>Name:</strong>
-  <%= @neighborhood.name %>
-</p>
-
-<p>
-  <strong>Parentneighborhoodid:</strong>
-  <%= @neighborhood.parentneighborhoodid %>
-</p>
-
-<%= link_to 'Edit', edit_neighborhood_path(@neighborhood) %> |
-<%= link_to 'Back', neighborhoods_path %>

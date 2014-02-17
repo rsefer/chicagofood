@@ -1,29 +1,26 @@
-<h1>Listing neighborhoods</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Parentneighborhoodid</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @neighborhoods.each do |neighborhood| %>
-      <tr>
-        <td><%= neighborhood.name %></td>
-        <td><%= neighborhood.parentneighborhoodid %></td>
-        <td><%= link_to 'Show', neighborhood %></td>
-        <td><%= link_to 'Edit', edit_neighborhood_path(neighborhood) %></td>
-        <td><%= link_to 'Destroy', neighborhood, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Neighborhood', new_neighborhood_path %>
+<section id="neighborhoods-all">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>Neighborhoods</h1>
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th>Name</th>
+				      <th>Parent</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <% @neighborhoods.each do |neighborhood| %>
+				      <tr>
+				        <td><%= link_to neighborhood_path(neighborhood) do %><%= neighborhood.name %><% end %></td>
+				        <td><% if !neighborhood.parentneighborhoodid.nil? %><%= link_to neighborhood_path(neighborhood.parentneighborhoodid) do %><%= Neighborhood.where(id: neighborhood.parentneighborhoodid).name %><% end %><% else %>&mdash;<% end %></td>
+				      </tr>
+				    <% end %>
+				  </tbody>
+				</table>
+				<p><%= link_to 'New Neighborhood', new_neighborhood_path %></p>
+			</div>
+		</div>
+	</div>
+</section>

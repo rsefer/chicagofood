@@ -4,6 +4,7 @@ Chicagofood::Application.routes.draw do
   resources :venuetypes
   resources :ratings
   resources :comments
+  resources :users, :path => 'u'
 
   resources :venues do
   	resources :comments
