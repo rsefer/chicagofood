@@ -3,10 +3,16 @@
 
 /* Main Style */
 
-$green: #5cb85c;
-$red: #d9534f;
+$turqoise: #009999;
+$red: #e20048;
+$orange: #ffd040;
 
 body {
+	background: $turqoise;
+}
+
+header {
+	background: $red;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -27,9 +33,6 @@ ul {
 	margin: 0px;
 	padding: 0px;
 }
-
-.green { color: $green; }
-.red   { color: $red; }
 
 .spread {
 	font-size: 12px;
@@ -61,6 +64,24 @@ hr.halfbottom {
 	margin: 10px 0px;
 }
 
+.navbar-default .navbar-brand {
+	float: none;
+	display: inline-block;
+	height: auto;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav > li > a {
+	color: #ffffff;
+}
+
+.navbar-right .user-avatar-thumb {
+	margin-top: -10px;
+	margin-bottom: -10px;
+}
+
 section {
 	color: #000000;
 	background: #ffffff;
@@ -69,7 +90,7 @@ section {
 
 img.user-avatar-thumb {
 	vertical-align: middle;
-	max-height: 32px;
+	max-height: 28px;
 	margin-right: 12px;
 	@include image-circle();
 }
