@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140217174248) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "comments", force: true do |t|
     t.integer  "commenterid"
     t.text     "body"
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 20140217174248) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["venue_id"], name: "index_comments_on_venue_id"
+  add_index "comments", ["venue_id"], name: "index_comments_on_venue_id", using: :btree
 
   create_table "neighborhoods", force: true do |t|
     t.string   "name"
@@ -38,7 +41,7 @@ ActiveRecord::Schema.define(version: 20140217174248) do
     t.datetime "updated_at"
   end
 
-  add_index "ratings", ["venue_id"], name: "index_ratings_on_venue_id"
+  add_index "ratings", ["venue_id"], name: "index_ratings_on_venue_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false
@@ -62,8 +65,8 @@ ActiveRecord::Schema.define(version: 20140217174248) do
     t.string   "state"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "venues", force: true do |t|
     t.string   "name"
