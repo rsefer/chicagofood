@@ -30,8 +30,18 @@
 		    <%= collection_select(:venue, 'typeid', Venuetype.all, :id, :name, {},{ :class => 'form-control' }) %>
 		  </div>
 		  <div class="form-group">
+		    <%= f.label :price, 'Price' %><br>
+		    <%= f.text_field :price, { :class => 'form-control', :placeholder => '' } %>
+		  </div>
+		  <div class="form-group">
 		  	<%= check_box(:venue, :byob, {}, 'true', 'false') %>
   			<%= f.label :byob, 'BYOB?' %>
+  			<%= check_box(:venue, :craftbeer, {}, 'true', 'false') %>
+  			<%= f.label :craftbeer, 'Craft Beer' %>
+  			<%= check_box(:venue, :cocktails, {}, 'true', 'false') %>
+  			<%= f.label :cocktails, 'Cocktails' %>
+  			<%= check_box(:venue, :latenight, {}, 'true', 'false') %>
+  			<%= f.label :latenight, 'Late Night' %>
 		  </div>
 		</div>
 		<div class="col-sm-6">

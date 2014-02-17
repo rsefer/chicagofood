@@ -2,10 +2,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6 col-sm-offset-3">
-				<form method="get">
+				<%= form_tag venues_path, :method => 'get' do %>
 					<h2 class="text-center">I would like...</h2>
-					<%= search_field(:search, :q, :class => 'form-control input-lg input-huge', :placeholder => 'mexican byob wicker park', :autofocus => true) %>
-				</form>
+					<%= text_field_tag :q, params[:q], { :class => 'form-control input-lg input-huge', :placeholder => 'mexican byob wicker park', :autofocus => true } %>
+				<% end %>
 				<hr>
 				<h3 class="text-center">Full List</h3>
 				<div class="row">

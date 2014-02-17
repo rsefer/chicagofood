@@ -15,9 +15,7 @@ end
 		<div class="row">
 			<div class="col-sm-12">
 				<h2><%= @venue.name %></h2>
-				<%= link_to 'Edit', edit_venue_path(@venue) %> |
-				<%= link_to 'Delete', venue_path(@venue), title: 'Delete', method: :delete, data: { confirm: "Are you sure you would like to delete #{@venue.name}?" } %> |
-				<%= link_to 'Back', venues_path %>
+				<%= link_to venues_path, title: 'Back', class: 'btn btn-primary' do %><i class="fa fa-undo left"></i>Back<% end %>&nbsp;<%= link_to edit_venue_path(@venue), title: 'Edit', class: 'btn btn-warning' do %><i class="fa fa-pencil left"></i>Edit<% end %>
 				<div class="row">
 					<div class="col-sm-6">
 						<% if !@venue.url.blank? %>
@@ -26,10 +24,14 @@ end
 						<p><%= Venuetype.find(@venue.typeid).name %></p>
 						<% if !@venue.yelpid.blank? %>
 							<p><a href="<%= @yelpSearch['url'] %>">Yelp Rating: <%= @yelpSearch['rating'] %> / 5</a><br><span class="red"><%= render_stars(@yelpSearch['rating']) %></span></p>
+							<p>Yelp Address:<br><%= @yelpSearch['location']['address'][0] %><br><%= @yelpSearch['location']['city'] %>, <%= @yelpSearch['location']['state_code'] %></p>
 							<!--<%= @yelpSearch %>-->
 						<% end %>
+						<% if !@venue.price.nil? %>
+						<p>Price:<br><%= render_price(@venue.price) %></p>
+						<% end %>
 						<% if !@venue.ratings.empty? %>
-							<p>Rating:<br>
+							<p>Our Rating:<br>
 							<%= render_stars(@venue.ratings.average('rating')) %>
 							</p>
 						<% end %>
@@ -66,7 +68,7 @@ end
 						<% end %>
 						<% if !@venue.street.blank? %>
 							<address>
-							<% if current_user.hasaddress %>
+							<% if current_user.try(:hasaddress) %>
 							<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.fulladdress_withname)%>/"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
 							<% else %>
 							<a href="http://maps.google.com/maps?q=<%= to_url(@venue.fulladdress_withname)%>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
@@ -76,10 +78,17 @@ end
 						<% if @venue.byob %>
 						<p><i class="fa fa-beer left"></i>BYOB</p>
 						<% end %>
+						<% if @venue.craftbeer %>
+						<p><i class="fa fa-check left"></i>Craft Beer</p>
+						<% end %>
+						<% if @venue.cocktails %>
+						<p><i class="fa fa-glass left"></i>Cocktails</p>
+						<% end %>
+						<% if @venue.latenight %>
+						<p><i class="fa fa-check left"></i>Late Night</p>
+						<% end %>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 col-sm-offset-3">
+					<div class="col-sm-6">
 						<h2>Comments</h2>
 						<% @venue.comments.each do |comment| %>
 						<div class="comment">
@@ -88,7 +97,9 @@ end
 						    <%= User.find(comment.commenterid).fullname %>
 							</div>
 							<div class="well well-sm">
-								<%= link_to comment_path(comment), method: :delete, data: { confirm: "Are you sure you would like to this comment?" } do %><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><% end %>
+								<% if comment.commenterid == current_user.id %>
+								<%= link_to comment_path(comment), method: :delete, data: { confirm: "Are you sure you would like to delete this comment?" } do %><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><% end %>
+								<% end %>
 								<%= simple_format(comment.body) %>
 							</div>
 						</div>
@@ -97,8 +108,8 @@ end
 						<% if user_signed_in? %>
 							<p>Commenting as <%= current_user.fullname %>.</p>
 							<%= form_for([@venue, @venue.comments.build]) do |f| %>
-								<%= f.text_area :body, :class => 'form-control' %>
-							  <%= f.submit %>
+								<%= f.text_area :body, { :class => 'form-control', :required => 'required', :placeholder => 'Great appetizers! I highly recommend...' } %>
+							  <button type="submit" class="btn btn-block btn-success">Post Comment</button>
 							<% end %>
 						<% else %>
 						<p>You must be <%= link_to "signed in", new_user_session_path %> to comment.</p>

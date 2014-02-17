@@ -124,6 +124,40 @@ footer #footer-logo {
 	vertical-align: middle;
 }
 
+a.sortablecol i.fa {
+	display: none;
+}
+
+a.sortablecol.current.desc i.fa.fa-caret-down {
+	display: inline-block;
+}
+
+a.sortablecol.current.asc i.fa.fa-caret-up {
+	display: inline-block;
+}
+
+.comment .well p:last-child {
+	margin: 0px;
+}
+
+.comment button.close {
+	font-size: 14px;
+	height: 20px;
+}
+
+form.new_comment textarea {
+	resize: none;
+	min-height: 50px;
+	@include border-radius-bottom-left(0px);
+	@include border-radius-bottom-right(0px);
+	border-bottom: 0px;
+}
+
+form.new_comment button {
+	@include border-radius-top-left(0px);
+	@include border-radius-top-right(0px);
+}
+
 @media screen and (-webkit-min-device-pixel-ratio: 2) {
 	
 	body {

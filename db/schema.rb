@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140207223520) do
+ActiveRecord::Schema.define(version: 20140217174248) do
 
   create_table "comments", force: true do |t|
     t.integer  "commenterid"
@@ -78,6 +78,10 @@ ActiveRecord::Schema.define(version: 20140207223520) do
     t.string   "zipcode"
     t.integer  "neighborhoodid"
     t.boolean  "byob"
+    t.integer  "price"
+    t.boolean  "craftbeer"
+    t.boolean  "cocktails"
+    t.boolean  "latenight"
   end
 
   create_table "venuetypes", force: true do |t|
