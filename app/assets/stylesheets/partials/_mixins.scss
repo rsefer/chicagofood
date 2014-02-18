@@ -28,3 +28,9 @@
   -moz-border-radius: 50%;
   border-radius: 50%;
 }
+
+@mixin columns($cols) {
+	-webkit-column-count: $cols;
+	-moz-column-count: $cols;
+	column-count: $cols;
+}

@@ -3,22 +3,12 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<h1>Neighborhoods</h1>
-				<table class="table">
-				  <thead>
-				    <tr>
-				      <th>Name</th>
-				      <th>Parent</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <% @neighborhoods.each do |neighborhood| %>
-				      <tr>
-				        <td><%= link_to neighborhood_path(neighborhood) do %><%= neighborhood.name %><% end %></td>
-				        <td><% if !neighborhood.parentneighborhoodid.nil? %><%= link_to neighborhood_path(neighborhood.parentneighborhoodid) do %><%= Neighborhood.where(id: neighborhood.parentneighborhoodid).name %><% end %><% else %>&mdash;<% end %></td>
-				      </tr>
-				    <% end %>
-				  </tbody>
-				</table>
+				<ul class="neighborhoods-list cols2">
+					<% @neighborhoods.sort{ |a,b| a.name <=> b.name }.each do |neighborhood| %>
+					<li><%= link_to neighborhood_path(neighborhood) do %><%= neighborhood.name %><% end %></li>
+					<% end %>
+				</ul>
+				<hr>
 				<p><%= link_to 'New Neighborhood', new_neighborhood_path %></p>
 			</div>
 		</div>

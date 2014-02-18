@@ -34,6 +34,11 @@ ul {
 	padding: 0px;
 }
 
+ul.cols2,
+ol.cols2 {
+	@include columns(2);
+}
+
 .spread {
 	font-size: 12px;
 	letter-spacing: 1px;
@@ -100,6 +105,16 @@ nav.navbar {
 	background: none;
 	border: none;
 	border-radius: 0px;
+}
+
+.navbar-toggle {
+	margin-right: 0px;
+	border: 0px;
+	@include border-radius(0px);
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #ffffff;
 }
 
 footer #footer-logo {

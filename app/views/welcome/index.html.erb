@@ -18,7 +18,14 @@
 				</div>
 				<hr>
 				<%= link_to new_venue_path, { :class => 'btn btn-lg btn-block btn-success' } do %><i class="fa fa-plus left"></i>Add a new Venue<% end %>
-				<p><%= link_to 'Neighborhoods', neighborhoods_path %></p>
+				<hr>
+				<ul class="neighborhoods-list cols2">
+					<% Neighborhood.all.sort{ |a,b| a.name <=> b.name }.each do |neighborhood| %>
+					<li><%= link_to neighborhood_path(neighborhood) do %><%= neighborhood.name %><% end %></li>
+					<% end %>
+				</ul>
+				<hr>
+				<p class="text-center"><%= link_to 'Add Neighborhood', new_neighborhood_path %></p>
 			</div>
 		</div>
 	</div>

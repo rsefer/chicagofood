@@ -2,10 +2,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h1><%= @neighborhood.name %></h1>
-				<p>
-				  <strong>Parent:</strong>
-				  <%= Neighborhood.where(id: @neighborhood.parentneighborhoodid).name %>
+				<h1><%= @neighborhood.name %></h1><%=  %>
+				<% if !@neighborhood.parentneighborhoodid.nil? %>
+				<p>Part of <%= link_to neighborhood_path(@neighborhood.parentneighborhoodid) do %><%= Neighborhood.find(@neighborhood.parentneighborhoodid).name %><% end %></p>
+				<% end %>
 				</p>
 				<table class="table">
 				  <thead>

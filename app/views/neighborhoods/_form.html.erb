@@ -11,15 +11,15 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :class => 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :parentneighborhoodid %><br>
-    <%= collection_select(:neighborhood, 'parentneighborhoodid', Neighborhood.all, :id, :name, { :include_blank => 'None' }, { :class => 'form-control' }) %>
+  <div class="form-group">
+    <%= f.label :parentneighborhoodid, 'Parent Neighborhood' %><br>
+    <%= collection_select(:neighborhood, 'parentneighborhoodid', Neighborhood.order('name ASC'), :id, :name, { :include_blank => 'None' }, { :class => 'form-control' }) %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <button type="submit" class="btn btn-success"><i class="fa fa-save left"></i>Save</button>
   </div>
 <% end %>
