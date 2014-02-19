@@ -172,6 +172,10 @@ a.sortablecol.current.asc i.fa.fa-caret-up {
 	display: inline-block;
 }
 
+#myrating i.fa:hover {
+	cursor: pointer;
+}
+
 .comment .well p:last-child {
 	margin: 0px;
 }

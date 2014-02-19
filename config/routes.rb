@@ -11,6 +11,7 @@ Chicagofood::Application.routes.draw do
   resources :venues do
   	resources :comments
   	resources :ratings
+  	get 'rating_average'
   end
 
   devise_for :users, path_names: { sign_up: 'register' }, :controllers => { :registrations => 'registrations' }

@@ -19,52 +19,54 @@ end
 				<div class="row">
 					<div class="col-sm-6">
 						<% if !@venue.url.blank? %>
-							<p><a href="<%= @venue.url %>"><%= @venue.url %></a></p>
+							<!--<p><a href="<%= @venue.url %>"><%= @venue.url %></a></p>-->
 						<% end %>
 						<p><%= Venuetype.find(@venue.typeid).name %></p>
 						<% if !@venue.yelpid.blank? %>
 							<p><a href="<%= @yelpSearch['url'] %>">Yelp Rating: <%= @yelpSearch['rating'] %> / 5</a><br><span class="red"><%= render_stars(@yelpSearch['rating']) %></span></p>
-							<p>Yelp Address:<br><%= @yelpSearch['location']['address'][0] %><br><%= @yelpSearch['location']['city'] %>, <%= @yelpSearch['location']['state_code'] %></p>
 							<!--<%= @yelpSearch %>-->
 						<% end %>
+						<%
+							if !@venue.yelpid.blank?
+								@addressWorking = @yelpSearch['location']['address'][0] + ' ' + @yelpSearch['location']['city'] + ' ' + @yelpSearch['location']['state_code']
+							else
+								if !@venue.street.blank?
+									@addressWorking = @venue.fulladdress_withname
+								else
+									@addressWorking = ''
+								end
+							end
+						%>
+						<address>
+							<% if current_user.try(:hasaddress) %>
+							<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@addressWorking)%>/"><%= @yelpSearch['location']['address'][0] %><br/><%= @yelpSearch['location']['city'] %>, <%= @yelpSearch['location']['state_code'] %></a>
+							<% else %>
+							<a href="http://maps.google.com/maps?q=<%= to_url(@addressWorking)%>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
+							<% end %>
+						</address>
 						<% if !@venue.price.nil? %>
 						<p>Price:<br><%= render_price(@venue.price) %></p>
 						<% end %>
 						<% if !@venue.ratings.empty? %>
 							<p>Our Rating:<br>
-							<%= render_stars(@venue.ratings.average('rating')) %>
+							<div id="ourrating"><%= render_stars(@venue.ratings.average('rating')) %></div>
 							</p>
 						<% end %>
 						<% if user_signed_in? %>
 							<p>My Rating:<br>
 							<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
-								<%= render_stars(@venue.ratings.where(raterid: current_user.id).sum('rating')) %>
+								<div id="myrating"><%= render_stars(@venue.ratings.where(raterid: current_user.id).sum('rating')) %></div>
 								<% @thisRating = @venue.ratings.where(raterid: current_user.id).first %>
-								<%= form_for(@thisRating) do |f| %>
-									<p>
-									  <%= f.label :rating %><br />
-									  <%= f.text_field :rating, :class => 'form-control' %>
-									</p>
-									<p>
-									  <%= f.submit %>
-									</p>
+								<%= form_for @thisRating, :remote => true do |f| %>
+									<%= f.hidden_field :rating %>
 								<% end %>
 							<% else %>
-								<%= render_stars(0) %>
+								<div id="myrating"><%= render_stars(0) %></div>
 								<%= form_for([@venue, @venue.ratings.build]) do |f| %>
-								<p>
-								  <%= f.label :rating %><br />
-								  <%= f.text_field :rating %>
-								</p>
-								<p>
-								  <%= f.submit %>
-								</p>
+									<%= f.hidden_field :rating %>
 								<% end %>
 							<% end %>
 						</p>
-						<% end %>
-						<% if !@venue.neighborhoodid.blank? %>
-						<p><%= Neighborhood.find(@venue.neighborhoodid).name %></p>
 						<% end %>
 						<% if !@venue.street.blank? %>
 							<address>

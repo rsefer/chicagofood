@@ -27,7 +27,7 @@
 			      <tr>
 			        <td><%= link_to venue do %><%= venue.name %><% end %></td>
 			        <td><%= Venuetype.find(venue.typeid).name %></td>
-			        <td><%= Neighborhood.find(venue.neighborhoodid).name %></td>
+			        <td><% if venue.neighborhoodid %><%= Neighborhood.find(venue.neighborhoodid).name %><% end %></td>
 			        <td class="text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
 			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
 			        <td class="text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>

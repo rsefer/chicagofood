@@ -17,14 +17,14 @@
 		    <%= f.label :name %><br>
 		    <%= f.text_field :name, { :class => 'form-control' } %>
 		  </div>
-		  <div class="form-group">
-		    <%= f.label :url, 'URL' %><br>
-		    <%= f.text_field :url, { :class => 'form-control', :placeholder => 'http://example.com' }  %>
-		  </div>
-		  <div class="form-group">
+		 <div class="form-group">
 		    <%= f.label :yelpid, 'Yelp ID' %> <small>Ex. http://www.yelp.com/biz/<strong><u>name-of-restaurant</u></strong></small><br>
 		    <%= f.text_field :yelpid, { :class => 'form-control', :placeholder => 'name-of-restaurant' } %>
 		  </div>
+		  <!--<div class="form-group">
+		    <%= f.label :url, 'URL' %><br>
+		    <%= f.text_field :url, { :class => 'form-control', :placeholder => 'http://example.com' }  %>
+		  </div>-->
 		  <div class="form-group">
 		    <%= f.label :typeid ,'Type' %><br>
 		    <%= collection_select(:venue, 'typeid', Venuetype.all, :id, :name, {},{ :class => 'form-control' }) %>
@@ -47,7 +47,7 @@
 		<div class="col-sm-6">
 		  <div class="form-group">
 		    <%= f.label :neighborhoodid, 'Neighborhood' %><br>
-		    <%= collection_select(:venue, 'neighborhoodid', Neighborhood.all, :id, :name, { :include_blank => 'None' }, { :class => 'form-control' }) %>
+		    <%= collection_select(:venue, 'neighborhoodid', Neighborhood.order('name ASC'), :id, :name, { :include_blank => '' }, { :class => 'form-control', :required => 'required' }) %>
 		  </div>
 		  <div class="form-group">
 		    <%= f.label :street, 'Street Address' %><br>

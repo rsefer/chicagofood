@@ -46,6 +46,12 @@ class VenuesController < ApplicationController
       format.html { redirect_to venues_url }
     end
   end
+  
+  def rating_average
+  	@venue = Venue.find(params[:venue_id])
+  	data = { :rating_average => @venue.ratings.average('rating') }
+  	render :json => data, :status => :ok
+  end
 
   private
   	def sort_column
