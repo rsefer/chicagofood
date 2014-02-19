@@ -1,6 +1,13 @@
-<h1>Editing venuetype</h1>
+<section id="venuetype-edit">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>Editing Venue Type</h1>
+				<%= render 'form' %>
+				<%= link_to 'Show', @venuetype %> |
+				<%= link_to 'Back', venuetypes_path %>
+			</div>
+		</div>
+	</div>
+</section>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @venuetype %> |
-<%= link_to 'Back', venuetypes_path %>

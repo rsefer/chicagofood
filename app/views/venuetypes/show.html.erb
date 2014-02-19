@@ -2,23 +2,40 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h2><%= pluralize_without_count(2, @venuetype.name) %></h2>
-				<h3><%= @venuetype.parenttypeid %></h3>
-				<%
-					scopeTop = Venue.where(typeid: @venuetype.id)
-					scope2nd = Venue.where(typeid: Venuetype.where(parenttypeid: @venuetype.id))
-					
-					if (scope2nd.empty?)
-						scopeTotal = scopeTop
-					else
-						scopeTotal = scopeTop + scope2nd
-					end
-					
-					scopeTotal.each do |venue| %>
-				<div>
-					<%= link_to venue do %><%= venue.name %><% end %>
-				</div>
+				<h2><%= @venuetype.name %></h2>
+				<% if !@venuetype.parenttypeid.nil? %>
+				<p>Part of <%= link_to venuetype_path(@venuetype.parenttypeid) do %><%= Venuetype.find(@venuetype.parenttypeid).name %><% end %></p>
 				<% end %>
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th>Name</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+					<%
+						scopeTop = Venue.where(typeid: @venuetype.id)
+						scope2nd = Venue.where(typeid: Venuetype.where(parenttypeid: @venuetype.id))
+						scope3rd = Venue.where(typeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: @venuetype.id)))
+						scope4th = Venue.where(typeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: @venuetype.id))))
+						
+						if (!scope4th.empty?)
+							scopeTotal = scopeTop + scope2nd + scope3rd + scope4th
+						elsif (!scope3rd.empty?)
+							scopeTotal = scopeTop + scope2nd + scope3rd
+						elsif (!scope2nd.empty?)
+							scopeTotal = scopeTop + scope2nd
+						else
+							scopeTotal = scopeTop
+						end
+						
+						scopeTotal.each do |venue| %>
+				      <tr>
+				        <td><%= link_to venue do %><%= venue.name %><% end %></td>
+				      </tr>
+				    <% end %>
+				  </tbody>
+				</table>
 				<%= link_to 'Edit', edit_venuetype_path(@venuetype) %> |
 				<%= link_to 'Back', venuetypes_path %>
 			</div>
