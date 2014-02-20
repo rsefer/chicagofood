@@ -16,6 +16,19 @@ end
 			<div class="col-sm-12">
 				<h2><%= @venue.name %></h2>
 				<%= link_to venues_path, title: 'Back', class: 'btn btn-primary' do %><i class="fa fa-undo left"></i>Back<% end %>&nbsp;<%= link_to edit_venue_path(@venue), title: 'Edit', class: 'btn btn-warning' do %><i class="fa fa-pencil left"></i>Edit<% end %>
+				
+				<% if user_signed_in? %>
+					<% if !@venue.tries.where(user_id: current_user.id).empty? %>
+						<% @thisTry = @venue.tries.where(user_id: current_user.id).first %>
+						<%= link_to try_path(@thisTry), title: 'Delete', method: :delete, class: 'btn btn-danger' do %><i class="fa fa-minus left"></i>To Try<% end %>
+					<% else %>
+						<%= form_for([@venue, @venue.tries.build]) do |f| %>
+							<%= f.hidden_field :status, :value => 'true' %>
+							<button type="submit" class="btn btn-danger"><i class="fa fa-plus left"></i>To Try</button>
+						<% end %>
+					<% end %>
+				<% end %>
+				
 				<div class="row">
 					<div class="col-sm-6">
 						<% if !@venue.url.blank? %>
@@ -122,6 +135,8 @@ end
 <script type="text/javascript">
 jQuery(document).ready(function($) {
 	
+	
+	/* Rating */
 	var myratingHTML = $('#myrating').html();
 	
 	$('#myrating i.fa').click(function() {
@@ -143,6 +158,17 @@ jQuery(document).ready(function($) {
 		var thisClickIndex = $('#myrating i.fa').index(this);
 		changeRatingStars('#myrating', thisClickIndex);
 	}, function() {
+	});
+	
+	/* To Try toggle */
+	$('#totry').click(function() {
+		$('form.edit_totry, form.new_to_try').submit();
+		$('form.edit_totry, form.new_to_try').bind('ajax:complete', function() {
+			/*$.get(window.location.pathname + '/rating_average', function(data) {
+				var newRatingIndex = $('#ourrating i.fa').index(data.rating_average);
+				changeRatingStars('#ourrating', data.rating_average - 1);
+			});*/
+		});
 	});
 	
 });

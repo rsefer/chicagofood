@@ -4,13 +4,17 @@ Chicagofood::Application.routes.draw do
   resources :venuetypes
   resources :ratings
   resources :comments
+  resources :tries
   resources :users, :path => 'u' do
-  	resources :to_tries
+  	resources :comments
+  	resources :ratings
+  	resources :tries
   end
 
   resources :venues do
   	resources :comments
   	resources :ratings
+  	resources :tries
   	get 'rating_average'
   end
 

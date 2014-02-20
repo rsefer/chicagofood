@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   
   has_many :comments, :dependent => :destroy
   has_many :ratings, :dependent => :destroy
-  has_many :to_tries, :dependent => :destroy
+  has_many :tries, :dependent => :destroy
   
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   
