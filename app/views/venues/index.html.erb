@@ -16,10 +16,10 @@
 				    <tr>
 				      <th><%= sortable 'name' do %>Test<% end %></th>
 				      <th><%= sortable 'typeid', 'Type' %></th>
-				      <th><%= sortable 'neighborhoodid', 'Neighborhood' %></th>
-				      <th class="text-center"><%= sortable 'ratings', 'Rating' %></th>
+				      <th class="hidden-xs"><%= sortable 'neighborhoodid', 'Neighborhood' %></th>
+				      <th class="hidden-xs text-center"><%= sortable 'ratings', 'Rating' %></th>
 				      <th class="text-center"><%= sortable 'price', 'Price' %></th>
-				      <th class="text-center"><%= sortable 'byob', 'BYOB' %></th>
+				      <th class="hidden-xs text-center"><%= sortable 'byob', 'BYOB' %></th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -27,15 +27,16 @@
 			      <tr>
 			        <td><%= link_to venue do %><%= venue.name %><% end %></td>
 			        <td><%= Venuetype.find(venue.typeid).name %></td>
-			        <td><% if venue.neighborhoodid %><%= Neighborhood.find(venue.neighborhoodid).name %><% end %></td>
-			        <td class="text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
+			        <td class="hidden-xs"><% if venue.neighborhoodid %><%= Neighborhood.find(venue.neighborhoodid).name %><% end %></td>
+			        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
 			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
-			        <td class="text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
+			        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
 			      </tr>
 				    <% end %>
 				  </tbody>
 				</table>
-				<%= link_to 'New Venue', new_venue_path %>
+				<hr>
+				<%= link_to new_venue_path, :class => 'btn btn-success' do %><i class="fa fa-plus left"></i>New Venue<% end %>
 			</div>
 		</div>
 	</div>

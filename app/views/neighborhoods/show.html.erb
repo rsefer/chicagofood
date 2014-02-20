@@ -7,6 +7,23 @@
 				<p>Part of <%= link_to neighborhood_path(@neighborhood.parentneighborhoodid) do %><%= Neighborhood.find(@neighborhood.parentneighborhoodid).name %><% end %></p>
 				<% end %>
 				</p>
+				<%
+					scopeTop = Venue.where(neighborhoodid: @neighborhood.id)
+					scope2nd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))
+					scope3rd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id)))
+					scope4th = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))))
+					
+					if (!scope4th.empty?)
+						scopeTotal = scopeTop + scope2nd + scope3rd + scope4th
+					elsif (!scope3rd.empty?)
+						scopeTotal = scopeTop + scope2nd + scope3rd
+					elsif (!scope2nd.empty?)
+						scopeTotal = scopeTop + scope2nd
+					else
+						scopeTotal = scopeTop
+					end
+				%>
+				<% if !scopeTotal.empty? %>
 				<table class="table">
 				  <thead>
 				    <tr>
@@ -15,9 +32,6 @@
 				  </thead>
 				  <tbody>
 					<%
-						scopeTop = Venue.where(neighborhoodid: @neighborhood.id)
-						scope2nd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))
-						
 						if (scope2nd.empty?)
 							scopeTotal = scopeTop
 						else
@@ -31,8 +45,9 @@
 				    <% end %>
 				  </tbody>
 				</table>
-				<%= link_to 'Edit', edit_neighborhood_path(@neighborhood) %> |
-				<%= link_to 'Back', neighborhoods_path %>
+				<% end %>
+				<p class="text-center">
+					<%= link_to 'Edit', edit_neighborhood_path(@neighborhood) %>&nbsp;&bull;&nbsp;<%= link_to new_venue_path({ :neighborhoodid => @neighborhood.id }) do %>Add a new venue in <%= @neighborhood.name %><% end %>
 			</div>
 		</div>
 	</div>

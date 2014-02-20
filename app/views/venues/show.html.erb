@@ -22,10 +22,6 @@ end
 							<!--<p><a href="<%= @venue.url %>"><%= @venue.url %></a></p>-->
 						<% end %>
 						<p><%= Venuetype.find(@venue.typeid).name %></p>
-						<% if !@venue.yelpid.blank? %>
-							<p><a href="<%= @yelpSearch['url'] %>">Yelp Rating: <%= @yelpSearch['rating'] %> / 5</a><br><span class="red"><%= render_stars(@yelpSearch['rating']) %></span></p>
-							<!--<%= @yelpSearch %>-->
-						<% end %>
 						<%
 							if !@venue.yelpid.blank?
 								@addressWorking = @yelpSearch['location']['address'][0] + ' ' + @yelpSearch['location']['city'] + ' ' + @yelpSearch['location']['state_code']
@@ -39,43 +35,45 @@ end
 						%>
 						<address>
 							<% if current_user.try(:hasaddress) %>
-							<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@addressWorking)%>/"><%= @yelpSearch['location']['address'][0] %><br/><%= @yelpSearch['location']['city'] %>, <%= @yelpSearch['location']['state_code'] %></a>
+							<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.name + ' ') %><%= to_url(@addressWorking) %>/"><%= @yelpSearch['location']['address'][0] %><br/><%= @yelpSearch['location']['city'] %>, <%= @yelpSearch['location']['state_code'] %></a>
 							<% else %>
-							<a href="http://maps.google.com/maps?q=<%= to_url(@addressWorking)%>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
+							<a href="http://maps.google.com/maps?q=<%= to_url(@venue.name + ' ') %><%= to_url(@addressWorking) %>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
 							<% end %>
 						</address>
+						<div class="row">
+							<% if !@venue.yelpid.blank? %>
+							<div class="col-md-4">
+								<p><a href="<%= @yelpSearch['url'] %>">Yelp Rating</a><br><span class="red"><%= render_stars(@yelpSearch['rating']) %></span></p>
+							</div>
+							<% end %>
+							<% if !@venue.ratings.empty? %>
+							<div class="col-md-4">
+								<p>Our Rating<br><span id="ourrating"><%= render_stars(@venue.ratings.average('rating')) %></span></p>
+							</div>
+							<% end %>
+							<% if user_signed_in? %>
+							<div class="col-md-4">
+								<p>My Rating<br>
+									<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
+										<span id="myrating"><%= render_stars(@venue.ratings.where(raterid: current_user.id).sum('rating')) %></span>
+										<% @thisRating = @venue.ratings.where(raterid: current_user.id).first %>
+										<%= form_for @thisRating, :remote => true do |f| %>
+											<%= f.hidden_field :rating %>
+										<% end %>
+									<% else %>
+										<span id="myrating"><%= render_stars(0) %></span>
+										<%= form_for([@venue, @venue.ratings.build]) do |f| %>
+											<%= f.hidden_field :rating %>
+										<% end %>
+									<% end %>
+								</p>
+							</div>
+							<% end %>
+						</div>
+						<!--<%= @yelpSearch %>-->
+						
 						<% if !@venue.price.nil? %>
 						<p>Price:<br><%= render_price(@venue.price) %></p>
-						<% end %>
-						<% if !@venue.ratings.empty? %>
-							<p>Our Rating:<br>
-							<div id="ourrating"><%= render_stars(@venue.ratings.average('rating')) %></div>
-							</p>
-						<% end %>
-						<% if user_signed_in? %>
-							<p>My Rating:<br>
-							<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
-								<div id="myrating"><%= render_stars(@venue.ratings.where(raterid: current_user.id).sum('rating')) %></div>
-								<% @thisRating = @venue.ratings.where(raterid: current_user.id).first %>
-								<%= form_for @thisRating, :remote => true do |f| %>
-									<%= f.hidden_field :rating %>
-								<% end %>
-							<% else %>
-								<div id="myrating"><%= render_stars(0) %></div>
-								<%= form_for([@venue, @venue.ratings.build]) do |f| %>
-									<%= f.hidden_field :rating %>
-								<% end %>
-							<% end %>
-						</p>
-						<% end %>
-						<% if !@venue.street.blank? %>
-							<address>
-							<% if current_user.try(:hasaddress) %>
-							<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.fulladdress_withname)%>/"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
-							<% else %>
-							<a href="http://maps.google.com/maps?q=<%= to_url(@venue.fulladdress_withname)%>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
-							<% end %>
-							</address>
 						<% end %>
 						<% if @venue.byob %>
 						<p><i class="fa fa-beer left"></i>BYOB</p>
@@ -99,14 +97,13 @@ end
 						    <%= User.find(comment.commenterid).fullname %>
 							</div>
 							<div class="well well-sm">
-								<% if comment.commenterid == current_user.id %>
+								<% if current_user.try && comment.commenterid == current_user.id %>
 								<%= link_to comment_path(comment), method: :delete, data: { confirm: "Are you sure you would like to delete this comment?" } do %><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><% end %>
 								<% end %>
 								<%= simple_format(comment.body) %>
 							</div>
 						</div>
 						<% end %>
-						
 						<% if user_signed_in? %>
 							<p>Commenting as <%= current_user.fullname %>.</p>
 							<%= form_for([@venue, @venue.comments.build]) do |f| %>

@@ -2,10 +2,31 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
+				<% if @venuetype.id == 1 || @venuetype.id == 2 %>
+				<h2><%= pluralize_without_count(2, @venuetype.name) %></h2>
+				<% else %>
 				<h2><%= @venuetype.name %></h2>
-				<% if !@venuetype.parenttypeid.nil? %>
-				<p>Part of <%= link_to venuetype_path(@venuetype.parenttypeid) do %><%= Venuetype.find(@venuetype.parenttypeid).name %><% end %></p>
 				<% end %>
+				<% if !@venuetype.parenttypeid.nil? %>
+				<p>Part of <%= link_to venuetype_path(@venuetype.parenttypeid) do %><%= Venuetype.find(@venuetype.parenttypeid).name %><% end %>.</p>
+				<% end %>
+				<%
+					scopeTop = Venue.where(typeid: @venuetype.id)
+					scope2nd = Venue.where(typeid: Venuetype.where(parenttypeid: @venuetype.id))
+					scope3rd = Venue.where(typeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: @venuetype.id)))
+					scope4th = Venue.where(typeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: @venuetype.id))))
+					
+					if (!scope4th.empty?)
+						scopeTotal = scopeTop + scope2nd + scope3rd + scope4th
+					elsif (!scope3rd.empty?)
+						scopeTotal = scopeTop + scope2nd + scope3rd
+					elsif (!scope2nd.empty?)
+						scopeTotal = scopeTop + scope2nd
+					else
+						scopeTotal = scopeTop
+					end
+				%>
+				<% if !scopeTotal.empty? %>
 				<table class="table">
 				  <thead>
 				    <tr>
@@ -14,11 +35,6 @@
 				  </thead>
 				  <tbody>
 					<%
-						scopeTop = Venue.where(typeid: @venuetype.id)
-						scope2nd = Venue.where(typeid: Venuetype.where(parenttypeid: @venuetype.id))
-						scope3rd = Venue.where(typeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: @venuetype.id)))
-						scope4th = Venue.where(typeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: @venuetype.id))))
-						
 						if (!scope4th.empty?)
 							scopeTotal = scopeTop + scope2nd + scope3rd + scope4th
 						elsif (!scope3rd.empty?)
@@ -29,15 +45,17 @@
 							scopeTotal = scopeTop
 						end
 						
-						scopeTotal.each do |venue| %>
+						scopeTotal.sort{ |a,b| a.name <=> b.name }.each do |venue| %>
 				      <tr>
 				        <td><%= link_to venue do %><%= venue.name %><% end %></td>
 				      </tr>
 				    <% end %>
 				  </tbody>
 				</table>
-				<%= link_to 'Edit', edit_venuetype_path(@venuetype) %> |
-				<%= link_to 'Back', venuetypes_path %>
+				<% end %>
+				<p class="text-center">
+					<%= link_to 'Edit', edit_venuetype_path(@venuetype) %>&nbsp;&bull;&nbsp;<%= link_to new_venue_path({ :typeid => @venuetype.id }) do %>Add a new <%= @venuetype.name %> venue<% end %>
+				</p>
 			</div>
 		</div>
 	</div>
