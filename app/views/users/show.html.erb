@@ -3,7 +3,48 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<h1><%= @user.fullname %></h1>
-				<% if !current_user.nil? && @user.id == current_user.id %><%= link_to 'Edit Profile', edit_user_registration_path %><% end %>
+				<% if !current_user.nil? && @user.id == current_user.id %><p><%= link_to 'Edit Profile', edit_user_registration_path %></p><% end %>
+				<div class="row">
+					<div class="col-md-4">
+						<img src="<%= @user.avatarurl %>" alt="<%= @user.fullname %>">
+					</div>
+					<div class="col-md-8">
+						<div class="row">
+							<div class="col-md-6">
+								<h2>To Try</h2>
+							</div>
+							<div class="col-md-6">
+								<h2>Ratings</h2>
+								<% @userRatings = Rating.where(raterid: @user.id) %>
+								<% if !@userRatings.empty? %>
+									<table class="table">
+									  <thead>
+									    <tr>
+									      <th>Name</th>
+									      <th class="text-center">Rating</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+											<% @userRatings.sort{ |a,b| b.updated_at <=> a.updated_at }.each do |rating| %>
+								      <tr>
+								      	<td><%= link_to venue_path(rating.venue_id) do %><%= Venue.find(rating.venue_id).name %><% end %></td>
+								      	<td class="text-center"><%= rating.rating %></td>
+								      </tr>
+											<% end %>
+									  </tbody>
+									</table>
+						    <% end %>
+							</div>
+						</div>
+						<% @userCommentsRecent = Comment.where(commenterid: @user.id) %>
+						<% if !@userCommentsRecent.empty? %>
+							<h2>Recent Comments</h2>
+							<% @userCommentsRecent.sort{ |a,b| b.updated_at <=> a.updated_at }.each do |comment| %>
+					      <div><%= link_to venue_path(comment.venue_id) do %><%= Venue.find(comment.venue_id).name %><% end %>: <%= comment.updated_at %>:<br><%= comment.body %></div>
+					    <% end %>
+				    <% end %>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

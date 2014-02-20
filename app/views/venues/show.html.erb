@@ -105,7 +105,6 @@ end
 						</div>
 						<% end %>
 						<% if user_signed_in? %>
-							<p>Commenting as <%= current_user.fullname %>.</p>
 							<%= form_for([@venue, @venue.comments.build]) do |f| %>
 								<%= f.text_area :body, { :class => 'form-control', :required => 'required', :placeholder => 'Great appetizers! I highly recommend...' } %>
 							  <button type="submit" class="btn btn-block btn-success">Post Comment</button>

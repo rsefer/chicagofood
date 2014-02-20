@@ -11,6 +11,14 @@ class User < ActiveRecord::Base
   
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   
+  def avatarurl
+  	if self.avatar.blank?
+  		"/images/default-avatar.jpg"
+  	else
+  		self.avatar
+  	end
+  end
+  
   def fullname
 		if !self.firstname.blank? && !self.lastname.blank?
 			self.firstname + " " + self.lastname

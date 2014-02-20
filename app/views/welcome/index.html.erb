@@ -1,7 +1,7 @@
 <section id="home-main">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-6 col-sm-offset-3">
+			<div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 				<%= form_tag venues_path, :method => 'get' do %>
 					<h2 class="text-center">I would like...</h2>
 					<%= text_field_tag :q, params[:q], { :class => 'form-control input-lg input-huge', :placeholder => 'mexican byob wicker park', :autofocus => true } %>

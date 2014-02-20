@@ -17,7 +17,7 @@
 				  		<% if user_signed_in? %>
 				  		<li><a href="#">To Try</a></li>
 				  		<li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><% if !current_user.avatar.nil? %><img class="user-avatar-thumb" src="<%= current_user.avatar %>"><% end %>Hi, <%= current_user.firstname %> <b class="caret"></b></a>
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar-thumb" src="<%= current_user.avatarurl %>">Hi, <%= current_user.firstname %> <b class="caret"></b></a>
 			          <ul class="dropdown-menu">
 			            <li><%= link_to user_path(current_user) do %>My Profile<% end %></li>
 			            <li><%= link_to destroy_user_session_path do %>Sign Out<% end %></li>
