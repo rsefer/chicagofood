@@ -6,6 +6,10 @@ class RatingsController < ApplicationController
     @venue = Venue.find(params[:venue_id])
     @rating = @venue.ratings.create(rating_params)
     @rating.raterid = current_user.id
+    tryExisting = Try.where('user_id = ? AND venue_id = ?', current_user.id, params[:venue_id]).first
+    if !tryExisting.nil?
+    	tryExisting.destroy
+    end
     @rating.save
     redirect_to venue_path(@venue)
   end
