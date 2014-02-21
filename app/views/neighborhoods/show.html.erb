@@ -12,12 +12,20 @@
 				  <thead>
 				    <tr>
 				      <th>Name</th>
+				      <th>Type</th>
+				      <th class="hidden-xs text-center">Rating</th>
+				      <th class="text-center">Price</th>
+				      <th class="hidden-xs text-center">BYOB</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 						<% @scopeTotal.each do |venue| %>
 			      <tr>
 			        <td><%= link_to venue do %><%= venue.name %><% end %></td>
+			        <td><%= Venuetype.find(venue.typeid).name %></td>
+			        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
+			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
+			        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
 			      </tr>
 				    <% end %>
 				  </tbody>

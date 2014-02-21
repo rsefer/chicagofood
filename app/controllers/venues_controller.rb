@@ -61,6 +61,7 @@ class VenuesController < ApplicationController
 	  def sort_direction
 	    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
 	  end
+	  
     def set_venue
       @venue = Venue.find(params[:id])
     end

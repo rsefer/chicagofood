@@ -15,8 +15,6 @@ end
 		<div class="row">
 			<div class="col-sm-12">
 				<h2><%= @venue.name %></h2>
-				<%= link_to venues_path, title: 'Back', class: 'btn btn-primary' do %><i class="fa fa-undo left"></i>Back<% end %>&nbsp;<%= link_to edit_venue_path(@venue), title: 'Edit', class: 'btn btn-warning' do %><i class="fa fa-pencil left"></i>Edit<% end %>
-				
 				<% if user_signed_in? %>
 					<% if !@venue.tries.where(user_id: current_user.id).empty? %>
 						<% @thisTry = @venue.tries.where(user_id: current_user.id).first %>
@@ -27,14 +25,23 @@ end
 							<% f.hidden_field :user_id, value: current_user.id %>
 						<% end %>
 					<% end %>
+					<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
+						<span id="myrating"><%= render_stars(@venue.ratings.where(raterid: current_user.id).sum('rating')) %></span>
+						<% @thisRating = @venue.ratings.where(raterid: current_user.id).first %>
+						<%= form_for @thisRating, :remote => true do |f| %>
+							<%= f.hidden_field :rating %>
+						<% end %>
+					<% else %>
+						<span id="myrating"><%= render_stars(0) %></span>
+						<%= form_for([@venue, @venue.ratings.build]) do |f| %>
+							<%= f.hidden_field :rating %>
+						<% end %>
+					<% end %>
 				<% end %>
 				
 				<div class="row">
 					<div class="col-sm-6">
-						<% if !@venue.url.blank? %>
-							<!--<p><a href="<%= @venue.url %>"><%= @venue.url %></a></p>-->
-						<% end %>
-						<p><%= Venuetype.find(@venue.typeid).name %></p>
+						<p><% if !@venue.price.nil? %><span id="venue-price"><%= render_price(@venue.price) %></span>&nbsp;&bull;&nbsp;<% end %><%= link_to venuetype_path(Venuetype.find(@venue.typeid)) do %><%= Venuetype.find(@venue.typeid).name %><% end %></p>
 						<%
 							if !@venue.yelpid.blank?
 								@addressWorking = @yelpSearch['location']['address'][0] + ' ' + @yelpSearch['location']['city'] + ' ' + @yelpSearch['location']['state_code']
@@ -55,39 +62,17 @@ end
 						</address>
 						<div class="row">
 							<% if !@venue.yelpid.blank? %>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<p><a href="<%= @yelpSearch['url'] %>">Yelp Rating</a><br><span class="red"><%= render_stars(@yelpSearch['rating']) %></span></p>
 							</div>
 							<% end %>
 							<% if !@venue.ratings.empty? %>
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<p>Our Rating<br><span id="ourrating"><%= render_stars(@venue.ratings.average('rating')) %></span></p>
-							</div>
-							<% end %>
-							<% if user_signed_in? %>
-							<div class="col-md-4">
-								<p>My Rating<br>
-									<% if !@venue.ratings.where(raterid: current_user.id).empty? %>
-										<span id="myrating"><%= render_stars(@venue.ratings.where(raterid: current_user.id).sum('rating')) %></span>
-										<% @thisRating = @venue.ratings.where(raterid: current_user.id).first %>
-										<%= form_for @thisRating, :remote => true do |f| %>
-											<%= f.hidden_field :rating %>
-										<% end %>
-									<% else %>
-										<span id="myrating"><%= render_stars(0) %></span>
-										<%= form_for([@venue, @venue.ratings.build]) do |f| %>
-											<%= f.hidden_field :rating %>
-										<% end %>
-									<% end %>
-								</p>
 							</div>
 							<% end %>
 						</div>
 						<!--<%= @yelpSearch %>-->
-						
-						<% if !@venue.price.nil? %>
-						<p>Price:<br><%= render_price(@venue.price) %></p>
-						<% end %>
 						<% if @venue.byob %>
 						<p><i class="fa fa-beer left"></i>BYOB</p>
 						<% end %>
@@ -125,6 +110,11 @@ end
 						<% else %>
 						<p>You must be <%= link_to "signed in", new_user_session_path %> to comment.</p>
 						<% end %>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<%= link_to venues_path, title: 'Back', class: 'btn btn-primary' do %><i class="fa fa-undo left"></i>Back<% end %>&nbsp;<%= link_to edit_venue_path(@venue), title: 'Edit', class: 'btn btn-warning' do %><i class="fa fa-pencil left"></i>Edit<% end %>
 					</div>
 				</div>
 			</div>

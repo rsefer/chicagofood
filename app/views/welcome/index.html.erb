@@ -2,18 +2,17 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
-				<%= form_tag venues_path, :method => 'get' do %>
+				<!--<%= form_tag venues_path, :method => 'get' do %>
 					<h2 class="text-center">I would like...</h2>
 					<%= text_field_tag :q, params[:q], { :class => 'form-control input-lg input-huge', :placeholder => 'mexican byob wicker park', :autofocus => true } %>
 				<% end %>
-				<hr>
-				<h3 class="text-center">Full List</h3>
+				<hr>-->
 				<div class="row">
 					<div class="col-sm-6">
-						<a href="/venuetypes/1" class="btn btn-lg btn-block btn-success"><i class="fa fa-cutlery left"></i>Food</a>
+						<a href="/venuetypes/1" class="btn btn-lg btn-block btn-success"><i class="fa fa-cutlery left"></i>Restaurants</a>
 					</div>
 					<div class="col-sm-6">
-						<a href="/venuetypes/2" class="btn btn-lg btn-block btn-success"><i class="fa fa-beer left"></i>Drink</a>
+						<a href="/venuetypes/2" class="btn btn-lg btn-block btn-success"><i class="fa fa-beer left"></i>Bars</a>
 					</div>
 				</div>
 				<hr>

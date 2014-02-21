@@ -12,6 +12,7 @@
 				      <th>Name</th>
 				      <th class="hidden-xs">Type</th>
 				      <th class="text-center">Price</th>
+				      <th class="hidden-xs text-center">Date Added</th>
 				      <% if @user.id == current_user.id %><th>&nbsp;</th><% end %>
 				    </tr>
 				  </thead>
@@ -21,6 +22,7 @@
 				    	<td><%= link_to venue_path(try.venue_id) do %><%= Venue.find(try.venue_id).name %><% end %></td>
 				    	<td class="hidden-xs"><%= link_to venuetype_path(Venue.find(try.venue_id).typeid) do %><%= Venuetype.find(Venue.find(try.venue_id).typeid).name %><% end %></td>
 				    	<td class="text-center"><%= render_price(Venue.find(try.venue_id).price) %></td>
+				    	<td class="hidden-xs text-center"><%= try.updated_at.strftime('%B %e, %Y') %></td>
 				    	<% if @user.id == current_user.id %><td class="text-center"><%= link_to try_path(try), title: 'Delete', method: :delete, class: 'red' do %><i class="fa fa-times fa-lg"></i><% end %></td><% end %>
 				    </tr>
 				    <% end %>

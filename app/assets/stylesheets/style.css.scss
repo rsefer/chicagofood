@@ -124,6 +124,11 @@ nav.navbar {
 	background-color: #ffffff;
 }
 
+form#new_try,
+from#edit-try {
+	display: inline;
+}
+
 footer #footer-logo {
 	max-width: 100px;
 }
@@ -177,6 +182,10 @@ a.sortablecol.current.desc i.fa.fa-caret-down {
 
 a.sortablecol.current.asc i.fa.fa-caret-up {
 	display: inline-block;
+}
+
+#myrating {
+	font-size: 1.5em;
 }
 
 #myrating i.fa:hover {
