@@ -17,9 +17,8 @@ class TriesController < ApplicationController
   def destroy
   	@venue = @try.venue_id
     @try.destroy
-    respond_to do |format|
-      format.html { redirect_to venue_path(@venue) }
-    end
+    
+    redirect_to :back
   end
   
   def show
