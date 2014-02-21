@@ -66,13 +66,12 @@ end
 								<p><a href="<%= @yelpSearch['url'] %>">Yelp Rating</a><br><span class="red"><%= render_stars(@yelpSearch['rating']) %></span></p>
 							</div>
 							<% end %>
-							<% if !@venue.ratings.empty? %>
+							<% if !@venue.ratings.any? %>
 							<div class="col-md-6">
 								<p>Our Rating<br><span id="ourrating"><%= render_stars(@venue.ratings.average('rating')) %></span></p>
 							</div>
 							<% end %>
 						</div>
-						<!--<%= @yelpSearch %>-->
 						<% if @venue.byob %>
 						<p><i class="fa fa-beer left"></i>BYOB</p>
 						<% end %>
