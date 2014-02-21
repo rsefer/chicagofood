@@ -8,6 +8,12 @@ if !@venue.yelpid.blank?
 		:token_secret => ENV['YELP_TOKEN_SECRET']
 	}
 	@yelpSearch = YelpApi.new(yelp_keys).search_by_business_id(@venue.yelpid)
+	# {"error"=>{"text"=>"Exceeded max daily requests", "id"=>"EXCEEDED_REQS"}}
+	if @yelpSearch['error'].any?
+		@yelpActive = false
+	else
+		@yelpActive = true
+	end
 end
 %>
 <section id="">
@@ -18,9 +24,9 @@ end
 				<% if user_signed_in? %>
 					<% if !@venue.tries.where(user_id: current_user.id).empty? %>
 						<% @thisTry = @venue.tries.where(user_id: current_user.id).first %>
-						<%= link_to try_path(@thisTry), title: 'Delete', method: :delete, class: 'btn btn-danger' do %><i class="fa fa-minus left"></i>To Try<% end %>
+						<%= link_to try_path(@thisTry), title: 'Delete', method: :delete, class: 'btn btn-danger' do %><i class="fa fa-check fa-fw left"></i>To Try<% end %>
 					<% else %>
-						<a id="totrysubmit" href="#" class="btn btn-danger"><i class="fa fa-plus left"></i>To Try</a>
+						<a id="totrysubmit" href="#" class="btn btn-danger"><i class="fa fa-plus fa-fw left"></i>To Try</a>
 						<%= form_for([@venue, @venue.tries.build]) do |f| %>
 							<% f.hidden_field :user_id, value: current_user.id %>
 						<% end %>
@@ -43,11 +49,11 @@ end
 					<div class="col-sm-6">
 						<p><% if !@venue.price.nil? %><span id="venue-price"><%= render_price(@venue.price) %></span>&nbsp;&bull;&nbsp;<% end %><%= link_to venuetype_path(Venuetype.find(@venue.typeid)) do %><%= Venuetype.find(@venue.typeid).name %><% end %></p>
 						<%
-							if !@venue.yelpid.blank?
+							if @yelpActive
 								@addressWorking = @yelpSearch['location']['address'][0] + ' ' + @yelpSearch['location']['city'] + ' ' + @yelpSearch['location']['state_code']
 							else
-								if !@venue.street.blank?
-									@addressWorking = @venue.fulladdress_withname
+								if @venue.hasaddress
+									@addressWorking = @venue.fulladdress
 								else
 									@addressWorking = ''
 								end
@@ -55,18 +61,27 @@ end
 						%>
 						<address>
 							<% if current_user.try(:hasaddress) %>
-							<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.name + ' ') %><%= to_url(@addressWorking) %>/"><%= @yelpSearch['location']['address'][0] %><br/><%= @yelpSearch['location']['city'] %>, <%= @yelpSearch['location']['state_code'] %></a>
+								<% if @yelpActive
+									@addressDisplay = @yelpSearch['location']['address'][0] + '<br/>' + @yelpSearch['location']['city'] + ', ' + @yelpSearch['location']['state_code']
+									else
+										if @venue.hasaddress
+											@addressDisplay = @venue.street + '<br/>' + @venue.city + ', ' + @venue.state
+										else
+											@addressDisplay = ''
+										end
+									end %>
+							<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.name + ' ') %><%= to_url(@addressWorking) %>/"><%= @addressDisplay.html_safe %></a>
 							<% else %>
-							<a href="http://maps.google.com/maps?q=<%= to_url(@venue.name + ' ') %><%= to_url(@addressWorking) %>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
+							<a href="http://maps.google.com/maps?q=<%= to_url(@venue.name + ' ') + to_url(@addressWorking) %>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
 							<% end %>
 						</address>
 						<div class="row">
-							<% if !@venue.yelpid.blank? %>
+							<% if @yelpActive %>
 							<div class="col-md-6">
 								<p><a href="<%= @yelpSearch['url'] %>">Yelp Rating</a><br><span class="red"><%= render_stars(@yelpSearch['rating']) %></span></p>
 							</div>
 							<% end %>
-							<% if !@venue.ratings.any? %>
+							<% if @yelpActive %>
 							<div class="col-md-6">
 								<p>Our Rating<br><span id="ourrating"><%= render_stars(@venue.ratings.average('rating')) %></span></p>
 							</div>

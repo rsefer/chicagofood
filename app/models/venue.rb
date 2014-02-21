@@ -3,8 +3,16 @@ class Venue < ActiveRecord::Base
 	has_many :ratings, :dependent => :destroy
 	has_many :tries, :dependent => :destroy
 	
-	def fulladdress
+	def hasaddress
 		if !self.street.blank?
+			true
+		else
+			false
+		end
+	end
+	
+	def fulladdress
+		if self.hasaddress
 			self.street + " " + self.city + ", " + self.state
 		end
 	end
