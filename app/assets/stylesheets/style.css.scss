@@ -93,11 +93,14 @@ section {
 	padding: 1em 0px;
 }
 
+img.user-avatar {
+	@include image-circle();
+}
+
 img.user-avatar-thumb {
 	vertical-align: middle;
 	max-height: 28px;
 	margin-right: 12px;
-	@include image-circle();
 }
 
 nav.navbar {

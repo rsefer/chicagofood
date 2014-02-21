@@ -1,0 +1,31 @@
+<section id="">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>To Try <small>from <%= link_to user_path(@user.id) do %><%= @user.fullname %><% end %></small></h1>
+				<% if @tries.empty? %>
+				<p><% if current_user.try && @user.id == current_user.id %>You have<% else %><%= @user.firstname %> has<% end %> not added any places to try.</p>
+				<% else %>
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th>Name</th>
+				      <th>Type</th>
+				      <th class="text-center">Price</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <% @tries.each do |try| %>
+				    <tr>
+				    	<td><%= link_to venue_path(try.venue_id) do %><%= Venue.find(try.venue_id).name %><% end %></td>
+				    	<td><%= link_to venuetype_path(Venue.find(try.venue_id).typeid) do %><%= Venuetype.find(Venue.find(try.venue_id).typeid).name %><% end %></td>
+				    	<td class="text-center"><%= render_price(Venue.find(try.venue_id).price) %></td>
+				    </tr>
+				    <% end %>
+				  </tbody>
+				</table>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</section>
