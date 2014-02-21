@@ -15,13 +15,13 @@
 				  <div class="collapse navbar-collapse" id="main-navbar-collapse">
 				  	<ul class="nav navbar-nav navbar-right">
 				  		<% if user_signed_in? %>
-				  		<li><%= link_to user_tries_path(current_user) do %>To Try (<%= user_try_count(current_user.id) %>)<% end %></li>
-				  		<li><%= link_to user_path(current_user) do %><img class="user-avatar user-avatar-thumb" src="<%= current_user.avatarurl %>" />Hi, <%= current_user.firstname %><% end %></li>
-				  		<li><%= link_to destroy_user_session_path do %>Sign Out<i class="fa fa-sign-out right"></i><% end %></li>
+				  		<li><%= link_to user_tries_path(current_user), title: 'To Try' do %>To Try (<%= user_try_count(current_user.id) %>)<% end %></li>
+				  		<li><%= link_to user_path(current_user), title: 'My Profile' do %><img class="user-avatar user-avatar-thumb" src="<%= current_user.avatarurl %>" />Hi, <%= current_user.firstname %><% end %></li>
+				  		<li><%= link_to destroy_user_session_path, title: 'Sign Out' do %>Sign Out<i class="fa fa-sign-out right"></i><% end %></li>
 			        </li>
 				  		<% else %>
-				  		<li><%= link_to new_user_registration_path do %><i class="fa fa-user left"></i>Register<% end %></li>
-				  		<li><%= link_to new_user_session_path do %><i class="fa fa-sign-in left"></i>Sign In<% end %></li>
+				  		<li><%= link_to new_user_registration_path, title: 'Register' do %><i class="fa fa-user left"></i>Register<% end %></li>
+				  		<li><%= link_to new_user_session_path, title: 'Sign In' do %><i class="fa fa-sign-in left"></i>Sign In<% end %></li>
 				  		<% end %>
 				  	</ul>
 				  </div>

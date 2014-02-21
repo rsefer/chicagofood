@@ -5,7 +5,7 @@
 				<h1>Neighborhoods</h1>
 				<ul class="neighborhoods-list cols2">
 					<% @neighborhoods.each do |neighborhood| %>
-					<li><%= link_to neighborhood_path(neighborhood) do %><%= neighborhood.name %><% end %></li>
+					<li><%= link_to neighborhood_path(neighborhood), title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
 					<% end %>
 				</ul>
 				<hr>

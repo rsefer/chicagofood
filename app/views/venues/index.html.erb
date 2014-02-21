@@ -26,7 +26,7 @@
 				  <tbody>
 				    <% @venues.each do |venue| %>
 			      <tr>
-			        <td><%= link_to venue do %><%= venue.name %><% end %></td>
+			        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
 			        <td><%= Venuetype.find(venue.typeid).name %></td>
 			        <td class="hidden-xs"><% if venue.neighborhoodid %><%= Neighborhood.find(venue.neighborhoodid).name %><% end %></td>
 			        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>

@@ -5,7 +5,7 @@
 				<h2>Venue Types</h2>
 				<ul class="cols2">
 					<% @venuetypes.each do |venuetype| %>
-		      <li><%= link_to venuetype do %><%= venuetype.name %><% end %></li>
+		      <li><%= link_to venuetype, title: venuetype.name do %><%= venuetype.name %><% end %></li>
 		      <% end %>
 	      </ul>
 	      <hr>

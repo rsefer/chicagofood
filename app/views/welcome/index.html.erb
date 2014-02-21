@@ -20,7 +20,7 @@
 				<hr>
 				<ul class="neighborhoods-list cols2">
 					<% Neighborhood.all.sort{ |a,b| a.name <=> b.name }.each do |neighborhood| %>
-					<li><%= link_to neighborhood_path(neighborhood) do %><%= neighborhood.name %><% end %></li>
+					<li><%= link_to neighborhood_path(neighborhood), title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
 					<% end %>
 				</ul>
 				<hr>
