@@ -3,10 +3,26 @@ class NeighborhoodsController < ApplicationController
   before_action :set_neighborhood, only: [:show, :edit, :update, :destroy]
 
   def index
-    @neighborhoods = Neighborhood.all
+    @neighborhoods = Neighborhood.all.sort{ |a,b| a.name <=> b.name }
   end
 
   def show
+  	@scopeTop = Venue.where(neighborhoodid: @neighborhood.id)
+		@scope2nd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))
+		@scope3rd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id)))
+		@scope4th = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))))
+		
+		if (!@scope4th.empty?)
+			@scopeTotal = @scopeTop + @scope2nd + @scope3rd + @scope4th
+		elsif (!@scope3rd.empty?)
+			@scopeTotal = @scopeTop + @scope2nd + @scope3rd
+		elsif (!@scope2nd.empty?)
+			@scopeTotal = @scopeTop + @scope2nd
+		else
+			@scopeTotal = @scopeTop
+		end
+		
+		@scopeTotal.sort! { |a, b| a.name <=> b.name }
   end
 
   def new

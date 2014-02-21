@@ -4,7 +4,7 @@
 			<div class="col-sm-12">
 				<h1>Neighborhoods</h1>
 				<ul class="neighborhoods-list cols2">
-					<% @neighborhoods.sort{ |a,b| a.name <=> b.name }.each do |neighborhood| %>
+					<% @neighborhoods.each do |neighborhood| %>
 					<li><%= link_to neighborhood_path(neighborhood) do %><%= neighborhood.name %><% end %></li>
 					<% end %>
 				</ul>

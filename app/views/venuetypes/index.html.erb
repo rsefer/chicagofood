@@ -4,7 +4,7 @@
 			<div class="col-sm-12">
 				<h2>Venue Types</h2>
 				<ul class="cols2">
-					<% @venuetypes.sort{ |a,b| a.name <=> b.name }.each do |venuetype| %>
+					<% @venuetypes.each do |venuetype| %>
 		      <li><%= link_to venuetype do %><%= venuetype.name %><% end %></li>
 		      <% end %>
 	      </ul>

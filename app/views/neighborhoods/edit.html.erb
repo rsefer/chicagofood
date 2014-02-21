@@ -4,8 +4,7 @@
 			<div class="col-sm-12">
 				<h1>Editing <%= @neighborhood.name %></h1>
 				<%= render 'form' %>
-				<%= link_to 'Show', @neighborhood %> |
-				<%= link_to 'Back', neighborhoods_path %>
+				<%= link_to @neighborhood, title: 'Show', class: 'btn btn-primary' do %><i class="fa fa-undo left"></i>Show<% end %>&nbsp;<%= link_to neighborhood_path(@neighborhood), title: 'Delete', method: :delete, data: { confirm: "Are you sure you would like to delete #{@neighborhood.name}?" }, class: 'btn btn-danger' do %><i class="fa fa-trash-o left"></i>Delete<% end %>
 			</div>
 		</div>
 	</div>

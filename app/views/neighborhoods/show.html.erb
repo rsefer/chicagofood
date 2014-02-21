@@ -7,23 +7,7 @@
 				<p>Part of <%= link_to neighborhood_path(@neighborhood.parentneighborhoodid) do %><%= Neighborhood.find(@neighborhood.parentneighborhoodid).name %><% end %></p>
 				<% end %>
 				</p>
-				<%
-					scopeTop = Venue.where(neighborhoodid: @neighborhood.id)
-					scope2nd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))
-					scope3rd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id)))
-					scope4th = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))))
-					
-					if (!scope4th.empty?)
-						scopeTotal = scopeTop + scope2nd + scope3rd + scope4th
-					elsif (!scope3rd.empty?)
-						scopeTotal = scopeTop + scope2nd + scope3rd
-					elsif (!scope2nd.empty?)
-						scopeTotal = scopeTop + scope2nd
-					else
-						scopeTotal = scopeTop
-					end
-				%>
-				<% if !scopeTotal.empty? %>
+				<% if !@scopeTotal.empty? %>
 				<table class="table">
 				  <thead>
 				    <tr>
@@ -31,17 +15,10 @@
 				    </tr>
 				  </thead>
 				  <tbody>
-					<%
-						if (scope2nd.empty?)
-							scopeTotal = scopeTop
-						else
-							scopeTotal = scopeTop + scope2nd
-						end
-						
-						scopeTotal.each do |venue| %>
-				      <tr>
-				        <td><%= link_to venue do %><%= venue.name %><% end %></td>
-				      </tr>
+						<% @scopeTotal.each do |venue| %>
+			      <tr>
+			        <td><%= link_to venue do %><%= venue.name %><% end %></td>
+			      </tr>
 				    <% end %>
 				  </tbody>
 				</table>

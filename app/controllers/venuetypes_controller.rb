@@ -3,10 +3,26 @@ class VenuetypesController < ApplicationController
   before_action :set_venuetype, only: [:show, :edit, :update, :destroy]
 
   def index
-    @venuetypes = Venuetype.all
+    @venuetypes = Venuetype.all.sort{ |a,b| a.name <=> b.name }
   end
 
   def show
+  	@scopeTop = Venue.where(typeid: @venuetype.id)
+		@scope2nd = Venue.where(typeid: Venuetype.where(parenttypeid: @venuetype.id))
+		@scope3rd = Venue.where(typeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: @venuetype.id)))
+		@scope4th = Venue.where(typeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: @venuetype.id))))
+		
+		if (!@scope4th.empty?)
+			@scopeTotal = @scopeTop + @scope2nd + @scope3rd + @scope4th
+		elsif (!@scope3rd.empty?)
+			@scopeTotal = @scopeTop + @scope2nd + @scope3rd
+		elsif (!@scope2nd.empty?)
+			@scopeTotal = @scopeTop + @scope2nd
+		else
+			@scopeTotal = @scopeTop
+		end
+		
+  	@scopeTotal.sort! { |a, b| a.name <=> b.name }
   end
 
   def new

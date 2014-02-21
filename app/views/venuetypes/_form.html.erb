@@ -23,7 +23,7 @@
     <%= collection_select(:venuetype, 'parenttypeid', Venuetype.order('name ASC'), :id, :name, { :selected => 1 }, { :class => 'form-control' } ) %>
     <% end %>
   </div>
-  <div class="actions">
+  <div class="form-group">
     <button type="submit" class="btn btn-success"><i class="fa fa-save left"></i>Save</button>
   </div>
 <% end %>

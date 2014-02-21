@@ -4,7 +4,7 @@
 			<div class="col-sm-12">
 				<h1>To Try <small>from <%= link_to user_path(@user.id) do %><%= @user.fullname %><% end %></small></h1>
 				<% if @tries.empty? %>
-				<p><% if current_user.try && @user.id == current_user.id %>You have<% else %><%= @user.firstname %> has<% end %> not added any places to try.</p>
+				<p><% if @user.id == current_user.id %>You have<% else %><%= @user.firstname %> has<% end %> not added any places to try.</p>
 				<% else %>
 				<table class="table">
 				  <thead>

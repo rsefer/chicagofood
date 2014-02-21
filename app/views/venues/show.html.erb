@@ -22,9 +22,9 @@ end
 						<% @thisTry = @venue.tries.where(user_id: current_user.id).first %>
 						<%= link_to try_path(@thisTry), title: 'Delete', method: :delete, class: 'btn btn-danger' do %><i class="fa fa-minus left"></i>To Try<% end %>
 					<% else %>
+						<a id="totrysubmit" href="#" class="btn btn-danger"><i class="fa fa-plus left"></i>To Try</a>
 						<%= form_for([@venue, @venue.tries.build]) do |f| %>
-							<%= f.hidden_field :status, :value => 'true' %>
-							<button type="submit" class="btn btn-danger"><i class="fa fa-plus left"></i>To Try</button>
+							<% f.hidden_field :user_id, value: current_user.id %>
 						<% end %>
 					<% end %>
 				<% end %>
@@ -161,14 +161,9 @@ jQuery(document).ready(function($) {
 	});
 	
 	/* To Try toggle */
-	$('#totry').click(function() {
-		$('form.edit_totry, form.new_to_try').submit();
-		$('form.edit_totry, form.new_to_try').bind('ajax:complete', function() {
-			/*$.get(window.location.pathname + '/rating_average', function(data) {
-				var newRatingIndex = $('#ourrating i.fa').index(data.rating_average);
-				changeRatingStars('#ourrating', data.rating_average - 1);
-			});*/
-		});
+	$('#totrysubmit').click(function(e) {
+		e.preventDefault();
+		$('form#new_try').submit();
 	});
 	
 });
