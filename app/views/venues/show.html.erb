@@ -9,7 +9,7 @@ if !@venue.yelpid.blank?
 	}
 	@yelpSearch = YelpApi.new(yelp_keys).search_by_business_id(@venue.yelpid)
 	# {"error"=>{"text"=>"Exceeded max daily requests", "id"=>"EXCEEDED_REQS"}}
-	if @yelpSearch['error'].any?
+	if !@yelpSearch['error'].nil?
 		@yelpActive = false
 	else
 		@yelpActive = true
