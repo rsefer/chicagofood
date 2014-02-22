@@ -98,13 +98,21 @@ section {
 }
 
 img.user-avatar {
+	vertical-align: middle;
+	
 	@include image-circle();
 }
 
+img.user-avatar-med {
+	font-size: 80px;
+	max-height: 1em;
+	margin-right: 0.2em;
+}
+
 img.user-avatar-thumb {
-	vertical-align: middle;
-	max-height: 28px;
-	margin-right: 12px;
+	font-size: 28px;
+	max-height: 1em;
+	margin-right: 0.4em;
 }
 
 nav.navbar {
@@ -212,6 +220,17 @@ form.new_comment textarea {
 form.new_comment button {
 	@include border-radius-top-left(0px);
 	@include border-radius-top-right(0px);
+}
+
+#user-nameandphoto {
+	margin-bottom: 1em;
+}
+
+#user-show #user-nameandphoto h1,
+#user-show #user-nameandphoto img {
+	display: inline-block;
+	vertical-align: middle;
+	margin-bottom: 0px;
 }
 
 @media screen and (max-width: 767px) {

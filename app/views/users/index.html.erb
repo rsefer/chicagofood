@@ -4,7 +4,7 @@
 			<div class="col-sm-12">
 				<ul>
 					<% @users.each do |user| %>
-			    <li><%= link_to user do %><%= user.fullname %><% end %></li>
+			    <li><%= link_to user, title: user.fullname do %><%= user.fullname %><% end %></li>
 			    <% end %>
 				</ul>
 			</div>
