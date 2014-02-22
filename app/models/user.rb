@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   
   def user_score
-  	Comment.where(commenterid: self.id).count + Rating.where(raterid: self.id).count
+  	Comment.where(user_id: self.id).count + Rating.where(user_id: self.id).count
   end
   
   def avatarurl

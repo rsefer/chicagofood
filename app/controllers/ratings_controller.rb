@@ -4,13 +4,13 @@ class RatingsController < ApplicationController
 	
 	def index
 		@user = User.find(params[:user_id])
-		@ratings = Rating.where(raterid: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
+		@ratings = Rating.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
 	end
 	
 	def create
     @venue = Venue.find(params[:venue_id])
     @rating = @venue.ratings.create(rating_params)
-    @rating.raterid = current_user.id
+    @rating.user_id = current_user.id
     tryExisting = Try.where('user_id = ? AND venue_id = ?', current_user.id, params[:venue_id]).first
     if !tryExisting.nil?
     	tryExisting.destroy
@@ -35,7 +35,7 @@ class RatingsController < ApplicationController
     end
 
     def rating_params
-      params.require(:rating).permit(:raterid, :rating)
+      params.require(:rating).permit(:user_id, :rating)
     end
   
 end

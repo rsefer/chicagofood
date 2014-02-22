@@ -4,13 +4,13 @@ class CommentsController < ApplicationController
 	
 	def index
 		@user = User.find(params[:user_id])
-		@comments = Comment.where(commenterid: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
+		@comments = Comment.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
 	end
 	
 	def create
     @venue = Venue.find(params[:venue_id])
     @comment = @venue.comments.create(comment_params)
-    @comment.commenterid = current_user.id
+    @comment.user_id = current_user.id
     @comment.save
     redirect_to venue_path(@venue)
   end
@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
     end
 
     def comment_params
-      params.require(:comment).permit(:commenterid, :body)
+      params.require(:comment).permit(:user_id, :body)
     end
   
 end
