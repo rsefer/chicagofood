@@ -240,9 +240,33 @@ form.new_comment button {
 		@include columns(1);
 	}
 	
+	h1, h2 {
+		text-align: center;
+	}
+	
+	h1 {
+		font-size: 26px;
+	}
+	
+	h2 {
+		font-size: 22px;
+	}
+	
 	h1 small {
 		display: block;
 		margin-top: 0.5em;
+	}
+	
+	section .btn {
+		display: block;
+	}
+	
+	#user-show #user-nameandphoto img {
+		font-size: 50px;
+	}
+	
+	#user-nameandphoto h1 small {
+		margin-top: 6px;;
 	}
 }
 
