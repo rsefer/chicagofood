@@ -1,0 +1,33 @@
+<section id="user-ratings">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>Ratings <small>from <%= link_to user_path(@user.id), title: @user.fullname do %><%= @user.fullname %><% end %></small></h1>
+				<% if @ratings.empty? %>
+				<p><% if @user.id == current_user.id %>You have<% else %><%= @user.firstname %> has<% end %> not rated any venues.</p>
+				<% else %>
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th>Name</th>
+				      <th class="text-center">Rating</th>
+				      <th class="hidden-xs">Type</th>
+				      <th class="hidden-xs text-center">Date Added</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <% @ratings.each do |rating| %>
+				    <tr>
+				    	<td><%= link_to venue_path(rating.venue_id), title: Venue.find(rating.venue_id).name do %><%= Venue.find(rating.venue_id).name %><% end %></td>
+				    	<td class="text-center"><%= rating.rating %></td>
+				    	<td class="hidden-xs"><%= link_to venuetype_path(Venue.find(rating.venue_id).typeid), title: Venuetype.find(Venue.find(rating.venue_id).typeid).name do %><%= Venuetype.find(Venue.find(rating.venue_id).typeid).name %><% end %></td>
+				    	<td class="hidden-xs text-center"><%= rating.updated_at.strftime('%B %e, %Y') %></td>
+				    </tr>
+				    <% end %>
+				  </tbody>
+				</table>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,24 @@
+<section id="user-comments">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>Comments <small>from <%= link_to user_path(@user.id), title: @user.fullname do %><%= @user.fullname %><% end %></small></h1>
+				<% if @comments.empty? %>
+				<p><% if @user.id == current_user.id %>You have<% else %><%= @user.firstname %> has<% end %> not made any comments.</p>
+				<% else %>
+				<ul>
+					<% @comments.each do |comment| %>
+					<li>
+						<%= link_to venue_path(comment.venue_id), title: Venue.find(comment.venue_id).name do %><%= Venue.find(comment.venue_id).name %><% end %>
+						<br>
+						<%= comment.body %>
+						<br>
+						<%= comment.updated_at.strftime('%B %e, %Y') %>
+						<hr>
+					</li>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</section>

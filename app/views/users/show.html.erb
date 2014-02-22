@@ -7,47 +7,29 @@
 					<h1><%= @user.fullname %><% if !current_user.nil? && @user.id == current_user.id %> <small><%= link_to 'Edit Profile', edit_user_registration_path %></small><% end %></h1>
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-						<h2>To Try</h2>
-						<% if !@userTries %>
-							<p><% if !current_user.nil? && @user.id == current_user.id %>You have<% else %><%= @user.firstname %> has<% end %> not added any places to try.</p>
-						<% else %>
+					<div class="col-sm-4">
+						<p>User Score: <%= @user.user_score %></p>
+						<%= link_to user_tries_path(@user.id), class: 'btn btn-block btn-danger' do %><%= @user.firstname %>'s Places to Try<% end %>
+						<%= link_to user_ratings_path(@user.id), class: 'btn btn-block btn-primary' do %><%= @user.firstname %>'s Ratings<% end %>
+						<%= link_to user_comments_path(@user.id), class: 'btn btn-block btn-success' do %><%= @user.firstname %>'s Comments<% end %>
+					</div>
+					<div class="col-sm-8">
+						<h2>Recent Activity</h2>
 						<ul>
-							<% @userTries.each do |try| %>
-							<li><%= link_to venue_path(try.venue_id) do %><%= Venue.find(try.venue_id).name %><% end %></li>
+							<% @userRecentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(8).each do |activity| %>
+							<li>
+								<% if activity.kind_of? Try %>
+								Added <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %> to their <%= link_to user_tries_path(@user.id) do %>list of places to try<% end %>.
+								<% elsif activity.kind_of? Rating %>
+								Rated <%= activity.rating %> <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %>
+								<% elsif activity.kind_of? Comment %>
+								Commented on <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %><br><%= activity.body %>
+								<% end %>
+								<hr>
+							</li>
 							<% end %>
 						</ul>
-						<% end %>
 					</div>
-					<div class="col-md-3">
-						<h2>Ratings</h2>
-						<% if !@userRatings.empty? %>
-							<table class="table">
-							  <thead>
-							    <tr>
-							      <th>Name</th>
-							      <th class="text-center">Rating</th>
-							    </tr>
-							  </thead>
-							  <tbody>
-									<% @userRatings.each do |rating| %>
-						      <tr>
-						      	<td><%= link_to venue_path(rating.venue_id) do %><%= Venue.find(rating.venue_id).name %><% end %></td>
-						      	<td class="text-center"><%= rating.rating %></td>
-						      </tr>
-									<% end %>
-							  </tbody>
-							</table>
-				    <% end %>
-					</div>
-					<% if !@userCommentsRecent.empty? %>
-					<div class="col-md-6">
-						<h2>Recent Comments</h2>
-						<% @userCommentsRecent.each do |comment| %>
-				      <div><%= link_to venue_path(comment.venue_id) do %><%= Venue.find(comment.venue_id).name %><% end %>: <%= comment.updated_at %>:<br><%= comment.body %></div>
-				    <% end %>
-					</div>
-					<% end %>
 				</div>
 			</div>
 		</div>

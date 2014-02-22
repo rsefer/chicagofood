@@ -1,7 +1,12 @@
 class RatingsController < ApplicationController
 	before_filter :authenticate_user!, except: [:index, :show]
 	before_action :set_rating, only: [:show, :edit, :update, :destroy]
-
+	
+	def index
+		@user = User.find(params[:user_id])
+		@ratings = Rating.where(raterid: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
+	end
+	
 	def create
     @venue = Venue.find(params[:venue_id])
     @rating = @venue.ratings.create(rating_params)
