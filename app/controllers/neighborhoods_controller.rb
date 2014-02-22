@@ -23,6 +23,7 @@ class NeighborhoodsController < ApplicationController
 		end
 		
 		@scopeTotal.sort! { |a, b| a.name <=> b.name }
+		@childTypes = Neighborhood.where(parentneighborhoodid: @neighborhood.id).sort! { |a, b| a.name <=> b.name }
   end
 
   def new

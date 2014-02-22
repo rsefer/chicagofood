@@ -25,6 +25,7 @@ class VenuetypesController < ApplicationController
 		end
 		
   	@scopeTotal.sort! { |a, b| a.name <=> b.name }
+  	@childTypes = Venuetype.where(parenttypeid: @venuetype.id).sort! { |a, b| a.name <=> b.name }
   end
 
   def new

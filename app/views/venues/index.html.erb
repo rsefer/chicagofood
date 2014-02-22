@@ -27,8 +27,8 @@
 				    <% @venues.each do |venue| %>
 			      <tr>
 			        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
-			        <td><%= Venuetype.find(venue.typeid).name %></td>
-			        <td class="hidden-xs"><% if venue.neighborhoodid %><%= Neighborhood.find(venue.neighborhoodid).name %><% end %></td>
+			        <td><%= link_to venuetype_path(Venuetype.find(venue.typeid)) do %><%= Venuetype.find(venue.typeid).name %><% end %></td>
+			        <td class="hidden-xs"><%= link_to neighborhood_path(Neighborhood.find(venue.neighborhoodid)) do %><%= Neighborhood.find(venue.neighborhoodid).name %><% end %></td>
 			        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
 			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
 			        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>

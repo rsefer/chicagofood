@@ -3,10 +3,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<h1><%= @neighborhood.name %></h1><%=  %>
-				<% if !@neighborhood.parentneighborhoodid.nil? %>
-				<p>Part of <%= link_to neighborhood_path(@neighborhood.parentneighborhoodid) do %><%= Neighborhood.find(@neighborhood.parentneighborhoodid).name %><% end %></p>
-				<% end %>
-				</p>
+				<p><% if !@neighborhood.parentneighborhoodid.nil? %>Part of <%= link_to neighborhood_path(@neighborhood.parentneighborhoodid) do %><%= Neighborhood.find(@neighborhood.parentneighborhoodid).name %><% end %>.<% end %> <% if !@childTypes.empty? %>Includes <%= @childTypes.map { |vtype| link_to vtype.name, vtype }.join(', ').html_safe %>.<% end %></p>
 				<% if !@scopeTotal.empty? %>
 				<table class="table">
 				  <thead>
@@ -22,7 +19,7 @@
 						<% @scopeTotal.each do |venue| %>
 			      <tr>
 			        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
-			        <td><%= Venuetype.find(venue.typeid).name %></td>
+			        <td><%= link_to venuetype_path(Venuetype.find(venue.typeid)) do %><%= Venuetype.find(venue.typeid).name %><% end %></td>
 			        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
 			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
 			        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>

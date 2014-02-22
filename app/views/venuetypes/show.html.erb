@@ -3,19 +3,19 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<% if @venuetype.id == 1 || @venuetype.id == 2 %>
-				<h2><%= pluralize_without_count(2, @venuetype.name) %></h2>
+				<h2>
+					<%= pluralize_without_count(2, @venuetype.name) %>
+				</h2>
 				<% else %>
 				<h2><%= @venuetype.name %></h2>
 				<% end %>
-				<% if !@venuetype.parenttypeid.nil? %>
-				<p>Part of <%= link_to venuetype_path(@venuetype.parenttypeid) do %><%= Venuetype.find(@venuetype.parenttypeid).name %><% end %>.</p>
-				<% end %>
+				<p><% if !@venuetype.parenttypeid.nil? %>Part of <%= link_to venuetype_path(@venuetype.parenttypeid) do %><%= Venuetype.find(@venuetype.parenttypeid).name %><% end %>. <% end %><% if !@childTypes.empty? %>Includes <%= @childTypes.map { |vtype| link_to vtype.name, vtype }.join(', ').html_safe %>.<% end %></p>
 				<% if !@scopeTotal.empty? %>
 				<table class="table">
 				  <thead>
 				    <tr>
 				      <th>Name</th>
-				      <th>Type</th>
+				      <% if @venuetype.id == 1 || @venuetype.id == 2 %><th>Type</th><% end %>
 				      <th class="hidden-xs">Neighborhood</th>
 				      <th class="hidden-xs text-center">Rating</th>
 				      <th class="text-center">Price</th>
@@ -26,8 +26,8 @@
 						<% @scopeTotal.each do |venue| %>
 			      <tr>
 			        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
-			        <td><%= Venuetype.find(venue.typeid).name %></td>
-			        <td class="hidden-xs"><% if venue.neighborhoodid %><%= Neighborhood.find(venue.neighborhoodid).name %><% end %></td>
+			        <% if @venuetype.id == 1 || @venuetype.id == 2 %><td><%= link_to venuetype_path(Venuetype.find(venue.typeid)) do %><%= Venuetype.find(venue.typeid).name %><% end %></td><% end %>
+			        <td class="hidden-xs"><%= link_to neighborhood_path(Neighborhood.find(venue.neighborhoodid)) do %><%= Neighborhood.find(venue.neighborhoodid).name %><% end %></td>
 			        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
 			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
 			        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
