@@ -1,6 +1,10 @@
 module ApplicationHelper
 
-	def is_current_user(user)
+	def is_current_user(user, isUserID = false)
+		if isUserID
+			user = User.find(user)
+		end
+		
 		if !current_user.nil? && user.id == current_user.id
 			true
 		else
