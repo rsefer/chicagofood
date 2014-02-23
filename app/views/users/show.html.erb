@@ -4,7 +4,7 @@
 			<div class="col-sm-12">
 				<div id="user-nameandphoto">
 					<img class="user-avatar user-avatar-med" src="<%= @user.avatarurl %>" alt="<%= @user.fullname %>">
-					<h1><%= @user.fullname %><% if !current_user.nil? && @user.id == current_user.id %> <small><%= link_to 'Edit Profile', edit_user_registration_path %></small><% end %></h1>
+					<h1><%= @user.fullname %><% if is_current_user(@user) %> <small><%= link_to 'Edit Profile', edit_user_registration_path %></small><% end %></h1>
 				</div>
 				<div class="row">
 					<div class="col-sm-4">
@@ -17,7 +17,7 @@
 						<hr class="visible-xs">
 						<h2>Recent Activity</h2>
 						<% if @userRecentActivity.empty? %>
-						<p><%= @user.firstname %> has no recent activity.</p>
+						<p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> no recent activity.</p>
 						<% else %>
 						<ul>
 							<% @userRecentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(8).each do |activity| %>

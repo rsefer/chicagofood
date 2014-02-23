@@ -4,7 +4,7 @@
 			<div class="col-sm-12">
 				<h1>Comments <small>from <%= link_to user_path(@user.id), title: @user.fullname do %><%= @user.fullname %><% end %></small></h1>
 				<% if @comments.empty? %>
-				<p><% if @user.id == current_user.id %>You have<% else %><%= @user.firstname %> has<% end %> not made any comments.</p>
+				<p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> not made any comments.</p>
 				<% else %>
 				<ul>
 					<% @comments.each do |comment| %>

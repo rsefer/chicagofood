@@ -1,5 +1,13 @@
 module ApplicationHelper
 
+	def is_current_user(user)
+		if !current_user.nil? && user.id == current_user.id
+			true
+		else
+			false
+		end
+	end
+	
 	def pluralize_without_count(count, noun, text = nil)
 	  if count != 0
 	    count == 1 ? "an #{noun}#{text}" : "#{noun.pluralize}#{text}"
