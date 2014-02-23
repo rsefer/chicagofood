@@ -11,9 +11,9 @@
 					<li>
 						<%= link_to venue_path(comment.venue_id), title: Venue.find(comment.venue_id).name do %><%= Venue.find(comment.venue_id).name %><% end %>
 						<br>
-						<%= comment.body %>
+						<%= wrap_quotes(comment.body).html_safe %>
 						<br>
-						<%= comment.updated_at.strftime('%B %e, %Y') %>
+						<%= comment.updated_at.strftime('%B %e, %Y %l:%M %P') %>
 						<hr>
 					</li>
 					<% end %>

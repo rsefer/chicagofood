@@ -14,7 +14,11 @@
 						<%= link_to user_comments_path(@user.id), class: 'btn btn-block btn-success' do %><%= @user.firstname %>'s Comments<% end %>
 					</div>
 					<div class="col-sm-8">
+						<hr class="visible-xs">
 						<h2>Recent Activity</h2>
+						<% if @userRecentActivity.empty? %>
+						<p><%= @user.firstname %> has no recent activity.</p>
+						<% else %>
 						<ul>
 							<% @userRecentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(8).each do |activity| %>
 							<li>
@@ -23,12 +27,15 @@
 								<% elsif activity.kind_of? Rating %>
 								Rated <%= activity.rating %> <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %>
 								<% elsif activity.kind_of? Comment %>
-								Commented on <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %><br><%= activity.body %>
+								Commented on <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %><br><%= wrap_quotes(activity.body).html_safe %>
 								<% end %>
+								<br>
+								<%= activity.updated_at.strftime('%B %e, %Y %l:%M %P') %>
 								<hr>
 							</li>
 							<% end %>
 						</ul>
+						<% end %>
 					</div>
 				</div>
 			</div>
