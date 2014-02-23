@@ -15,7 +15,7 @@
   	<div class="col-sm-6">
 		  <div class="form-group">
 		    <%= f.label :name %><br>
-		    <%= f.text_field :name, { :class => 'form-control' } %>
+		    <%= f.text_field :name, { :class => 'form-control', :required => 'required' } %>
 		  </div>
 		 <div class="form-group">
 		    <%= f.label :yelpid, 'Yelp ID' %> <small>Ex. http://www.yelp.com/biz/<strong><u>name-of-restaurant</u></strong></small><br>
@@ -25,19 +25,11 @@
 		    <%= f.label :url, 'URL' %><br>
 		    <%= f.text_field :url, { :class => 'form-control', :placeholder => 'http://example.com' }  %>
 		  </div>-->
+		  <% if !@venue.new_record? %>
+		  	<%= render :partial => 'typeandprice' %>
+		  <% end %>
 		  <div class="form-group">
-		    <%= f.label :typeid ,'Type' %><br>
-		    <% if params[:typeid] %>
-		    <%= select(:venue, :typeid, Venuetype.all.collect {|vt| [ vt.name, vt.id ] }, { :selected => params[:typeid] }, { :class => 'form-control' }) %>
-		    <% else %>
-		    <%= collection_select(:venue, 'typeid', Venuetype.order('name ASC'), :id, :name, {}, { :class => 'form-control' }) %>
-		    <% end %>
-		  </div>
-		  <div class="form-group">
-		    <%= f.label :price, 'Price' %> <small>1 = $, 2 = $$, 3 = $$$, 4 = $$$$</small><br>
-		    <%= f.text_field :price, { :class => 'form-control', :placeholder => '#' } %>
-		  </div>
-		  <div class="form-group">
+		  	<label>Good For</label><br>
 		  	<%= check_box(:venue, :byob, {}, 'true', 'false') %>
   			<%= f.label :byob, 'BYOB?' %>
   			<%= check_box(:venue, :craftbeer, {}, 'true', 'false') %>
@@ -57,26 +49,30 @@
 		    <%= collection_select(:venue, 'neighborhoodid', Neighborhood.order('name ASC'), :id, :name, { :include_blank => '' }, { :class => 'form-control', :required => 'required' }) %>
 		    <% end %>
 		  </div>
-		  <div class="form-group">
-		    <%= f.label :street, 'Street Address' %><br>
-		    <%= f.text_field :street, { :class => 'form-control' } %>
-		  </div>
-		  <div class="form-group">
-		    <%= f.label :city %><br>
-		    <% if @venue.state %>
-		    <%= f.text_field :city, { :class => 'form-control' } %>
-		    <% else %>
-		    <%= f.text_field :city, { :class => 'form-control', :value => 'Chicago' } %>
-		    <% end %>
-		  </div>
-		  <div class="form-group">
-		    <%= f.label :state %><br>
-		    <% if @venue.state.blank? %>
-		    <%= select(:venue, 'state', us_states, { :selected => 'IL' }, { :class => 'form-control' }) %>
-		    <% else %>
-		    <%= select(:venue, 'state', us_states, {}, { :class => 'form-control' }) %>
-		    <% end %>
-		  </div>
+		  <% if !@venue.new_record? %>
+			  <div class="form-group">
+			    <%= f.label :street, 'Street Address' %><br>
+			    <%= f.text_field :street, { :class => 'form-control' } %>
+			  </div>
+			  <div class="form-group">
+			    <%= f.label :city %><br>
+			    <% if @venue.state %>
+			    <%= f.text_field :city, { :class => 'form-control' } %>
+			    <% else %>
+			    <%= f.text_field :city, { :class => 'form-control', :value => 'Chicago' } %>
+			    <% end %>
+			  </div>
+			  <div class="form-group">
+			    <%= f.label :state %><br>
+			    <% if @venue.state.blank? %>
+			    <%= select(:venue, 'state', us_states, { :selected => 'IL' }, { :class => 'form-control' }) %>
+			    <% else %>
+			    <%= select(:venue, 'state', us_states, {}, { :class => 'form-control' }) %>
+			    <% end %>
+			  </div>
+		  <% else %>
+		  	<%= render :partial => 'typeandprice' %>
+		  <% end %>
 		</div>
 	</div>
   <!--<div class="form-group">
