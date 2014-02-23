@@ -20,7 +20,7 @@
 						<p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> no recent activity.</p>
 						<% else %>
 						<ul>
-							<% @userRecentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(8).each do |activity| %>
+							<% @userRecentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(10).each do |activity| %>
 							<li>
 								<% if activity.kind_of? Try %>
 								Added <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %> to their <%= link_to user_tries_path(@user.id) do %>list of places to try<% end %>.

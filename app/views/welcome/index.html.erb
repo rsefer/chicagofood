@@ -1,30 +1,87 @@
 <section id="home-main">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
-				<!--<%= form_tag venues_path, :method => 'get' do %>
-					<h2 class="text-center">I would like...</h2>
-					<%= text_field_tag :q, params[:q], { :class => 'form-control input-lg input-huge', :placeholder => 'mexican byob wicker park', :autofocus => true } %>
-				<% end %>
-				<hr>-->
+			<div class="col-sm-12">
 				<div class="row">
-					<div class="col-sm-6">
-						<a href="/venuetypes/1" class="btn btn-lg btn-block btn-success"><i class="fa fa-cutlery left"></i>Restaurants</a>
+					<div class="col-md-8 col-md-push-4">
+						<!--<%= form_tag venues_path, :method => 'get' do %>
+							<h2 class="text-center">I would like...</h2>
+							<%= text_field_tag :q, params[:q], { :class => 'form-control input-lg input-huge', :placeholder => 'mexican byob wicker park', :autofocus => true } %>
+						<% end %>
+						<hr>-->
+						<%= link_to new_venue_path, { :class => 'btn btn-lg btn-block btn-success margin-down' } do %><i class="fa fa-plus left"></i>Add a new Venue<% end %>
+						<div class="row">
+							<div class="col-sm-6">
+								<a href="/venuetypes/1" class="btn btn-lg btn-block btn-warning margin-down-xs"><i class="fa fa-cutlery left"></i>All Restaurants</a>
+							</div>
+							<div class="col-sm-6">
+								<a href="/venuetypes/2" class="btn btn-lg btn-block btn-info"><i class="fa fa-beer left"></i>All Bars</a>
+							</div>
+						</div>
+						<hr>
+						<h4 class="text-center">Types</h4>
+						<ul class="types-list cols4">
+							<% @venuetypes.each do |vtype| %>
+							<li><%= link_to venuetype_path(vtype), title: vtype.name do %><%= vtype.name %><% end %></li>
+							<% end %>
+						</ul>
+						<br>
+						<p class="text-center"><%= link_to new_venuetype_path, class: 'btn btn-primary' do %><i class="fa fa-plus left"></i>Add a Venue Type<% end %></p>
+						<hr>
+						<h4 class="text-center">Neighborhoods</h4>
+						<ul class="neighborhoods-list cols4">
+							<% @neighborhoods.each do |neighborhood| %>
+							<li><%= link_to neighborhood_path(neighborhood), title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
+							<% end %>
+						</ul>
+						<br>
+						<p class="text-center"><%= link_to new_neighborhood_path, class: 'btn btn-primary' do %><i class="fa fa-plus left"></i>Add a Neighborhood<% end %></p>
 					</div>
-					<div class="col-sm-6">
-						<a href="/venuetypes/2" class="btn btn-lg btn-block btn-success"><i class="fa fa-beer left"></i>Bars</a>
+					<div class="col-md-4 col-md-pull-8">
+						<hr class="hidden-md hidden-lg">
+						<h3 class="text-center">Recent Activity</h3>
+						<% if @recentActivity.empty? %>
+						<p>No recent activity.</p>
+						<% else %>
+						<ul class="activity-list nolast">
+							<% @recentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(10).each do |activity| %>
+							<li>
+								<% if activity.kind_of? Venue or activity.kind_of? Neighborhood or activity.kind_of? Venuetype %>
+									<% if activity.kind_of? Venue %>
+										<i class="fa fa-fw fa-home left"></i><%= link_to venue_path(activity) do %><%= activity.name %><% end %>
+									<% elsif activity.kind_of? Neighborhood %>
+										<i class="fa fa-fw fa-map-marker left"></i><%= link_to neighborhood_path(activity) do %><%= activity.name %><% end %>
+									<% elsif activity.kind_of? Venuetype %>
+										<i class="fa fa-fw fa-cutlery left"></i><%= link_to venuetype_path(activity) do %><%= activity.name %><% end %>
+									<% end %>
+									<% if activity.updated_at == activity.created_at %>added<% else %>updated<% end %>.
+								<% elsif activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment %>
+									<% if activity.kind_of? Try %>
+									<i class="fa fa-fw fa-plus left"></i>
+									<% elsif activity.kind_of? Rating %>
+									<i class="fa fa-fw fa-star left"></i>
+									<% elsif activity.kind_of? Comment %>
+									<i class="fa fa-fw fa-quote-left left"></i>
+									<% end %>
+									<% if is_current_user(activity.user_id, true) %>
+									You
+									<% else %>
+									<%= link_to user_path(User.find(activity.user_id)) do %><%= User.find(activity.user_id).firstname %><% end %>
+									<% end %>
+									<% if activity.kind_of? Try %>
+									added <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %> to the 'To Try' list.
+									<% elsif activity.kind_of? Rating %>
+									rated <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %> <%= pluralize(activity.rating, 'star') %>.
+									<% elsif activity.kind_of? Comment %>
+									commented on <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %>.
+									<% end %>
+								<% end %>
+							</li>
+							<% end %>
+						</ul>
+						<% end %>
 					</div>
 				</div>
-				<hr>
-				<%= link_to new_venue_path, { :class => 'btn btn-lg btn-block btn-success' } do %><i class="fa fa-plus left"></i>Add a new Venue<% end %>
-				<hr>
-				<ul class="neighborhoods-list cols2">
-					<% Neighborhood.all.sort{ |a,b| a.name <=> b.name }.each do |neighborhood| %>
-					<li><%= link_to neighborhood_path(neighborhood), title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
-					<% end %>
-				</ul>
-				<hr>
-				<p class="text-center"><%= link_to 'Add Neighborhood', new_neighborhood_path %></p>
 			</div>
 		</div>
 	</div>

@@ -8,7 +8,11 @@ $red: #e20048;
 $orange: #ffd040;
 
 body {
-	background: $turqoise;
+	background: $turqoise;	
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: 'proxima-nova', sans-serif;
 }
 
 header {
@@ -17,7 +21,6 @@ header {
 
 h1, h2, h3, h4, h5, h6 {
 	margin: 0px 0px 15px 0px;
-	font-family: 'brandon-grotesque', sans-serif;
 }
 
 h1 {
@@ -43,11 +46,20 @@ ol.cols2 {
 	@include columns(2);
 }
 
+ul.cols4,
+ol.cols4 {
+	@include columns(4);
+}
+
 .spread {
 	font-size: 12px;
 	letter-spacing: 1px;
 	font-weight: bold;
 	text-transform: uppercase;
+}
+
+.margin-down {
+	margin-bottom: 1em;
 }
 
 .currency {
@@ -112,7 +124,7 @@ img.user-avatar-med {
 img.user-avatar-thumb {
 	font-size: 28px;
 	max-height: 1em;
-	margin-right: 0.4em;
+	margin-right: 0.3em;
 }
 
 nav.navbar {
@@ -167,13 +179,21 @@ footer #footer-logo {
 	margin-top: 15px;
 }
 
-#monthlyRevenueChart {
-	width: 100%;
-	min-height: 300px;
+ul.comments-list li,
+ul.activity-list li {
+	padding-bottom: 1em;
+	margin-bottom: 1em;
+	border-bottom: 1px solid #eeeeee;
 }
 
-.chart a.canvasjs-chart-credit {
-	display: none !important;
+ul.nolast li:last-child {
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	border-bottom: 0px;
+}
+
+.comment .comment-body {
+	margin-top: 1em;
 }
 
 .doicons i {
@@ -240,6 +260,11 @@ form.new_comment button {
 		@include columns(1);
 	}
 	
+	ul.cols4,
+	ol.cols4 {
+		@include columns(2);
+	}
+	
 	h1, h2 {
 		text-align: center;
 	}
@@ -255,6 +280,10 @@ form.new_comment button {
 	h1 small {
 		display: block;
 		margin-top: 0.5em;
+	}
+	
+	.margin-down-xs {
+		margin-bottom: 1em;
 	}
 	
 	section .btn {
