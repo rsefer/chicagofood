@@ -105,10 +105,10 @@ end
 						<% @venue.comments.each do |comment| %>
 						<div class="comment">
 							<div class="comment-user-info">
-								<%= link_to user_path(comment.user_id) do %><img class="user-avatar user-avatar-thumb" src="<%= User.find(comment.commenterid).avatar %>"><%= User.find(comment.commenterid).fullname %><% end %>
+								<%= link_to user_path(comment.user_id) do %><img class="user-avatar user-avatar-thumb" src="<%= User.find(comment.user_id).avatar %>"><%= User.find(comment.user_id).fullname %><% end %>
 							</div>
 							<div class="well well-sm">
-								<% if current_user.try && comment.commenterid == current_user.id %>
+								<% if current_user.try && comment.user_id == current_user.id %>
 								<%= link_to comment_path(comment), method: :delete, data: { confirm: "Are you sure you would like to delete this comment?" } do %><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><% end %>
 								<% end %>
 								<%= simple_format(comment.body) %>
