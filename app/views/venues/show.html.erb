@@ -16,7 +16,7 @@ if !@venue.yelpid.blank?
 	end
 end
 %>
-<section id="">
+<section id="venue-show" class="pad">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
@@ -60,19 +60,19 @@ end
 							end
 						%>
 						<address>
-							<% if current_user.try(:hasaddress) %>
-								<% if @yelpActive
+							<% if @yelpActive
 									@addressDisplay = @yelpSearch['location']['address'][0] + '<br/>' + @yelpSearch['location']['city'] + ', ' + @yelpSearch['location']['state_code']
+								else
+									if @venue.hasaddress
+										@addressDisplay = @venue.street + '<br/>' + @venue.city + ', ' + @venue.state
 									else
-										if @venue.hasaddress
-											@addressDisplay = @venue.street + '<br/>' + @venue.city + ', ' + @venue.state
-										else
-											@addressDisplay = ''
-										end
-									end %>
+										@addressDisplay = ''
+									end
+								end %>
+							<% if current_user.try(:hasaddress) %>
 							<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.name + ' ') %><%= to_url(@addressWorking) %>/"><%= @addressDisplay.html_safe %></a>
 							<% else %>
-							<a href="http://maps.google.com/maps?q=<%= to_url(@venue.name + ' ') + to_url(@addressWorking) %>"><%= @venue.street %><br/><%= @venue.city %>, <%= @venue.state %></a>
+							<a href="http://maps.google.com/maps?q=<%= to_url(@venue.name + ' ') + to_url(@addressWorking) %>"><%= @addressDisplay.html_safe %></a>
 							<% end %>
 						</address>
 						<div class="row">
