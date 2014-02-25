@@ -261,6 +261,14 @@ form.new_comment button {
 	margin-bottom: 0px;
 }
 
+.radiogroup label {
+	margin-right: 1em;
+}
+
+.radiogroup label:last-child {
+	margin-right: 0px;
+}
+
 @media screen and (max-width: 767px) {
 	
 	ul.cols2,

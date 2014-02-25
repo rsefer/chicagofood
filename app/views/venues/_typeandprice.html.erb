@@ -6,7 +6,14 @@
   <%= collection_select(:venue, 'typeid', Venuetype.order('name ASC'), :id, :name, {}, { :class => 'form-control' }) %>
   <% end %>
 </div>
-<div class="form-group">
-  <%= label(:venue, :price) do %>Price<% end %> <small>1 = $, 2 = $$, 3 = $$$, 4 = $$$$</small><br>
-  <%= text_field(:venue, :price, { :class => 'form-control', :placeholder => '#' }) %>
+<div class="form-group radiogroup">
+  <%= label(:venue, :price, value: 1) do %>Price<% end %><br>
+  <%= radio_button('venue', 'price', 1, { :required =>  'required' }) %>
+  <%= label(:venue, :price, value: 1) do %><%= render_price(1) %><% end %>
+  <%= radio_button('venue', 'price', 2, { :required =>  'required' }) %>
+  <%= label(:venue, :price, value: 2) do %><%= render_price(2) %><% end %>
+  <%= radio_button('venue', 'price', 3, { :required =>  'required' }) %>
+  <%= label(:venue, :price, value: 3) do %><%= render_price(3) %><% end %>
+  <%= radio_button('venue', 'price', 4, { :required =>  'required' }) %>
+  <%= label(:venue, :price, value: 4) do %><%= render_price(4) %><% end %>
 </div>
