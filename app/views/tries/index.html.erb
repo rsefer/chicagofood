@@ -13,7 +13,7 @@
 				      <th class="hidden-xs">Type</th>
 				      <th class="text-center">Price</th>
 				      <th class="hidden-xs text-center">Date Added</th>
-				      <% if !current_user.nil? && @user.id == current_user.id %><th>&nbsp;</th><% end %>
+				      <% if is_current_user(@user) or user_signed_in? %><th>&nbsp;</th><% end %>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -23,7 +23,11 @@
 				    	<td class="hidden-xs"><%= link_to venuetype_path(Venue.find(try.venue_id).typeid), title: Venuetype.find(Venue.find(try.venue_id).typeid).name do %><%= Venuetype.find(Venue.find(try.venue_id).typeid).name %><% end %></td>
 				    	<td class="text-center"><%= render_price(Venue.find(try.venue_id).price) %></td>
 				    	<td class="hidden-xs text-center"><%= try.updated_at.strftime('%B %e, %Y') %></td>
-				    	<% if is_current_user(@user) %><td class="text-center"><%= link_to try_path(try), title: "Remove #{Venue.find(try.venue_id).name} from your list?", method: :delete, class: 'red' do %><i class="fa fa-times fa-lg"></i><% end %></td><% end %>
+				    	<% if is_current_user(@user) or user_signed_in? %><td class="text-center">
+				    		<% if is_current_user(@user) %>
+				    			<%= link_to try_path(try), title: "Remove #{Venue.find(try.venue_id).name} from your list?", method: :delete, class: 'red' do %><i class="fa fa-times fa-lg"></i><% end %>
+				    		<% elsif user_signed_in? and Try.where('user_id = ? AND venue_id = ?', current_user.id, try.venue_id).exists? %><i class="fa fa-check fa-lg green"></i><% end %>
+				    	</td><% end %>
 				    </tr>
 				    <% end %>
 				  </tbody>
