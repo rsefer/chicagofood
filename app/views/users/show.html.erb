@@ -6,9 +6,22 @@
 					<img class="user-avatar user-avatar-med" src="<%= @user.avatarurl %>" alt="<%= @user.fullname %>">
 					<h1><%= @user.fullname %><% if is_current_user(@user) %> <small><%= link_to 'Edit Profile', edit_user_registration_path %></small><% end %></h1>
 				</div>
+				<div id="user-count-block" class="row text-center">
+					<div class="col-xs-4 main">
+						<div class="user-count-number"><%= @user.user_score %></div>
+						<div class="user-count-title">User Score</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="user-count-number"><%= @user.user_comment_count %></div>
+						<div class="user-count-title sub">Comments</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="user-count-number"><%= @user.user_rating_count %></div>
+						<div class="user-count-title">Ratings</div>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-sm-4">
-						<p>User Score: <%= @user.user_score %></p>
 						<%= link_to user_tries_path(@user.id), class: 'btn btn-block btn-danger' do %><%= @user.firstname %>'s Places to Try<% end %>
 						<%= link_to user_ratings_path(@user.id), class: 'btn btn-block btn-primary' do %><%= @user.firstname %>'s Ratings<% end %>
 						<%= link_to user_comments_path(@user.id), class: 'btn btn-block btn-success' do %><%= @user.firstname %>'s Comments<% end %>
@@ -19,19 +32,24 @@
 						<% if @userRecentActivity.empty? %>
 						<p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> no recent activity.</p>
 						<% else %>
-						<ul>
+						<ul class="activity-list nolast">
 							<% @userRecentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(10).each do |activity| %>
 							<li>
-								<% if activity.kind_of? Try %>
-								Added <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %> to their <%= link_to user_tries_path(@user.id) do %>list of places to try<% end %>.
-								<% elsif activity.kind_of? Rating %>
-								Rated <%= activity.rating %> <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %>
-								<% elsif activity.kind_of? Comment %>
-								Commented on <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %><br><%= wrap_quotes(activity.body).html_safe %>
+								<% if activity.kind_of? Venue or activity.kind_of? Neighborhood or activity.kind_of? Venuetype %>
+									<% if activity.kind_of? Venue %><i class="fa fa-fw fa-home left"></i><%= link_to venue_path(activity) do %><%= activity.name %><% end %>
+									<% elsif activity.kind_of? Neighborhood %><i class="fa fa-fw fa-map-marker left"></i><%= link_to neighborhood_path(activity) do %><%= activity.name %><% end %>
+									<% elsif activity.kind_of? Venuetype %><i class="fa fa-fw fa-cutlery left"></i><%= link_to venuetype_path(activity) do %><%= activity.name %><% end %>
+									<% end %>
+									<% if activity.updated_at == activity.created_at %>added<% else %>updated<% end %>.
+								<% elsif activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment
+									if activity.kind_of? Try %><i class="fa fa-fw fa-plus left"></i><% elsif activity.kind_of? Rating %><i class="fa fa-fw fa-star left"></i><% elsif activity.kind_of? Comment %><i class="fa fa-fw fa-quote-left left"></i><% end
+									if activity.kind_of? Try %>Added <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %> to the <%= link_to user_tries_path(@user.id) do %>list of places to try<% end %>.<%
+									elsif activity.kind_of? Rating %>Rated <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %> <%= pluralize(activity.rating, 'star') %>.
+									<% elsif activity.kind_of? Comment %>Commented on <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %>:
+									<div class="activity-comment"><%= wrap_quotes(activity.body).html_safe %></div>
+									<% end %>
 								<% end %>
-								<br>
-								<%= activity.updated_at.strftime('%B %e, %Y %l:%M %P') %>
-								<hr>
+								<div class="activity-date"><small><%= activity.updated_at.strftime('%B %e, %Y %l:%M %P') %></small></div>
 							</li>
 							<% end %>
 						</ul>

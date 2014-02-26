@@ -261,12 +261,27 @@ form.new_comment button {
 	margin-bottom: 0px;
 }
 
+#user-count-block .user-count-number {
+	font-size: 6em;
+	line-height: 1;
+	font-weight: bold;
+}
+
+#user-count-block .user-count-title {
+	margin-bottom: 2em;
+}
+
 .radiogroup label {
 	margin-right: 1em;
 }
 
 .radiogroup label:last-child {
 	margin-right: 0px;
+}
+
+.activity-comment {
+	margin: 0.5em 0px;
+	font-style: italic;
 }
 
 @media screen and (max-width: 767px) {
@@ -322,6 +337,16 @@ form.new_comment button {
 	#user-nameandphoto h1 small {
 		margin-top: 6px;;
 	}
+	
+	#user-count-block .user-count-number {
+		font-size: 2em;
+		line-height: normal;
+	}
+	
+	#user-count-block .user-count-title {
+		margin-bottom: 1em;
+	}
+	
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) {

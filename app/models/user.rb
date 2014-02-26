@@ -10,9 +10,17 @@ class User < ActiveRecord::Base
   has_many :tries, :dependent => :destroy
   
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+
+  def user_comment_count
+  	Comment.where(user_id: self.id).count
+  end
+  
+  def user_rating_count
+  	Rating.where(user_id: self.id).count
+  end
   
   def user_score
-  	Comment.where(user_id: self.id).count + Rating.where(user_id: self.id).count
+  	self.user_comment_count + self.user_rating_count
   end
   
   def avatarurl
