@@ -4,7 +4,7 @@
 			<div class="col-sm-12">
 				<ul>
 					<% @users.each do |user| %>
-			    <li><%= link_to user, title: user.fullname do %><%= user.fullname %><% end %></li>
+			    <li><%= link_to user_path(user), title: user.fullname do %><img class="user-avatar user-avatar-thumb" src="<%= user.avatarurl %>" /><%= user.fullname %><% end %></li>
 			    <% end %>
 				</ul>
 			</div>

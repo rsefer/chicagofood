@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   def index
-    @users = User.all
+    @users = User.all.sort{ |a,b| a.firstname <=> b.firstname }
 
     respond_to do |format|
       format.html
