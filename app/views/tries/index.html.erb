@@ -12,6 +12,7 @@
 				    <tr>
 				      <th>Name</th>
 				      <th class="hidden-xs">Type</th>
+				      <th class="hidden-xs">Neighborhood</th>
 				      <th class="text-center">Price</th>
 				      <th class="hidden-xs text-center">Date Added</th>
 				      <% if is_current_user(@user) or user_signed_in? %><th>&nbsp;</th><% end %>
@@ -22,6 +23,7 @@
 				    <tr>
 				    	<td><%= link_to venue_path(try.venue_id), title: Venue.find(try.venue_id).name do %><%= Venue.find(try.venue_id).name %><% end %></td>
 				    	<td class="hidden-xs"><%= link_to venuetype_path(Venue.find(try.venue_id).typeid), title: Venuetype.find(Venue.find(try.venue_id).typeid).name do %><%= Venuetype.find(Venue.find(try.venue_id).typeid).name %><% end %></td>
+				    	<td class="hidden-xs"><%= link_to neighborhood_path(Neighborhood.find(Venue.find(try.venue_id).neighborhoodid)) do %><%= Neighborhood.find(Venue.find(try.venue_id).neighborhoodid).name %><% end %></td>
 				    	<td class="text-center"><%= render_price(Venue.find(try.venue_id).price) %></td>
 				    	<td class="hidden-xs text-center"><%= try.updated_at.strftime('%B %e, %Y') %></td>
 				    	<% if is_current_user(@user) or user_signed_in? %><td class="text-center">
