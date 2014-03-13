@@ -1,4 +1,5 @@
 <% provide(:title, "#{@neighborhood.name} | Neighborhoods") %>
+
 <section id="neighborhoods-single" class="pad">
 	<div class="container">
 		<div class="row">
@@ -10,7 +11,8 @@
 				  <thead>
 				    <tr>
 				      <th>Name</th>
-				      <th>Type</th>
+				      <th class="hidden-xs">Category</th>
+							<th>Type</th>
 				      <th class="hidden-xs text-center">Rating</th>
 				      <th class="text-center">Price</th>
 				      <th class="hidden-xs text-center">BYOB</th>
@@ -18,9 +20,27 @@
 				  </thead>
 				  <tbody>
 						<% @scopeTotal.each do |venue| %>
+						<%
+							@venuetype = Venuetype.find(venue.typeid)
+
+							if !@venuetype.parenttypeid.nil?
+								if !Venuetype.find(@venuetype.parenttypeid).parenttypeid.nil?
+									if !Venuetype.find(Venuetype.find(@venuetype.parenttypeid).parenttypeid).parenttypeid.nil?
+										@venuetypeTop = Venuetype.find(Venuetype.find(Venuetype.find(Venuetype.find(@venuetype).parenttypeid).parenttypeid).parenttypeid)
+									else
+										@venuetypeTop = Venuetype.find(Venuetype.find(Venuetype.find(@venuetype).parenttypeid).parenttypeid)
+									end
+								else
+									@venuetypeTop = Venuetype.find(@venuetype.parenttypeid)
+								end
+							else
+								@venuetypeTop = @venuetype
+							end
+						%>
 			      <tr>
 			        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
-			        <td><%= link_to venuetype_path(Venuetype.find(venue.typeid)) do %><%= Venuetype.find(venue.typeid).name %><% end %></td>
+							<td class="hidden-xs"><%= link_to venuetype_path(@venuetypeTop) do %><%= @venuetypeTop.name %><% end %></td>
+			        <td><%= link_to venuetype_path(@venuetype) do %><%= @venuetype.name %><% end %></td>
 			        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
 			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
 			        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
@@ -35,4 +55,3 @@
 		</div>
 	</div>
 </section>
-

@@ -11,7 +11,7 @@ class NeighborhoodsController < ApplicationController
 		@scope2nd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))
 		@scope3rd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id)))
 		@scope4th = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))))
-		
+
 		if (!@scope4th.empty?)
 			@scopeTotal = @scopeTop + @scope2nd + @scope3rd + @scope4th
 		elsif (!@scope3rd.empty?)
@@ -21,7 +21,7 @@ class NeighborhoodsController < ApplicationController
 		else
 			@scopeTotal = @scopeTop
 		end
-		
+
 		@scopeTotal.sort! { |a, b| a.name <=> b.name }
 		@childTypes = Neighborhood.where(parentneighborhoodid: @neighborhood.id).sort! { |a, b| a.name <=> b.name }
   end
