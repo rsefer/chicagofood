@@ -8,9 +8,9 @@ if !@venue.yelpid.blank?
 		:token => ENV['YELP_TOKEN'],
 		:token_secret => ENV['YELP_TOKEN_SECRET']
 	}
-	@yelpSearch = YelpApi.new(yelp_keys).search_by_business_id(@venue.yelpid)
+	#@yelpSearch = YelpApi.new(yelp_keys).search_by_business_id(@venue.yelpid)
 	# {"error"=>{"text"=>"Exceeded max daily requests", "id"=>"EXCEEDED_REQS"}}
-	if !@yelpSearch['error'].nil?
+	if !defined? @yelpSearch or !@yelpSearch['error'].nil?
 		@yelpActive = false
 	else
 		@yelpActive = true
@@ -164,11 +164,11 @@ end
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {
-	
-	
+
+
 	/* Rating */
 	var myratingHTML = $('#myrating').html();
-	
+
 	$('#myrating i.fa').click(function() {
 		var thisClickIndex = $('#myrating i.fa').index(this) + 1;
 		$('input#rating_rating').val(thisClickIndex);
@@ -179,23 +179,23 @@ jQuery(document).ready(function($) {
 				changeRatingStars('#ourrating', data.rating_average - 1);
 			});
 		});
-		
+
 		myratingHTML = $('#myrating').html();
-		
+
 	});
-	
+
 	$('#myrating i.fa').hover(function() {
 		var thisClickIndex = $('#myrating i.fa').index(this);
 		changeRatingStars('#myrating', thisClickIndex);
 	}, function() {
 	});
-	
+
 	/* To Try toggle */
 	$('#totrysubmit').click(function(e) {
 		e.preventDefault();
 		$('form#new_try').submit();
 	});
-	
+
 });
 
 function changeRatingStars(whichStars, starNum) {
