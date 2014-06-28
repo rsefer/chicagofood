@@ -4,11 +4,6 @@
 			<div class="col-sm-12">
 				<div class="row">
 					<div class="col-md-8 col-md-push-4">
-						<!--<%= form_tag venues_path, :method => 'get' do %>
-							<h2 class="text-center">I would like...</h2>
-							<%= text_field_tag :q, params[:q], { :class => 'form-control input-lg input-huge', :placeholder => 'mexican byob wicker park', :autofocus => true } %>
-						<% end %>
-						<hr>-->
 						<%= link_to new_venue_path, { :class => 'btn btn-lg btn-block btn-success margin-down' } do %><i class="fa fa-plus left"></i>Add a new Venue<% end %>
 						<div class="row">
 							<div class="col-sm-6">
@@ -22,14 +17,14 @@
 						<h4 class="text-center">Types</h4>
 						<ul class="types-list cols4">
 							<% @venuetypes.each do |vtype| %>
-							<li><%= link_to venuetype_path(vtype), title: vtype.name do %><%= vtype.name %><% end %></li>
+							<li><%= link_to vtype, title: vtype.name do %><%= vtype.name %><% end %></li>
 							<% end %>
 						</ul>
 						<hr>
 						<h4 class="text-center">Neighborhoods</h4>
 						<ul class="neighborhoods-list cols4">
 							<% @neighborhoods.each do |neighborhood| %>
-							<li><%= link_to neighborhood_path(neighborhood), title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
+							<li><%= link_to neighborhood, title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
 							<% end %>
 						</ul>
 					</div>
@@ -44,21 +39,21 @@
 							<li>
 								<% if activity.kind_of? Venue or activity.kind_of? Neighborhood or activity.kind_of? Venuetype %>
 									<% if activity.kind_of? Venue %>
-										<i class="fa fa-fw fa-home left"></i><%= link_to venue_path(activity) do %><%= activity.name %><% end %>
+										<i class="fa fa-fw fa-home left"></i><%= link_to activity do %><%= activity.name %><% end %>
 									<% elsif activity.kind_of? Neighborhood %>
-										<i class="fa fa-fw fa-map-marker left"></i><%= link_to neighborhood_path(activity) do %><%= activity.name %><% end %>
+										<i class="fa fa-fw fa-map-marker left"></i><%= link_to activity do %><%= activity.name %><% end %>
 									<% elsif activity.kind_of? Venuetype %>
-										<i class="fa fa-fw fa-cutlery left"></i><%= link_to venuetype_path(activity) do %><%= activity.name %><% end %>
+										<i class="fa fa-fw fa-cutlery left"></i><%= link_to activity do %><%= activity.name %><% end %>
 									<% end %>
 									<% if activity.updated_at == activity.created_at %>added<% else %>updated<% end %>.
 								<% elsif activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment %>
-									<% if activity.kind_of? Try %><i class="fa fa-fw fa-plus left"></i><% elsif activity.kind_of? Rating %><i class="fa fa-fw fa-star left"></i><% elsif activity.kind_of? Comment %><i class="fa fa-fw fa-quote-left left"></i><% end %><% if is_current_user(activity.user_id, true) %>You<% else %><%= link_to user_path(User.find(activity.user_id)) do %><%= User.find(activity.user_id).firstname %><% end %><% end %>
+									<% if activity.kind_of? Try %><i class="fa fa-fw fa-plus left"></i><% elsif activity.kind_of? Rating %><i class="fa fa-fw fa-star left"></i><% elsif activity.kind_of? Comment %><i class="fa fa-fw fa-quote-left left"></i><% end %><% if is_current_user(activity.user, true) %>You<% else %><%= link_to activity.user do %><%= activity.user.firstname %><% end %><% end %>
 									<% if activity.kind_of? Try %>
-									added <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %> to the 'To Try' list.
+									added <%= link_to activity.venue do %><%= activity.venue.name %><% end %> to the 'To Try' list.
 									<% elsif activity.kind_of? Rating %>
-									rated <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %> <%= pluralize(activity.rating, 'star') %>.
+									rated <%= link_to activity.venue do %><%= activity.venue.name %><% end %> <%= pluralize(activity.rating, 'star') %>.
 									<% elsif activity.kind_of? Comment %>
-									commented on <%= link_to venue_path(activity.venue_id) do %><%= Venue.find(activity.venue_id).name %><% end %>.
+									commented on <%= link_to activity.venue do %><%= activity.venue.name %><% end %>.
 									<% end %>
 								<% end %>
 							</li>

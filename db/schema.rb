@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140223232043) do
+ActiveRecord::Schema.define(version: 20140628174318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20140223232043) do
 
   create_table "neighborhoods", force: true do |t|
     t.string   "name"
-    t.integer  "parentneighborhoodid"
+    t.integer  "parent_neighborhood_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20140223232043) do
   create_table "venues", force: true do |t|
     t.string   "name"
     t.string   "url"
-    t.integer  "typeid"
+    t.integer  "venuetype_id"
     t.string   "yelpid"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 20140223232043) do
     t.string   "city"
     t.string   "state"
     t.string   "zipcode"
-    t.integer  "neighborhoodid"
+    t.integer  "neighborhood_id"
     t.boolean  "byob"
     t.integer  "price"
     t.boolean  "craftbeer"
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 20140223232043) do
 
   create_table "venuetypes", force: true do |t|
     t.string   "name"
-    t.integer  "parenttypeid"
+    t.integer  "parent_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -44,11 +44,11 @@
 		</div>
 		<div class="col-sm-6">
 		  <div class="form-group">
-		    <%= f.label :neighborhoodid, 'Neighborhood' %><br>
-		    <% if params[:neighborhoodid] %>
-		    <%= select(:venue, :neighborhoodid, Neighborhood.all.collect {|n| [ n.name, n.id ] }, { :selected => params[:neighborhoodid] }, { :class => 'form-control' }) %>
+		    <%= f.label :neighborhood_id, 'Neighborhood' %><br>
+		    <% if params[:neighborhood_id] %>
+		    <%= select(:venue, :neighborhood_id, Neighborhood.all.collect {|n| [ n.name, n.id ] }, { :selected => params[:neighborhood_id] }, { :class => 'form-control' }) %>
 		    <% else %>
-		    <%= collection_select(:venue, 'neighborhoodid', Neighborhood.order('name ASC'), :id, :name, { :include_blank => '' }, { :class => 'form-control', :required => 'required' }) %>
+		    <%= collection_select(:venue, 'neighborhood_id', Neighborhood.order('name ASC'), :id, :name, { :include_blank => '' }, { :class => 'form-control', :required => 'required' }) %>
 		    <% end %>
 		  </div>
 		  <% if !@venue.new_record? %>

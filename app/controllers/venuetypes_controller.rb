@@ -1,7 +1,7 @@
 class VenuetypesController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
   before_action :set_venuetype, only: [:show, :edit, :update, :destroy]
-  
+
   helper_method :sort_column, :sort_direction
 
   def index
@@ -9,11 +9,11 @@ class VenuetypesController < ApplicationController
   end
 
   def show
-  	@scopeTop = Venue.where(typeid: @venuetype.id)
-		@scope2nd = Venue.where(typeid: Venuetype.where(parenttypeid: @venuetype.id))
-		@scope3rd = Venue.where(typeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: @venuetype.id)))
-		@scope4th = Venue.where(typeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: Venuetype.where(parenttypeid: @venuetype.id))))
-		
+  	@scopeTop = Venue.where(venuetype_id: @venuetype.id)
+		@scope2nd = Venue.where(venuetype_id: Venuetype.where(parent_type_id: @venuetype.id))
+		@scope3rd = Venue.where(venuetype_id: Venuetype.where(parent_type_id: Venuetype.where(parent_type_id: @venuetype.id)))
+		@scope4th = Venue.where(venuetype_id: Venuetype.where(parent_type_id: Venuetype.where(parent_type_id: Venuetype.where(parent_type_id: @venuetype.id))))
+
 		if (!@scope4th.empty?)
 			@scopeTotal = @scopeTop + @scope2nd + @scope3rd + @scope4th
 		elsif (!@scope3rd.empty?)
@@ -23,9 +23,9 @@ class VenuetypesController < ApplicationController
 		else
 			@scopeTotal = @scopeTop
 		end
-		
-  	@scopeTotal.sort! { |a, b| a.name <=> b.name }
-  	@childTypes = Venuetype.where(parenttypeid: @venuetype.id).sort! { |a, b| a.name <=> b.name }
+
+  	@scopeTotal#.sort! { |a, b| a.name <=> b.name }
+  	@childTypes = Venuetype.where(parent_type_id: @venuetype.id)#.sort! { |a, b| a.name <=> b.name }
   end
 
   def new
@@ -68,16 +68,16 @@ class VenuetypesController < ApplicationController
   	def sort_column
 	    Venue.column_names.include?(params[:sort]) ? params[:sort] : "name"
 	  end
-	  
+
 	  def sort_direction
 	    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
 	  end
-	  
+
     def set_venuetype
       @venuetype = Venuetype.find(params[:id])
     end
 
     def venuetype_params
-      params.require(:venuetype).permit(:name, :parenttypeid)
+      params.require(:venuetype).permit(:name, :parent_type_id)
     end
 end

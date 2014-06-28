@@ -3,14 +3,14 @@ class NeighborhoodsController < ApplicationController
   before_action :set_neighborhood, only: [:show, :edit, :update, :destroy]
 
   def index
-    @neighborhoods = Neighborhood.all.sort{ |a,b| a.name <=> b.name }
+    @neighborhoods = Neighborhood.all
   end
 
   def show
-  	@scopeTop = Venue.where(neighborhoodid: @neighborhood.id)
-		@scope2nd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))
-		@scope3rd = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id)))
-		@scope4th = Venue.where(neighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: Neighborhood.where(parentneighborhoodid: @neighborhood.id))))
+  	@scopeTop = Venue.where(neighborhood_id: @neighborhood.id)
+		@scope2nd = Venue.where(neighborhood_id: Neighborhood.where(parent_neighborhood_id: @neighborhood.id))
+		@scope3rd = Venue.where(neighborhood_id: Neighborhood.where(parent_neighborhood_id: Neighborhood.where(parent_neighborhood_id: @neighborhood.id)))
+		@scope4th = Venue.where(neighborhood_id: Neighborhood.where(parent_neighborhood_id: Neighborhood.where(parent_neighborhood_id: Neighborhood.where(parent_neighborhood_id: @neighborhood.id))))
 
 		if (!@scope4th.empty?)
 			@scopeTotal = @scopeTop + @scope2nd + @scope3rd + @scope4th
@@ -22,8 +22,8 @@ class NeighborhoodsController < ApplicationController
 			@scopeTotal = @scopeTop
 		end
 
-		@scopeTotal.sort! { |a, b| a.name <=> b.name }
-		@childTypes = Neighborhood.where(parentneighborhoodid: @neighborhood.id).sort! { |a, b| a.name <=> b.name }
+		#@scopeTotal.sort! { |a, b| a.name <=> b.name }
+		@childTypes = Neighborhood.where(parent_neighborhood_id: @neighborhood.id)
   end
 
   def new
@@ -68,6 +68,6 @@ class NeighborhoodsController < ApplicationController
     end
 
     def neighborhood_params
-      params.require(:neighborhood).permit(:name, :parentneighborhoodid)
+      params.require(:neighborhood).permit(:name, :parent_neighborhood_id)
     end
 end

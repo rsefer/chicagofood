@@ -10,7 +10,7 @@
 				<% else %>
 				<h2><%= @venuetype.name %></h2>
 				<% end %>
-				<p><% if !@venuetype.parenttypeid.nil? %>Part of <%= link_to venuetype_path(@venuetype.parenttypeid) do %><%= Venuetype.find(@venuetype.parenttypeid).name %><% end %>. <% end %><% if !@childTypes.empty? %>Includes <%= @childTypes.map { |vtype| link_to vtype.name, vtype }.join(', ').html_safe %>.<% end %></p>
+				<p><% if @venuetype.hasParent %>Part of <%= link_to @venuetype.parent do %><%= @venuetype.parent.name %><% end %>. <% end %><% if !@childTypes.empty? %>Includes <%= @childTypes.map { |vtype| link_to vtype.name, vtype }.join(', ').html_safe %>.<% end %></p>
 				<% if !@scopeTotal.empty? %>
 				<table class="table">
 				  <thead>
@@ -27,8 +27,8 @@
 						<% @scopeTotal.each do |venue| %>
 			      <tr>
 			        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
-			        <% if @venuetype.id == 1 || @venuetype.id == 2 %><td><%= link_to venuetype_path(Venuetype.find(venue.typeid)) do %><%= Venuetype.find(venue.typeid).name %><% end %></td><% end %>
-			        <td class="hidden-xs"><%= link_to neighborhood_path(Neighborhood.find(venue.neighborhoodid)) do %><%= Neighborhood.find(venue.neighborhoodid).name %><% end %></td>
+			        <% if @venuetype.id == 1 || @venuetype.id == 2 %><td><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td><% end %>
+			        <td class="hidden-xs"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
 			        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
 			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
 			        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
@@ -38,7 +38,7 @@
 				</table>
 				<% end %>
 				<p class="text-center">
-					<%= link_to 'Edit', edit_venuetype_path(@venuetype) %>&nbsp;&bull;&nbsp;<%= link_to new_venue_path({ :typeid => @venuetype.id }) do %>Add a new <%= @venuetype.name %> venue<% end %>
+					<%= link_to 'Edit', edit_venuetype_path(@venuetype) %>&nbsp;&bull;&nbsp;<%= link_to new_venue_path({ :venuetype_id => @venuetype.id }) do %>Add a new <%= @venuetype.name %> venue<% end %>
 				</p>
 			</div>
 		</div>

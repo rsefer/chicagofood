@@ -29,7 +29,7 @@ end
 								<% if user_signed_in? %>
 									<% if @venue.tries.where(user_id: current_user.id).present? %>
 										<% @thisTry = @venue.tries.where(user_id: current_user.id).first %>
-										<%= link_to try_path(@thisTry), title: 'Delete', method: :delete, class: 'btn btn-danger margin-down' do %><i class="fa fa-check fa-fw left"></i>To Try<% end %>
+										<%= link_to @thisTry, title: 'Delete', method: :delete, class: 'btn btn-danger margin-down' do %><i class="fa fa-check fa-fw left"></i>To Try<% end %>
 									<% else %>
 										<a id="totrysubmit" href="#" class="btn btn-danger margin-down"><i class="fa fa-plus fa-fw left"></i>To Try</a>
 										<%= form_for([@venue, @venue.tries.build]) do |f| %>
@@ -37,8 +37,8 @@ end
 										<% end %>
 									<% end %>
 								<% end %>
-								<p class="lead"><% if !@venue.price.nil? %><span id="venue-price"><%= render_price(@venue.price) %></span>&nbsp;&bull;&nbsp;<% end %><%= link_to venuetype_path(Venuetype.find(@venue.typeid)) do %><%= Venuetype.find(@venue.typeid).name %><% end %></p>
-								<p><%= link_to neighborhood_path(@venue.neighborhoodid) do %><%= Neighborhood.find(@venue.neighborhoodid).name %><% end %></p>
+								<p class="lead"><% if !@venue.price.nil? %><span id="venue-price"><%= render_price(@venue.price) %></span>&nbsp;&bull;&nbsp;<% end %><%= link_to @venue.venuetype do %><%= @venue.venuetype.name %><% end %></p>
+								<p><%= link_to @venue.neighborhood do %><%= @venue.neighborhood.name %><% end %></p>
 								<address>
 									<%
 										if @yelpActive
@@ -131,9 +131,9 @@ end
 							<li class="comment">
 								<div class="comment-user-info">
 									<% if is_current_user(comment.user_id, true) %>
-									<%= link_to comment_path(comment), method: :delete, data: { confirm: "Are you sure you would like to delete this comment?" } do %><button type="button" class="close" data-dismiss="alert" aria-hidden="true"><span class="lead">&times;</span></button><% end %>
+									<%= link_to comment, method: :delete, data: { confirm: "Are you sure you would like to delete this comment?" } do %><button type="button" class="close" data-dismiss="alert" aria-hidden="true"><span class="lead">&times;</span></button><% end %>
 									<% end %>
-									<%= link_to user_path(comment.user_id) do %><img class="user-avatar user-avatar-thumb" src="<%= User.find(comment.user_id).avatar %>"><%= User.find(comment.user_id).fullname %><% end %> on <%= comment.updated_at.strftime('%B %e, %Y') %>
+									<%= link_to comment.user do %><img class="user-avatar user-avatar-thumb" src="<%= comment.user.avatar %>"><%= comment.user.fullname %><% end %> on <%= comment.updated_at.strftime('%B %e, %Y') %>
 								</div>
 								<div class="comment-body">
 									<%= comment.body %>

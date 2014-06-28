@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<h1><%= @neighborhood.name %></h1><%=  %>
-				<p><% if !@neighborhood.parentneighborhoodid.nil? %>Part of <%= link_to neighborhood_path(@neighborhood.parentneighborhoodid) do %><%= Neighborhood.find(@neighborhood.parentneighborhoodid).name %><% end %>.<% end %> <% if !@childTypes.empty? %>Includes <%= @childTypes.map { |vtype| link_to vtype.name, vtype }.join(', ').html_safe %>.<% end %></p>
+				<p><% if @neighborhood.hasParent %>Part of <%= link_to neighborhood_path(@neighborhood.parent_neighborhood_id) do %><%= @neighborhood.parent.name %><% end %>.<% end %> <% if !@childTypes.empty? %>Includes <%= @childTypes.map { |vtype| link_to vtype.name, vtype }.join(', ').html_safe %>.<% end %></p>
 				<% if !@scopeTotal.empty? %>
 				<table class="table">
 				  <thead>
@@ -21,26 +21,24 @@
 				  <tbody>
 						<% @scopeTotal.each do |venue| %>
 						<%
-							@venuetype = Venuetype.find(venue.typeid)
-
-							if !@venuetype.parenttypeid.nil?
-								if !Venuetype.find(@venuetype.parenttypeid).parenttypeid.nil?
-									if !Venuetype.find(Venuetype.find(@venuetype.parenttypeid).parenttypeid).parenttypeid.nil?
-										@venuetypeTop = Venuetype.find(Venuetype.find(Venuetype.find(Venuetype.find(@venuetype).parenttypeid).parenttypeid).parenttypeid)
+							if venue.venuetype.hasParent
+								if venue.venuetype.parent.hasParent
+									if venue.venuetype.parent.parent.hasParent
+										@venuetypeTop = venue.venuetype.parent.parent.parent
 									else
-										@venuetypeTop = Venuetype.find(Venuetype.find(Venuetype.find(@venuetype).parenttypeid).parenttypeid)
+										@venuetypeTop = venue.venuetype.parent.parent
 									end
 								else
-									@venuetypeTop = Venuetype.find(@venuetype.parenttypeid)
+									@venuetypeTop = venue.venuetype.parent
 								end
 							else
-								@venuetypeTop = @venuetype
+								@venuetypeTop = venue.venuetype
 							end
 						%>
 			      <tr>
 			        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
 							<td class="hidden-xs"><%= link_to venuetype_path(@venuetypeTop) do %><%= @venuetypeTop.name %><% end %></td>
-			        <td><%= link_to venuetype_path(@venuetype) do %><%= @venuetype.name %><% end %></td>
+			        <td><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td>
 			        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
 			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
 			        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
@@ -50,7 +48,7 @@
 				</table>
 				<% end %>
 				<p class="text-center">
-					<%= link_to 'Edit', edit_neighborhood_path(@neighborhood) %>&nbsp;&bull;&nbsp;<%= link_to new_venue_path({ :neighborhoodid => @neighborhood.id }) do %>Add a new venue in <%= @neighborhood.name %><% end %>
+					<%= link_to 'Edit', edit_neighborhood_path(@neighborhood) %>&nbsp;&bull;&nbsp;<%= link_to new_venue_path({ :neighborhood_id => @neighborhood.id }) do %>Add a new venue in <%= @neighborhood.name %><% end %>
 			</div>
 		</div>
 	</div>

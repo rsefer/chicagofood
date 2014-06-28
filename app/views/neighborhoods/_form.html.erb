@@ -16,8 +16,8 @@
     <%= f.text_field :name, :class => 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :parentneighborhoodid, 'Parent Neighborhood' %><br>
-    <%= collection_select(:neighborhood, 'parentneighborhoodid', Neighborhood.order('name ASC'), :id, :name, { :include_blank => 'None' }, { :class => 'form-control' }) %>
+    <%= f.label :parent_neighborhood_id, 'Parent Neighborhood' %><br>
+    <%= collection_select(:neighborhood, 'parent_neighborhood_id', Neighborhood.order('name ASC'), :id, :name, { :include_blank => 'None' }, { :class => 'form-control' }) %>
   </div>
   <div class="form-group">
     <button type="submit" class="btn btn-success"><i class="fa fa-save left"></i>Save</button>

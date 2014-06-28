@@ -16,11 +16,11 @@
     <%= f.text_field :name, :class => 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :parenttypeid, 'Parent Type' %><br>
-    <% if !@venuetype.parenttypeid.nil? %>
-    <%= collection_select(:venuetype, 'parenttypeid', Venuetype.order('name ASC'), :id, :name, {}, { :class => 'form-control' } ) %>
+    <%= f.label :parent_type_id, 'Parent Type' %><br>
+    <% if !@venuetype.parent_type_id.nil? %>
+    <%= collection_select(:venuetype, 'parent_type_id', Venuetype.order('name ASC'), :id, :name, {}, { :class => 'form-control' } ) %>
     <% else %>
-    <%= collection_select(:venuetype, 'parenttypeid', Venuetype.order('name ASC'), :id, :name, { :selected => 1 }, { :class => 'form-control' } ) %>
+    <%= collection_select(:venuetype, 'parent_type_id', Venuetype.order('name ASC'), :id, :name, { :selected => 1 }, { :class => 'form-control' } ) %>
     <% end %>
   </div>
   <div class="form-group">

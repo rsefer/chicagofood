@@ -1,15 +1,6 @@
 <% provide(:title, "Venues") %>
 <section id="venues-all" class="pad">
 	<div class="container">
-		<!--<div class="row">
-			<div class="col-sm-12">
-				<%= form_tag venues_path, :method => 'get' do %>
-					<h2 class="text-center">I would like...</h2>
-					<input type="checkbox" name="byob" value="true">
-					<%= text_field_tag :search, params[:search], { :class => 'form-control input-lg input-huge', :placeholder => 'mexican byob wicker park', :autofocus => true } %>
-				<% end %>
-			</div>
-		</div>-->
 		<div class="row">
 			<div class="col-sm-12">
 				<h1>All Venues</h1>
@@ -28,8 +19,8 @@
 				    <% @venues.each do |venue| %>
 			      <tr>
 			        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
-			        <td><%= link_to venuetype_path(Venuetype.find(venue.typeid)) do %><%= Venuetype.find(venue.typeid).name %><% end %></td>
-			        <td class="hidden-xs"><%= link_to neighborhood_path(Neighborhood.find(venue.neighborhoodid)) do %><%= Neighborhood.find(venue.neighborhoodid).name %><% end %></td>
+			        <td><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td>
+			        <td class="hidden-xs"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
 			        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
 			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
 			        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>

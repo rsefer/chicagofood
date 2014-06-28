@@ -21,14 +21,14 @@
 				  <tbody>
 				    <% @tries.each do |try| %>
 				    <tr>
-				    	<td><%= link_to venue_path(try.venue_id), title: Venue.find(try.venue_id).name do %><%= Venue.find(try.venue_id).name %><% end %></td>
-				    	<td class="hidden-xs"><%= link_to venuetype_path(Venue.find(try.venue_id).typeid), title: Venuetype.find(Venue.find(try.venue_id).typeid).name do %><%= Venuetype.find(Venue.find(try.venue_id).typeid).name %><% end %></td>
-				    	<td class="hidden-xs"><%= link_to neighborhood_path(Neighborhood.find(Venue.find(try.venue_id).neighborhoodid)) do %><%= Neighborhood.find(Venue.find(try.venue_id).neighborhoodid).name %><% end %></td>
-				    	<td class="text-center"><%= render_price(Venue.find(try.venue_id).price) %></td>
+				    	<td><%= link_to venue_path(try.venue_id), title: try.venue.name do %><%= try.venue.name %><% end %></td>
+				    	<td class="hidden-xs"><%= link_to venuetype_path(try.venue.venuetype_id), title: try.venue.venuetype.name do %><%= try.venue.venuetype.name %><% end %></td>
+				    	<td class="hidden-xs"><%= link_to try.venue.neighborhood do %><%= try.venue.neighborhood.name %><% end %></td>
+				    	<td class="text-center"><%= render_price(try.venue.price) %></td>
 				    	<td class="hidden-xs text-center"><%= try.updated_at.strftime('%B %e, %Y') %></td>
 				    	<% if is_current_user(@user) or user_signed_in? %><td class="text-center">
 				    		<% if is_current_user(@user) %>
-				    			<%= link_to try_path(try), title: "Remove #{Venue.find(try.venue_id).name} from your list?", method: :delete, class: 'red' do %><i class="fa fa-times fa-lg"></i><% end %>
+				    			<%= link_to try_path(try), title: "Remove #{try.venue.name} from your list?", method: :delete, class: 'red' do %><i class="fa fa-times fa-lg"></i><% end %>
 				    		<% elsif user_signed_in? and Try.where('user_id = ? AND venue_id = ?', current_user.id, try.venue_id).exists? %><i class="fa fa-check fa-lg green"></i><% end %>
 				    	</td><% end %>
 				    </tr>
