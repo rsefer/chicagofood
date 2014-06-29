@@ -3,11 +3,11 @@
 one:
   name: MyString
   url: MyString
-  typeid: 1
+  venuetype_id: 1
   yelpid: 1
 
 two:
   name: MyString
   url: MyString
-  typeid: 1
+  venuetype_id: 1
   yelpid: 1

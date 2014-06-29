@@ -2,8 +2,8 @@
 
 one:
   name: MyString
-  parentneighborhoodid: 1
+  parent_neighborhood_id: 1
 
 two:
   name: MyString
-  parentneighborhoodid: 1
+  parent_neighborhood_id: 1

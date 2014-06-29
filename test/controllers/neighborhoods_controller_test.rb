@@ -18,7 +18,7 @@ class NeighborhoodsControllerTest < ActionController::TestCase
 
   test "should create neighborhood" do
     assert_difference('Neighborhood.count') do
-      post :create, neighborhood: { name: @neighborhood.name, parentneighborhoodid: @neighborhood.parentneighborhoodid }
+      post :create, neighborhood: { name: @neighborhood.name, parent_neighborhood_id: @neighborhood.parent_neighborhood_id }
     end
 
     assert_redirected_to neighborhood_path(assigns(:neighborhood))
@@ -35,7 +35,7 @@ class NeighborhoodsControllerTest < ActionController::TestCase
   end
 
   test "should update neighborhood" do
-    patch :update, id: @neighborhood, neighborhood: { name: @neighborhood.name, parentneighborhoodid: @neighborhood.parentneighborhoodid }
+    patch :update, id: @neighborhood, neighborhood: { name: @neighborhood.name, parent_neighborhood_id: @neighborhood.parent_neighborhood_id }
     assert_redirected_to neighborhood_path(assigns(:neighborhood))
   end
 

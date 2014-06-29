@@ -18,7 +18,7 @@ class VenuetypesControllerTest < ActionController::TestCase
 
   test "should create venuetype" do
     assert_difference('Venuetype.count') do
-      post :create, venuetype: { name: @venuetype.name, parenttypeid: @venuetype.parenttypeid }
+      post :create, venuetype: { name: @venuetype.name, parent_type_id: @venuetype.parent_type_id }
     end
 
     assert_redirected_to venuetype_path(assigns(:venuetype))
@@ -35,7 +35,7 @@ class VenuetypesControllerTest < ActionController::TestCase
   end
 
   test "should update venuetype" do
-    patch :update, id: @venuetype, venuetype: { name: @venuetype.name, parenttypeid: @venuetype.parenttypeid }
+    patch :update, id: @venuetype, venuetype: { name: @venuetype.name, parent_type_id: @venuetype.parent_type_id }
     assert_redirected_to venuetype_path(assigns(:venuetype))
   end
 
