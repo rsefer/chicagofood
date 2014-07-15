@@ -1,3 +1,5 @@
+@import "bootstrap";
+@import "font-awesome";
 @import "partials/mixins";
 @import "bootstrap-mods";
 
@@ -10,7 +12,7 @@ $orange: #ffd040;
 $green: #5cb85c;
 
 body {
-	background: $turqoise;	
+	background: $turqoise;
 }
 
 body, h1, h2, h3, h4, h5, h6 {
@@ -127,7 +129,7 @@ section {
 
 img.user-avatar {
 	vertical-align: middle;
-	
+
 	@include image-circle();
 }
 
@@ -323,87 +325,87 @@ form.new_comment button {
 }
 
 @media screen and (min-width: 768px) {
-	
+
 	.navbar-nav > li > a {
 		padding-top: 18px;
 		padding-bottom: 18px;
 	}
-	
+
 }
 
 @media screen and (max-width: 767px) {
-	
+
 	header #logo {
 		max-height: 20px;
 		margin-top: -4px;
 	}
-	
+
 	ul.cols2,
 	ol.cols2 {
 		@include columns(1);
 	}
-	
+
 	ul.cols4,
 	ol.cols4 {
 		@include columns(2);
 	}
-	
+
 	h1, h2 {
 		text-align: center;
 	}
-	
+
 	h1 {
 		font-size: 26px;
 	}
-	
+
 	h2 {
 		font-size: 22px;
 	}
-	
+
 	h1 small {
 		display: block;
 		margin-top: 0.5em;
 	}
-	
+
 	.margin-down-xs {
 		margin-bottom: 1em;
 	}
-	
+
 	section .btn {
 		display: block;
 		width: 100%;
 	}
-	
+
 	section .btn {
-		
+
 	}
-	
+
 	#user-show #user-nameandphoto img {
 		font-size: 50px;
 	}
-	
+
 	#user-nameandphoto h1 {
 		text-align: left;
 	}
-	
+
 	#user-nameandphoto h1 small {
 		margin-top: 6px;;
 	}
-	
+
 	#user-count-block .user-count-number {
 		font-size: 2em;
 		line-height: normal;
 	}
-	
+
 	#user-count-block .user-count-title {
 		margin-bottom: 1em;
 	}
-	
+
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) {
-	
+
 	body {
 	}
-	
+
 }
