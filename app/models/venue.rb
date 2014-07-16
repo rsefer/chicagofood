@@ -5,6 +5,11 @@ class Venue < ActiveRecord::Base
 	belongs_to :venuetype
 	belongs_to :neighborhood
 
+	validates :street, :city, :state, presence: true
+
+	geocoded_by :fulladdress
+	after_validation :geocode
+
 	include Recent
 
 	def hasaddress

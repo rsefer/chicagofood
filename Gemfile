@@ -23,6 +23,7 @@ group :production do
   gem 'rails_12factor'
 end
 
+gem 'geocoder'
 gem 'devise'
 gem 'carrierwave'
 gem 'yelp4rails'

@@ -68,6 +68,7 @@ GEM
     font-awesome-sass (4.1.0)
       sass (~> 3.2)
     formatador (0.2.5)
+    geocoder (1.2.3)
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -189,6 +190,7 @@ DEPENDENCIES
   devise
   figaro
   font-awesome-sass
+  geocoder
   guard-livereload
   hirb
   jbuilder

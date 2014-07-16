@@ -1,7 +1,8 @@
 class VenuesController < ApplicationController
 	before_filter :authenticate_user!, except: [:index, :show]
   before_action :set_venue, only: [:show, :edit, :update, :destroy]
-  
+	after_action :update_geocoder, only: [:create, :update]
+
   helper_method :sort_column, :sort_direction
 
   def index
@@ -46,7 +47,7 @@ class VenuesController < ApplicationController
       format.html { redirect_to venues_url }
     end
   end
-  
+
   def rating_average
   	@venue = Venue.find(params[:venue_id])
   	data = { :rating_average => @venue.ratings.average('rating') }
@@ -57,14 +58,24 @@ class VenuesController < ApplicationController
   	def sort_column
 	    Venue.column_names.include?(params[:sort]) ? params[:sort] : "name"
 	  end
-	  
+
 	  def sort_direction
 	    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
 	  end
-	  
+
     def set_venue
       @venue = Venue.find(params[:id])
     end
+
+		def update_geocoder
+			if @venue.latitude.nil? and @venue.street.present?
+				new_location = "#{@venue.street} #{@venue.city} #{@venue.state}"
+				s = Geocoder.search(new_location)
+				@venue.latitude = s[0].latitude
+				@venue.longitude = s[0].longitude
+				@venue.save
+			end
+		end
 
     def venue_params
       params.require(:venue).permit(:name, :url, :venuetype_id, :yelpid, :street, :city, :state, :zipcode, :neighborhood_id, :byob, :craftbeer, :cocktails, :latenight, :cashonly, :price)
