@@ -1,0 +1,68 @@
+<section id="home-main" class="pad">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="map-overall" class="map"></div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script charset="utf-8">
+	var infowindow, map;
+
+	jQuery(document).ready(function($) {
+		initialize(41.92, -87.65);
+	});
+
+	function initialize(latitude, longitude) {
+
+		infowindow = new google.maps.InfoWindow({ content: 'Loading...' });
+
+		var mapOptions = {
+			center: new google.maps.LatLng(latitude, longitude),
+			zoom: 13,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+
+		map = new google.maps.Map(document.getElementById("map-overall"), mapOptions);
+
+		locations = [
+			<% @venues.each do |venue| %>
+			[<%= venue.id %>, <%= venue.latitude %>, <%= venue.longitude %>, '<%= venue.name %>', '<%= venue_path(venue) %>'],
+			<% end %>
+	  ];
+
+	  for (i = 0; i < locations.length; i++) {
+	  	marker = new google.maps.Marker({
+	  		position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+	  		map: map,
+				icon: pinSymbol("#f24848")
+	  	});
+	  	marker.set('id', locations[i][0]);
+
+	  	google.maps.event.addListener(marker, 'click', (function(marker, i) {
+	  		return function() {
+
+					marker.setIcon(pinSymbol('#3d41c3'));
+	  			map.setCenter(marker.getPosition());
+					map.setZoom(15);
+					var contentString = '<div class="map-infowindow"><a href="' + locations[i][4] + '">' + locations[i][3] +'</a></div>';
+					infowindow.setContent(contentString);
+					infowindow.open(map, this);
+				}
+	    })(marker, i));
+	  }
+
+	}
+
+	function pinSymbol(color) {
+    return {
+        path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
+        fillColor: color,
+        fillOpacity: 1,
+        strokeColor: '#000',
+        strokeWeight: 2
+   };
+}
+</script>

@@ -124,6 +124,10 @@ end
 						<% end %>
 					</div>
 					<div class="col-sm-6">
+						<div id="venue-show-map" class="map"></div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="col-sm-6 col-sm-offset-3">
 						<h3>Comments</h3>
 						<% if !@venue.comments.empty? %>
 						<ul class="comments-list">
@@ -165,6 +169,7 @@ end
 <script type="text/javascript">
 jQuery(document).ready(function($) {
 
+	initialize(<%= @venue.latitude %>, <%= @venue.longitude %>);
 
 	/* Rating */
 	var myratingHTML = $('#myrating').html();
@@ -204,4 +209,32 @@ function changeRatingStars(whichStars, starNum) {
 	thisStar.prevAll(whichStars + ' i.fa').removeClass().addClass('fa fa-star');
 	thisStar.nextAll(whichStars + ' i.fa').removeClass().addClass('fa fa-star-o');
 }
+
+function initialize(latitude, longitude) {
+
+	infowindow = new google.maps.InfoWindow({ content: 'Loading...' });
+
+	var mapOptions = {
+		center: new google.maps.LatLng(latitude, longitude),
+		zoom: 15,
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		disableDefaultUI: true
+	};
+
+	map = new google.maps.Map(document.getElementById('venue-show-map'), mapOptions);
+
+	locations = [
+		[<%= @venue.id %>, <%= @venue.latitude %>, <%= @venue.longitude %>]
+	];
+
+	for (i = 0; i < locations.length; i++) {
+		marker = new google.maps.Marker({
+			position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+			map: map
+		});
+		marker.set('id', locations[i][0]);
+	}
+
+}
+
 </script>

@@ -32,6 +32,10 @@ class VenuesController < ApplicationController
   end
 
   def update
+		if @venue.street_changed? or @venue.city_changed? or @venue.state_changed?
+			@changed = true
+		end
+
     respond_to do |format|
       if @venue.update(venue_params)
         format.html { redirect_to @venue, notice: 'Venue was successfully updated.' }
@@ -68,7 +72,7 @@ class VenuesController < ApplicationController
     end
 
 		def update_geocoder
-			if @venue.latitude.nil? and @venue.street.present?
+			if @venue.street.present? and (@venue.latitude.nil? or @changed)
 				new_location = "#{@venue.street} #{@venue.city} #{@venue.state}"
 				s = Geocoder.search(new_location)
 				@venue.latitude = s[0].latitude

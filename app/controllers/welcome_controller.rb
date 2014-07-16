@@ -8,4 +8,8 @@ class WelcomeController < ApplicationController
     @recentActivity.sort_by(&:updated_at)
   end
 
+  def map
+    @venues = Venue.all.sort{|a,b| a.latitude <=> b.latitude }
+  end
+
 end
