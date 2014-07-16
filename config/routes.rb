@@ -1,5 +1,5 @@
 Chicagofood::Application.routes.draw do
-	
+
   resources :neighborhoods
   resources :venuetypes
   resources :ratings
@@ -19,7 +19,9 @@ Chicagofood::Application.routes.draw do
   end
 
   devise_for :users, path_names: { sign_up: 'register' }, :controllers => { :registrations => 'registrations' }
-	
+
+	get 'map' => 'welcome#map'
+
 	root "welcome#index"
-	
+
 end
