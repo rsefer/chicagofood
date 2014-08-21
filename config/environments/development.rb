@@ -26,7 +26,9 @@ Chicagofood::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-  
+
   config.action_mailer.default_url_options = { :host => 'chicagofood.dev:88' }
-  
+
+  Paperclip.options[:command_path] = "/usr/local/bin/"
+
 end
