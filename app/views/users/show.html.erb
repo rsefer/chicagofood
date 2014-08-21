@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div id="user-nameandphoto">
-					<img class="user-avatar user-avatar-med" src="<%= @user.avatarurl %>" alt="<%= @user.fullname %>">
+					<img class="user-avatar user-avatar-med" src="<%= @user.avatar.url(:medium) %>" alt="<%= @user.fullname %>">
 					<h1><%= @user.fullname %><% if is_current_user(@user) %> <small><%= link_to 'Edit Profile', edit_user_registration_path %></small><% end %></h1>
 				</div>
 				<div id="user-count-block" class="row text-center">

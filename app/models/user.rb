@@ -6,8 +6,18 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
-	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/default-avatar.jpg"
-  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  validates :avatar,
+		attachment_content_type: { content_type: /\Aimage\/.*\Z/ },
+		attachment_size: { less_than: 2.megabytes }
+
+	has_attached_file :avatar,
+		:styles => {
+			:medium => '300x300#',
+			:thumb => '100x100#'
+		},
+		:default_url => '/images/default-avatar.jpg',
+		:storage => :s3,
+		:s3_credentials => "#{Rails.root}/config/aws.yml"
 
   def user_comment_count
   	Comment.where(user_id: self.id).count
@@ -19,14 +29,6 @@ class User < ActiveRecord::Base
 
   def user_score
   	self.user_comment_count + self.user_rating_count
-  end
-
-  def avatarurl
-  	if self.avatar.blank?
-  		"/images/default-avatar.jpg"
-  	else
-  		self.avatar
-  	end
   end
 
   def fullname
