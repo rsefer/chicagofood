@@ -27,7 +27,8 @@ end
 
 gem 'geocoder'
 gem 'devise'
-gem 'carrierwave'
+gem 'paperclip', github: 'thoughtbot/paperclip'
+gem 'aws-sdk'
 gem 'yelp4rails'
 gem 'figaro'
 gem 'bootstrap-sass'

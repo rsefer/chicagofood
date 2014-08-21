@@ -1,28 +1,26 @@
 class User < ActiveRecord::Base
-	
-	mount_uploader :avatar, AvatarUploader
-	
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  
+
   has_many :comments, :dependent => :destroy
   has_many :ratings, :dependent => :destroy
   has_many :tries, :dependent => :destroy
-  
+
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+
+	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/default-avatar.jpg"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def user_comment_count
   	Comment.where(user_id: self.id).count
   end
-  
+
   def user_rating_count
   	Rating.where(user_id: self.id).count
   end
-  
+
   def user_score
   	self.user_comment_count + self.user_rating_count
   end
-  
+
   def avatarurl
   	if self.avatar.blank?
   		"/images/default-avatar.jpg"
@@ -30,7 +28,7 @@ class User < ActiveRecord::Base
   		self.avatar
   	end
   end
-  
+
   def fullname
 		if !self.firstname.blank? && !self.lastname.blank?
 			self.firstname + " " + self.lastname
@@ -38,7 +36,7 @@ class User < ActiveRecord::Base
 			self.email
 		end
 	end
-	
+
 	def hasaddress
 		if !self.street.blank? && !self.city.blank?
 			true
@@ -46,7 +44,7 @@ class User < ActiveRecord::Base
 			false
 		end
 	end
-	
+
 	def fulladdress
 		if !self.state.blank?
 			self.street + " " + self.city + ", " + self.state
@@ -54,5 +52,5 @@ class User < ActiveRecord::Base
 			self.street + " " + self.city
 		end
 	end
-  
+
 end
