@@ -56,6 +56,7 @@
 									commented on <%= link_to activity.venue do %><%= activity.venue.name %><% end %>.
 									<% end %>
 								<% end %>
+								<div class="activity-date"><i class="fa fa-fw left"></i><small><%= time_ago_in_words(activity.updated_at).titleize %> ago</small></div>
 							</li>
 							<% end %>
 						</ul>

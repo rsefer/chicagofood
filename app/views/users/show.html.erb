@@ -50,7 +50,7 @@
 									<div class="activity-comment"><%= wrap_quotes(activity.body).html_safe %></div>
 									<% end %>
 								<% end %>
-								<div class="activity-date"><small><%= activity.updated_at.strftime('%B %e, %Y %l:%M %P') %></small></div>
+								<div class="activity-date"><small><%= time_ago_in_words(activity.updated_at).titleize %> ago</small></div>
 							</li>
 							<% end %>
 						</ul>
