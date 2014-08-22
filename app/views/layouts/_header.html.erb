@@ -14,6 +14,7 @@
 				  </div>
 				  <div class="collapse navbar-collapse" id="main-navbar-collapse">
 				  	<ul class="nav navbar-nav navbar-right">
+							<li><%= link_to map_path, title: 'Map' do %><i class="fa fa-map-marker left"></i>Map<% end %></li>
 				  		<% if user_signed_in? %>
 				  		<li><%= link_to user_tries_path(current_user), title: 'To Try' do %>To Try (<%= user_try_count(current_user.id) %>)<% end %></li>
 				  		<li><%= link_to user_path(current_user), title: 'My Profile' do %><img class="user-avatar user-avatar-thumb" src="<%= current_user.avatar.url(:thumb) %>" />Hi, <%= current_user.firstname %><% end %></li>
