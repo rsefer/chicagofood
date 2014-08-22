@@ -233,6 +233,14 @@ ul.nolast li:last-child {
 	border-bottom: 0px;
 }
 
+ul.user-list {
+
+	li:not(:last-child) {
+		margin-bottom: 0.5em;
+	}
+	
+}
+
 .comment .comment-body {
 	margin-top: 1em;
 }
