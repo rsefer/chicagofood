@@ -20,9 +20,9 @@ class UsersController < ApplicationController
       format.html
     end
   end
-  
+
   def try
   	@user = User.find(params[:user_id])
   end
-  
+
 end

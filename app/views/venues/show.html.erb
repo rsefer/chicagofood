@@ -127,29 +127,37 @@ end
 						<div id="venue-show-map" class="map"></div>
 					</div>
 					<div class="clearfix"></div>
-					<div class="col-sm-6 col-sm-offset-3">
+					<div class="col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-2">
 						<h3>Comments</h3>
 						<% if !@venue.comments.empty? %>
 						<ul class="comments-list">
 							<% @venue.comments.each do |comment| %>
-							<li class="comment">
-								<div class="comment-user-info">
-									<% if is_current_user(comment.user_id, true) %>
-									<%= link_to comment, method: :delete, data: { confirm: "Are you sure you would like to delete this comment?" } do %><button type="button" class="close" data-dismiss="alert" aria-hidden="true"><span class="lead">&times;</span></button><% end %>
-									<% end %>
-									<%= link_to comment.user do %><img class="user-avatar user-avatar-thumb" src="<%= comment.user.avatar.url(:thumb) %>"><%= comment.user.fullname %><% end %> on <%= comment.updated_at.strftime('%B %e, %Y') %>
-								</div>
-								<div class="comment-body">
-									<%= comment.body %>
-								</div>
-							</li>
+								<% if !comment.private or comment.user == current_user %>
+								<li class="comment<% if comment.private %> private<% end %>">
+									<div class="comment-user-info">
+										<% if is_current_user(comment.user_id, true) %>
+										<%= link_to comment, method: :delete, data: { confirm: "Are you sure you would like to delete this comment?" } do %><button type="button" class="close" data-dismiss="alert" aria-hidden="true"><span class="lead">&times;</span></button><% end %>
+										<% end %>
+										<%= link_to comment.user do %><img class="user-avatar user-avatar-thumb" src="<%= comment.user.avatar.url(:thumb) %>"><%= comment.user.fullname %><% end %> on <%= comment.updated_at.strftime('%B %e, %Y') %>
+									</div>
+									<div class="comment-body">
+										<%= comment.body %>
+									</div>
+								</li>
+								<% end %>
 							<% end %>
 						</ul>
 						<% end %>
 						<% if user_signed_in? %>
 							<%= form_for([@venue, @venue.comments.build]) do |f| %>
-								<%= f.text_area :body, { :class => 'form-control', :required => 'required', :placeholder => 'Great appetizers! I highly recommend...' } %>
-							  <button type="submit" class="btn btn-block btn-success">Post Comment</button>
+								<div class="form-group">
+									<%= f.text_area :body, { :class => 'form-control', :required => 'required', :placeholder => 'Great appetizers! I highly recommend...' } %>
+								</div>
+								<div class="form-group">
+									<%= f.check_box :private, {}, :true, :false %>
+									<%= f.label :private do %><i class="fa fa-lock left right"></i>Private? <small>(Hidden to others)</small><% end %>
+									<button type="submit" class="post-comment-button btn btn-success">Post Comment</button>
+								</div>
 							<% end %>
 						<% else %>
 						<p><%= link_to "Login", new_user_session_path %> to comment.</p>
