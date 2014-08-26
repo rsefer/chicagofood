@@ -220,11 +220,28 @@ footer #footer-logo {
 	margin-top: 15px;
 }
 
-ul.comments-list li,
-ul.activity-list li {
-	padding-bottom: 1em;
+ul.comments-list,
+ul.activity-list {
+
 	margin-bottom: 1em;
-	border-bottom: 1px solid #eeeeee;
+
+	li {
+
+		padding: 0.5em 0.5em 1em;
+		border-bottom: 1px solid #eeeeee;
+
+		&:not(:first-child) {
+			margin: 1em 0px 0px;
+		}
+
+		&.private {
+			margin-top: 0px;
+			padding: 1em 0.5em;
+			background: #f3f3f3;
+		}
+
+	}
+
 }
 
 ul.nolast li:last-child {
@@ -238,7 +255,7 @@ ul.user-list {
 	li:not(:last-child) {
 		margin-bottom: 0.5em;
 	}
-	
+
 }
 
 .comment .comment-body {
@@ -273,8 +290,14 @@ a.sortablecol.current.asc i.fa.fa-caret-up {
 	margin-bottom: 0px;
 }
 
-#venue-info-checks p {
-	margin-bottom: 0px;
+#venue-info-checks {
+
+	margin-bottom: 0.5em;
+
+	p {
+		margin-bottom: 0px;
+	}
+
 }
 
 .comment .well p:last-child {
@@ -282,21 +305,27 @@ a.sortablecol.current.asc i.fa.fa-caret-up {
 }
 
 .comment button.close {
+	margin-top: -5px;
 	font-size: 14px;
 	height: 20px;
 }
 
-form.new_comment textarea {
-	resize: none;
-	min-height: 50px;
-	border-radius-bottom-left: 0px;
-	border-radius-bottom-right: 0px;
-	border-bottom: 0px;
-}
+form.new_comment {
 
-form.new_comment button {
-	border-radius-top-left: 0px;
-	border-radius-top-right: 0px;
+	textarea {
+		resize: none;
+		min-height: 80px;
+	}
+
+	input[type="checkbox"] {
+		margin-top: 10px;
+	}
+
+	button {
+		float: left;
+		margin-right: 1em;
+	}
+
 }
 
 #user-nameandphoto {
@@ -397,7 +426,24 @@ form.new_comment button {
 		width: 100%;
 	}
 
-	section .btn {
+	.map {
+		margin-bottom: 1em;
+	}
+
+	form.new_comment {
+
+		input[type="checkbox"] {
+			margin-top: inherit;
+		}
+
+		label {
+			margin-bottom: 1em;
+		}
+
+		button {
+			float: none;
+			margin: inherit;
+		}
 
 	}
 
