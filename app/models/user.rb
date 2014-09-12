@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
 		:storage => :s3,
 		:s3_credentials => "#{Rails.root}/config/aws.yml"
 
-  def user_comment_count
-  	Comment.where(user_id: self.id).count
+  def user_public_comment_count
+  	Comment.where(user_id: self.id).where(private: false).count
   end
 
   def user_rating_count
@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   end
 
   def user_score
-  	self.user_comment_count + self.user_rating_count
+  	self.user_public_comment_count + self.user_rating_count
   end
 
   def fullname

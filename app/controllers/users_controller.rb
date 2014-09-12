@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   def index
-    @users = User.all.sort{ |a,b| a.firstname <=> b.firstname }
+    @users = User.all.sort{ |a,b| b.user_score <=> a.user_score }
 
     respond_to do |format|
       format.html
@@ -20,9 +20,9 @@ class UsersController < ApplicationController
       format.html
     end
   end
-  
+
   def try
   	@user = User.find(params[:user_id])
   end
-  
+
 end

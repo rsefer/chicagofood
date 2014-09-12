@@ -36,28 +36,30 @@
 						<% else %>
 						<ul class="activity-list nolast">
 							<% @recentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(10).each do |activity| %>
-							<li>
-								<% if activity.kind_of? Venue or activity.kind_of? Neighborhood or activity.kind_of? Venuetype %>
-									<% if activity.kind_of? Venue %>
-										<i class="fa fa-fw fa-home left"></i><%= link_to activity do %><%= activity.name %><% end %>
-									<% elsif activity.kind_of? Neighborhood %>
-										<i class="fa fa-fw fa-map-marker left"></i><%= link_to activity do %><%= activity.name %><% end %>
-									<% elsif activity.kind_of? Venuetype %>
-										<i class="fa fa-fw fa-cutlery left"></i><%= link_to activity do %><%= activity.name %><% end %>
+								<% if !activity.kind_of? Comment or (activity.kind_of? Comment and (!activity.private or is_current_user(activity.user, true))) %>
+								<li<% if activity.kind_of? Comment and activity.private %> class="private"<% end %>>
+									<% if activity.kind_of? Venue or activity.kind_of? Neighborhood or activity.kind_of? Venuetype %>
+										<% if activity.kind_of? Venue %>
+											<i class="fa fa-fw fa-home left"></i><%= link_to activity do %><%= activity.name %><% end %>
+										<% elsif activity.kind_of? Neighborhood %>
+											<i class="fa fa-fw fa-map-marker left"></i><%= link_to activity do %><%= activity.name %><% end %>
+										<% elsif activity.kind_of? Venuetype %>
+											<i class="fa fa-fw fa-cutlery left"></i><%= link_to activity do %><%= activity.name %><% end %>
+										<% end %>
+										<% if activity.updated_at == activity.created_at %>added<% else %>updated<% end %>.
+									<% elsif activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment %>
+										<% if activity.kind_of? Try %><i class="fa fa-fw fa-plus left"></i><% elsif activity.kind_of? Rating %><i class="fa fa-fw fa-star left"></i><% elsif activity.kind_of? Comment %><i class="fa fa-fw fa-quote-left left"></i><% end %><% if is_current_user(activity.user, true) %>You<% else %><%= link_to activity.user do %><%= activity.user.firstname %><% end %><% end %>
+										<% if activity.kind_of? Try %>
+										added <%= link_to activity.venue do %><%= activity.venue.name %><% end %> to the 'To Try' list.
+										<% elsif activity.kind_of? Rating %>
+										rated <%= link_to activity.venue do %><%= activity.venue.name %><% end %> <%= pluralize(activity.rating, 'star') %>.
+										<% elsif activity.kind_of? Comment %>
+										commented on <%= link_to activity.venue do %><%= activity.venue.name %><% end %>.
+										<% end %>
 									<% end %>
-									<% if activity.updated_at == activity.created_at %>added<% else %>updated<% end %>.
-								<% elsif activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment %>
-									<% if activity.kind_of? Try %><i class="fa fa-fw fa-plus left"></i><% elsif activity.kind_of? Rating %><i class="fa fa-fw fa-star left"></i><% elsif activity.kind_of? Comment %><i class="fa fa-fw fa-quote-left left"></i><% end %><% if is_current_user(activity.user, true) %>You<% else %><%= link_to activity.user do %><%= activity.user.firstname %><% end %><% end %>
-									<% if activity.kind_of? Try %>
-									added <%= link_to activity.venue do %><%= activity.venue.name %><% end %> to the 'To Try' list.
-									<% elsif activity.kind_of? Rating %>
-									rated <%= link_to activity.venue do %><%= activity.venue.name %><% end %> <%= pluralize(activity.rating, 'star') %>.
-									<% elsif activity.kind_of? Comment %>
-									commented on <%= link_to activity.venue do %><%= activity.venue.name %><% end %>.
-									<% end %>
+									<div class="activity-date"><i class="fa fa-fw left"></i><small><%= time_ago_in_words(activity.updated_at).titleize %> ago</small></div>
+								</li>
 								<% end %>
-								<div class="activity-date"><i class="fa fa-fw left"></i><small><%= time_ago_in_words(activity.updated_at).titleize %> ago</small></div>
-							</li>
 							<% end %>
 						</ul>
 						<% end %>
