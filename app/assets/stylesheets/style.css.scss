@@ -53,6 +53,7 @@ h1 {
 	color: $green;
 }
 
+.red,
 a.red {
 	color: $red;
 }
@@ -250,8 +251,6 @@ ul.nolast li:last-child {
 }
 
 ul.user-list {
-
-	font-size: 1.5em;
 
 	li:not(:last-child) {
 		margin-bottom: 2.5em;

@@ -1,0 +1,32 @@
+<% provide(:title, "#{@user.fullname}'s Menu Item Ratings") %>
+<section id="user-ratings" class="pad">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>Menu Item Ratings <small>from <%= link_to @user, title: @user.fullname do %><%= @user.fullname %><% end %></small></h1>
+        <% if @item_ratings.empty? %>
+        <p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> not rated any menu items.</p>
+        <% else %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Menu Item Name</th>
+              <th>Venue</th>
+              <th class="text-center">Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @item_ratings.each do |item_rating| %>
+            <tr>
+              <td><%= item_rating.item.name %></td>
+              <td><%= link_to item_rating.item.venue.name, item_rating.item.venue %></td>
+              <td class="text-center"><% if item_rating.liked %><i class="fa fa-thumbs-up green"></i><% else %><i class="fa fa-thumbs-down red"></i><% end %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

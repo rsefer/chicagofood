@@ -24,12 +24,16 @@ class User < ActiveRecord::Base
   	Comment.where(user_id: self.id).where(private: false).count
   end
 
-  def user_rating_count
+  def user_venue_rating_count
   	Rating.where(user_id: self.id).count
   end
 
+  def user_item_rating_count
+    ItemRating.where(user_id: self.id).count
+  end
+
   def user_score
-  	self.user_public_comment_count + self.user_rating_count
+  	self.user_public_comment_count + self.user_venue_rating_count + self.user_item_rating_count
   end
 
   def fullname

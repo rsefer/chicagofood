@@ -1,5 +1,6 @@
 class ItemRatingsController < ApplicationController
   before_action :set_item_rating, only: [:show, :edit, :update, :destroy]
+  before_action :set_display_user, only: [:index]
 
   def index
     @item_ratings = ItemRating.all
@@ -47,6 +48,10 @@ class ItemRatingsController < ApplicationController
   private
     def set_item_rating
       @item_rating = ItemRating.find(params[:id])
+    end
+
+    def set_display_user
+      @user = User.find(params[:user_id])
     end
 
     def item_rating_params

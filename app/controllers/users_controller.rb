@@ -13,7 +13,8 @@ class UsersController < ApplicationController
     @userTries = Try.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
     @userRatings = Rating.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
     @userComments = Comment.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
-    @userRecentActivity = @userTries + @userRatings + @userComments
+    @userItemRatings = ItemRating.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
+    @userRecentActivity = @userTries + @userRatings + @userComments = @userItemRatings
     @userRecentActivity.sort_by(&:updated_at)
 
     respond_to do |format|
