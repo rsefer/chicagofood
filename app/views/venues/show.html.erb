@@ -127,7 +127,10 @@ end
 						<div id="venue-show-map" class="map"></div>
 					</div>
 					<div class="clearfix"></div>
-					<div class="col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-2">
+					<div class="col-sm-6">
+						<%= link_to venue_items_path(@venue), { class: 'btn btn-block btn-warning' } do %>Menu<% end %>
+					</div>
+					<div class="col-sm-6">
 						<h3>Comments</h3>
 						<% if !@venue.comments.empty? %>
 						<ul class="comments-list">

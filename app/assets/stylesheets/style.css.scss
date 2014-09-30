@@ -6,7 +6,6 @@
 @import "partials/common";
 @import "partials/bootstrap-mods";
 
-
 body {
 	background: $turqoise;
 }
@@ -378,6 +377,47 @@ form.new_comment {
 #footer-fineprint a:visited {
 	color: $white;
 	text-decoration: underline;
+}
+
+.likedislike.input-group {
+
+	float: right;
+	width: 100px;
+
+	.input-group-addon {
+
+		color: $grey;
+		border: 0px;
+
+		&.selected {
+
+			color: $white;
+
+			&.liked {
+				background: $green;
+			}
+
+			&.disliked {
+				background: $red;
+			}
+
+		}
+
+		&:not(.selected):hover {
+
+			.fa-thumbs-o-up {
+				color: $green;
+			}
+
+			.fa-thumbs-o-down {
+				color: $red;
+			}
+
+		}
+
+
+	}
+
 }
 
 @media screen and (min-width: 768px) {

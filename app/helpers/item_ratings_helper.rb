@@ -1,0 +1,2 @@
+module ItemRatingsHelper
+end

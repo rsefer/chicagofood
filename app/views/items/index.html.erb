@@ -1,0 +1,27 @@
+<% provide(:title, "Items | #{@venue.name}") %>
+<section id="venue-new" class="pad">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1><%= link_to @venue.name, @venue %> Menu Items</h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <% if user_signed_in? %><th>&nbsp;</th><% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% @items.each do |item| %>
+              <tr>
+                <td><%= item.name %></td>
+                <% if user_signed_in? %><td><%= render :partial => 'item_ratings/item_rating', :locals => { :item => item } %></td><% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= link_to new_venue_item_path, :class => 'btn btn-success' do %><i class="fa fa-plus left"></i>New Menu Item<% end %>
+      </div>
+    </div>
+  </div>
+</section>

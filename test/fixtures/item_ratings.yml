@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  item_id: 
+  user_id: 
+  liked: 
+  default: MyString
+  'true': MyString
+
+two:
+  item_id: 
+  user_id: 
+  liked: 
+  default: MyString
+  'true': MyString

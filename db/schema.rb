@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140826171421) do
+ActiveRecord::Schema.define(version: 20140929192306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,26 @@ ActiveRecord::Schema.define(version: 20140826171421) do
   end
 
   add_index "comments", ["venue_id"], name: "index_comments_on_venue_id", using: :btree
+
+  create_table "item_ratings", force: true do |t|
+    t.integer  "item_id"
+    t.integer  "user_id"
+    t.boolean  "liked",      default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "item_ratings", ["item_id"], name: "index_item_ratings_on_item_id", using: :btree
+  add_index "item_ratings", ["user_id"], name: "index_item_ratings_on_user_id", using: :btree
+
+  create_table "items", force: true do |t|
+    t.integer  "venue_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "items", ["venue_id"], name: "index_items_on_venue_id", using: :btree
 
   create_table "neighborhoods", force: true do |t|
     t.string   "name"

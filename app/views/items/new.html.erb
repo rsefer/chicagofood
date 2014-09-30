@@ -1,0 +1,11 @@
+<% provide(:title, "New Item") %>
+<section id="venue-new" class="pad">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>New Menu Item for <%= link_to @venue.name, @venue %></h1>
+        <%= render 'form' %>
+      </div>
+    </div>
+  </div>
+</section>

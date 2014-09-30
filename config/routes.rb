@@ -1,5 +1,7 @@
 Chicagofood::Application.routes.draw do
 
+  resources :item_ratings
+
   resources :neighborhoods
   resources :venuetypes
   resources :ratings
@@ -15,6 +17,7 @@ Chicagofood::Application.routes.draw do
   	resources :comments
   	resources :ratings
   	resources :tries
+    resources :items
   	get 'rating_average'
   end
 
