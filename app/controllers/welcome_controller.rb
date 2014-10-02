@@ -4,7 +4,7 @@ class WelcomeController < ApplicationController
   	@venuetypes = Venuetype.all
   	@neighborhoods = Neighborhood.all
 
-  	@recentActivity = Venue.recent + Neighborhood.recent + Venuetype.recent + Try.recent + Rating.recent + Comment.recent
+  	@recentActivity = Venue.recent + Neighborhood.recent + Venuetype.recent + Try.recent + Rating.recent + Comment.recent + ItemRating.recent
     @recentActivity.sort_by(&:updated_at)
   end
 
