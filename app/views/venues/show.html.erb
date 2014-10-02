@@ -21,7 +21,7 @@ end
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h2><%= @venue.name %></h2>
+				<h2 class="venue-title"><%= @venue.name %> <small>in <%= link_to @venue.neighborhood do %><%= @venue.neighborhood.name %><% end %></small></h2>
 				<div class="row margin-down">
 					<div class="col-sm-6">
 						<div id="venue-info-main" class="venue-info-block row">
@@ -38,7 +38,6 @@ end
 									<% end %>
 								<% end %>
 								<p class="lead"><% if !@venue.price.nil? %><span id="venue-price"><%= render_price(@venue.price) %></span>&nbsp;&bull;&nbsp;<% end %><%= link_to @venue.venuetype do %><%= @venue.venuetype.name %><% end %></p>
-								<p><%= link_to @venue.neighborhood do %><%= @venue.neighborhood.name %><% end %></p>
 								<address>
 									<%
 										if @yelpActive
@@ -62,30 +61,27 @@ end
 							</div>
 							<div class="col-xs-6">
 								<% if user_signed_in? %>
-									<p>Your Rating<br>
-									<% if @venue.ratings.where(user_id: current_user.id).present? %>
+									<p>
+										<% if @venue.ratings.where(user_id: current_user.id).present? %>
+										Your Rating:<br>
 										<span id="myrating"><%= render_stars(@venue.ratings.where(user_id: current_user.id).sum('rating')) %></span>
 										<% @thisRating = @venue.ratings.where(user_id: current_user.id).first %>
 										<%= form_for @thisRating, :remote => true do |f| %>
 											<%= f.hidden_field :rating %>
 										<% end %>
-									<% else %>
-										<span id="myrating"><%= render_stars(0) %></span>
-										<%= form_for([@venue, @venue.ratings.build]) do |f| %>
-											<%= f.hidden_field :rating %>
+										<% else %>
+											Rate It:<br>
+											<span id="myrating"><%= render_stars(0) %></span>
+											<%= form_for([@venue, @venue.ratings.build]) do |f| %>
+												<%= f.hidden_field :rating %>
+											<% end %>
 										<% end %>
-									<% end %>
 									</p>
 								<% end %>
 								<div class="row">
-									<% if @yelpActive %>
-									<div class="col-sm-12">
-										<p><a href="<%= @yelpSearch['url'] %>">Yelp Rating</a><br><span class="red"><%= render_stars(@yelpSearch['rating']) %></span></p>
-									</div>
-									<% end %>
 									<% if @venue.ratings.exists? %>
 									<div class=" col-sm-12">
-										<p>Our Rating<br><span id="ourrating"><%= render_stars(@venue.ratings.average('rating')) %></span></p>
+										<p>Our Rating: <%= @venue.ratings.average('rating') %>/5</p>
 									</div>
 									<% end %>
 								</div>
@@ -131,6 +127,10 @@ end
 						<%= link_to venue_items_path(@venue), { class: 'btn btn-block btn-warning' } do %>Menu<% end %>
 					</div>
 					<div class="col-sm-6">
+						<h3>Eats</h3>
+						<% if user_signed_in? %>
+							<%= render 'eats/form' %>
+						<% end %>
 						<h3>Comments</h3>
 						<% if !@venue.comments.empty? %>
 						<ul class="comments-list">

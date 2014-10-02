@@ -1,0 +1,21 @@
+<%= form_for([current_user, current_user.eats.build]) do |f| %>
+  <% if @venue.items.exists? %>
+  <div class="row">
+    <div class="col-md-9 col-xs-8">
+      <div class="form-group">
+        <%= f.select(:item_id, @venue.items.alpha.collect{ |i| [i.name, i.id] }, { include_blank: 'Choose a Menu Item:' }, { class: 'form-control', required: 'required' }) %>
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-4">
+      <div id="active-eat-item-rating">
+      </div>
+    </div>
+  </div>
+  <% end %>
+  <div class="form-group">
+    <a href="#">Add New Menu Item</a>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="post-comment-button btn btn-success">Ate it!</button>
+  </div>
+<% end %>

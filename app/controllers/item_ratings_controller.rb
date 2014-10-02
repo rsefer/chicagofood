@@ -3,7 +3,7 @@ class ItemRatingsController < ApplicationController
   before_action :set_display_user, only: [:index]
 
   def index
-    @item_ratings = ItemRating.all
+    @item_ratings = ItemRating.where(user_id: @user.id)
   end
 
   def show

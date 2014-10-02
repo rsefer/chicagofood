@@ -31,6 +31,7 @@
 						<%= link_to user_ratings_path(@user.id), class: 'btn btn-block btn-primary' do %>Venue Ratings<% end %>
 						<%= link_to user_comments_path(@user.id), class: 'btn btn-block btn-success' do %>Comments<% end %>
 						<%= link_to user_item_ratings_path(@user.id), class: 'btn btn-block btn-warning' do %>Menu Item Ratings<% end %>
+						<%= link_to user_eats_path(@user.id), class: 'btn btn-block btn-info' do %>Eats<% end %>
 					</div>
 					<div class="col-sm-8">
 						<hr class="visible-xs">
@@ -42,22 +43,28 @@
 							<% @userRecentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(10).each do |activity| %>
 								<% if !activity.kind_of? Comment or !activity.private or (activity.private and is_current_user(activity.user, true)) %>
 								<li<% if activity.kind_of? Comment and activity.private %> class="private"<% end %>>
+									<div class="activity-date pull-right"><small><%= time_ago_in_words(activity.updated_at).titleize %> ago</small></div>
 									<% if activity.kind_of? Venue or activity.kind_of? Neighborhood or activity.kind_of? Venuetype %>
-										<% if activity.kind_of? Venue %><i class="fa fa-fw fa-home left"></i><%= link_to venue_path(activity) do %><%= activity.name %><% end %>
-										<% elsif activity.kind_of? Neighborhood %><i class="fa fa-fw fa-map-marker left"></i><%= link_to neighborhood_path(activity) do %><%= activity.name %><% end %>
-										<% elsif activity.kind_of? Venuetype %><i class="fa fa-fw fa-cutlery left"></i><%= link_to venuetype_path(activity) do %><%= activity.name %><% end %>
+										<%
+											if activity.kind_of? Venue %><i class="fa fa-fw fa-home left"></i><%= link_to venue_path(activity) do %><%= activity.name %><% end
+											elsif activity.kind_of? Neighborhood %><i class="fa fa-fw fa-map-marker left"></i><%= link_to neighborhood_path(activity) do %><%= activity.name %><% end
+											elsif activity.kind_of? Venuetype %><i class="fa fa-fw fa-cutlery left"></i><%= link_to venuetype_path(activity) do %><%= activity.name %><% end %>
 										<% end %>
 										<% if activity.updated_at == activity.created_at %>added<% else %>updated<% end %>.
-									<% elsif activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment or activity.kind_of? ItemRating
-										if activity.kind_of? Try %><i class="fa fa-fw fa-plus left"></i><% elsif activity.kind_of? Rating %><i class="fa fa-fw fa-star left"></i><% elsif activity.kind_of? Comment %><i class="fa fa-fw fa-quote-left left"></i><% elsif activity.kind_of? ItemRating %><i class="fa fa-fw <% if activity.liked %>fa-thumbs-up green<% else %>fa-thumbs-down red<% end %> left"></i><% end
+									<% elsif activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment or activity.kind_of? ItemRating or activity.kind_of? Eat
+										if activity.kind_of? Try %><i class="fa fa-fw fa-plus left"></i><%
+										elsif activity.kind_of? Rating %><i class="fa fa-fw fa-star left"></i><%
+										elsif activity.kind_of? Comment %><i class="fa fa-fw fa-quote-left left"></i><%
+										elsif activity.kind_of? ItemRating %><i class="fa fa-fw <% if activity.liked %>fa-thumbs-up green<% else %>fa-thumbs-down red<% end %> left"></i><%
+										elsif activity.kind_of? Eat %><i class="fa fa-fw fa-coffee left"></i><% end
 										if activity.kind_of? Try %>Added <%= link_to venue_path(activity.venue_id) do %><%= activity.venue.name %><% end %> to the <%= link_to user_tries_path(@user.id) do %>list of places to try<% end %>.<%
 										elsif activity.kind_of? Rating %>Rated <%= link_to venue_path(activity.venue_id) do %><%= activity.venue.name %><% end %> <%= pluralize(activity.rating, 'star') %>.
 										<% elsif activity.kind_of? Comment %>Commented on <%= link_to venue_path(activity.venue_id) do %><%= activity.venue.name %><% end %>:
 										<div class="activity-comment"><%= wrap_quotes(activity.body).html_safe %></div>
 										<% elsif activity.kind_of? ItemRating %><% if activity.liked %>Liked<% else %>Disliked<% end %> the <%= activity.item.name %> at <%= link_to activity.item.venue.name, activity.item.venue %>.
+										<% elsif activity.kind_of? Eat %>Had the <%= activity.item.name %> at <%= link_to activity.item.venue.name, activity.item.venue %>.
 										<% end %>
 									<% end %>
-									<div class="activity-date"><small><%= time_ago_in_words(activity.updated_at).titleize %> ago</small></div>
 								</li>
 								<% end %>
 							<% end %>

@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :ratings, :dependent => :destroy
   has_many :tries, :dependent => :destroy
   has_many :item_ratings, :dependent => :destroy
+  has_many :eats, :dependent => :destroy
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 

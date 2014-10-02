@@ -1,17 +1,19 @@
 Chicagofood::Application.routes.draw do
 
-  resources :item_ratings
-
   resources :neighborhoods
   resources :venuetypes
   resources :ratings
   resources :comments
   resources :tries
+  resources :item_ratings
+  resources :eats
+
   resources :users, :path => 'u' do
   	resources :comments
   	resources :ratings
   	resources :tries
     resources :item_ratings
+    resources :eats
   end
 
   resources :venues do
@@ -19,12 +21,14 @@ Chicagofood::Application.routes.draw do
   	resources :ratings
   	resources :tries
     resources :items
+    resources :eats
   	get 'rating_average'
   end
 
   devise_for :users, path_names: { sign_up: 'register' }, :controllers => { :registrations => 'registrations' }
 
 	get 'map' => 'welcome#map'
+  get 'venues_controller/update_item_rating_display', to: 'venues#update_item_rating_display'
 
 	root "welcome#index"
 

@@ -58,6 +58,13 @@ class VenuesController < ApplicationController
   	render :json => data, :status => :ok
   end
 
+	def update_item_rating_display
+		@item = Item.find(params[:item_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
   	def sort_column
 	    Venue.column_names.include?(params[:sort]) ? params[:sort] : "name"
