@@ -45,7 +45,7 @@
 											elsif activity.kind_of? Venuetype %><i class="fa fa-fw fa-cutlery left"></i><%= link_to activity do %><%= activity.name %><% end
 											end
 
-											if activity.updated_at == activity.created_at %>added<% else %>updated<%
+											if activity.updated_at == activity.created_at %> added<% else %> updated<%
 											end %>.<%
 
 										elsif activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment or activity.kind_of? ItemRating
@@ -61,13 +61,14 @@
 										end
 
 										if activity.kind_of? Try %> added <%= link_to activity.venue do %><%= activity.venue.name %><% end %> to the 'To Try' list.<%
-										elsif activity.kind_of? Rating %> rated <%= link_to activity.venue do %><%= activity.venue.name %><% end %> <%= pluralize(activity.rating, 'star') %>.<%
+										elsif activity.kind_of? Rating %> rated <%= link_to activity.venue do %><%= activity.venue.name %><%
+										end
+										%> <%= pluralize(activity.rating, 'star') %>.<%
 										elsif activity.kind_of? Comment %> commented on <%= link_to activity.venue.name, activity.venue %>.<%
 										elsif activity.kind_of? ItemRating %> <% if activity.liked %>liked<% else %>disliked<% end %> the <%= activity.item.name %> at <%= link_to activity.item.venue.name, activity.item.venue %>.<%
 										end
-										
+
 									end %>
-									<div class="activity-date"><i class="fa fa-fw left"></i><small><%= time_ago_in_words(activity.updated_at).titleize %> ago</small></div>
 								</li>
 								<% end %>
 							<% end %>
