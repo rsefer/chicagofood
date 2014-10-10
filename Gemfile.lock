@@ -123,7 +123,6 @@ GEM
     multi_json (1.10.1)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
-    oauth (0.4.7)
     orm_adapter (0.5.0)
     pg (0.17.1)
     polyglot (0.3.5)
@@ -196,9 +195,6 @@ GEM
       json (>= 1.8.0)
     warden (1.2.3)
       rack (>= 1.0)
-    yelp4rails (1.0.0)
-      json
-      oauth (>= 0.4.7)
 
 PLATFORMS
   ruby
@@ -227,4 +223,3 @@ DEPENDENCIES
   spring
   turbolinks
   uglifier
-  yelp4rails

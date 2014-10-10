@@ -4,10 +4,8 @@ one:
   name: MyString
   url: MyString
   venuetype_id: 1
-  yelpid: 1
 
 two:
   name: MyString
   url: MyString
   venuetype_id: 1
-  yelpid: 1

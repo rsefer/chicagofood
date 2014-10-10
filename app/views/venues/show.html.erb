@@ -1,22 +1,4 @@
 <% provide(:title, "#{@venue.name} | Venues") %>
-<%
-if !@venue.yelpid.blank?
-	#http://parabuzzle.github.io/yelp4rails/
-	yelp_keys = {
-		:consumer_key => ENV['YELP_CONSUMER_KEY'],
-		:consumer_secret => ENV['YELP_CONSUMER_SECRET'],
-		:token => ENV['YELP_TOKEN'],
-		:token_secret => ENV['YELP_TOKEN_SECRET']
-	}
-	#@yelpSearch = YelpApi.new(yelp_keys).search_by_business_id(@venue.yelpid)
-	# {"error"=>{"text"=>"Exceeded max daily requests", "id"=>"EXCEEDED_REQS"}}
-	if !defined? @yelpSearch or !@yelpSearch['error'].nil?
-		@yelpActive = false
-	else
-		@yelpActive = true
-	end
-end
-%>
 <section id="venue-show" class="pad">
 	<div class="container">
 		<div class="row">
@@ -40,17 +22,12 @@ end
 								<p class="lead"><% if !@venue.price.nil? %><span id="venue-price"><%= render_price(@venue.price) %></span>&nbsp;&bull;&nbsp;<% end %><%= link_to @venue.venuetype do %><%= @venue.venuetype.name %><% end %></p>
 								<address>
 									<%
-										if @yelpActive
-											@addressWorking = @yelpSearch['location']['address'][0] + ' ' + @yelpSearch['location']['city'] + ' ' + @yelpSearch['location']['state_code']
-											@addressDisplay = @yelpSearch['location']['address'][0] + '<br/>' + @yelpSearch['location']['city'] + ', ' + @yelpSearch['location']['state_code']
+										if @venue.hasaddress
+											@addressWorking = @venue.fulladdress
+											@addressDisplay = @venue.street + '<br/>' + @venue.city + ', ' + @venue.state
 										else
-											if @venue.hasaddress
-												@addressWorking = @venue.fulladdress
-												@addressDisplay = @venue.street + '<br/>' + @venue.city + ', ' + @venue.state
-											else
-												@addressWorking = ''
-												@addressDisplay = ''
-											end
+											@addressWorking = ''
+											@addressDisplay = ''
 										end %>
 									<% if current_user.try(:hasaddress) %>
 									<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.name + ' ') %><%= to_url(@addressWorking) %>/"><%= @addressDisplay.html_safe %></a>
