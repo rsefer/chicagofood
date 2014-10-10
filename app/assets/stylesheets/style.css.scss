@@ -185,6 +185,10 @@ nav.navbar {
 	background-color: $white;
 }
 
+.totry-btn {
+	display: inline;
+}
+
 form#new_try,
 form#edit-try {
 	display: inline;
@@ -511,6 +515,10 @@ form.new_comment {
 			margin-top: $margin / 2;
 		}
 
+	}
+
+	.totry-btn {
+		margin-top: $margin;
 	}
 
 	#user-show #user-nameandphoto img {

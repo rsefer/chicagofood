@@ -1,5 +1,4 @@
 <%= form_for([current_user, current_user.eats.build]) do |f| %>
-  <% if @venue.items.exists? %>
   <div class="row">
     <div class="col-md-9 col-xs-8">
       <div class="form-group">
@@ -10,10 +9,6 @@
       <div id="active-eat-item-rating">
       </div>
     </div>
-  </div>
-  <% end %>
-  <div class="form-group">
-    <%= link_to 'Add New Menu Item', new_venue_item_path(@venue) %>
   </div>
   <div class="form-group">
     <button type="submit" class="post-comment-button btn btn-success">Ate it!</button>

@@ -35,4 +35,10 @@ class Venue < ActiveRecord::Base
 		end
 	end
 
+	def hasExtras
+		if self.byob or self.craftbeer or self.cocktails or self.latenight or self.cashonly
+			true
+		end
+	end
+
 end

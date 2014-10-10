@@ -3,111 +3,114 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h2 class="venue-title"><%= @venue.name %> <small>in <%= link_to @venue.neighborhood do %><%= @venue.neighborhood.name %><% end %></small></h2>
+				<h2 class="venue-title"><%= @venue.name %> <small>in <%= link_to @venue.neighborhood do %><%= @venue.neighborhood.name %><% end %></small><% if user_signed_in? %>
+					<% if @venue.tries.where(user_id: current_user.id).present? %>
+						<% @thisTry = @venue.tries.where(user_id: current_user.id).first %>
+						<%= link_to @thisTry, title: 'Delete', method: :delete, class: 'btn btn-sm btn-danger margin-down totry-btn' do %><i class="fa fa-check fa-fw left"></i>To Try<% end %>
+					<% else %>
+						<a id="totrysubmit" href="#" class="btn btn-sm btn-danger margin-down totry-btn"><i class="fa fa-plus fa-fw left"></i>To Try</a>
+						<%= form_for([@venue, @venue.tries.build]) do |f| %>
+							<% f.hidden_field :user_id, value: current_user.id %>
+						<% end %>
+					<% end %>
+				<% end %></h2>
 				<div class="row margin-down">
 					<div class="col-sm-6">
 						<div id="venue-info-main" class="venue-info-block row">
-							<div class="col-xs-6">
-								<% if user_signed_in? %>
-									<% if @venue.tries.where(user_id: current_user.id).present? %>
-										<% @thisTry = @venue.tries.where(user_id: current_user.id).first %>
-										<%= link_to @thisTry, title: 'Delete', method: :delete, class: 'btn btn-danger margin-down' do %><i class="fa fa-check fa-fw left"></i>To Try<% end %>
-									<% else %>
-										<a id="totrysubmit" href="#" class="btn btn-danger margin-down"><i class="fa fa-plus fa-fw left"></i>To Try</a>
-										<%= form_for([@venue, @venue.tries.build]) do |f| %>
-											<% f.hidden_field :user_id, value: current_user.id %>
-										<% end %>
-									<% end %>
-								<% end %>
-								<p class="lead"><% if !@venue.price.nil? %><span id="venue-price"><%= render_price(@venue.price) %></span>&nbsp;&bull;&nbsp;<% end %><%= link_to @venue.venuetype do %><%= @venue.venuetype.name %><% end %></p>
-								<address>
-									<%
-										if @venue.hasaddress
-											@addressWorking = @venue.fulladdress
-											@addressDisplay = @venue.street + '<br/>' + @venue.city + ', ' + @venue.state
-										else
-											@addressWorking = ''
-											@addressDisplay = ''
-										end %>
-									<% if current_user.try(:hasaddress) %>
-									<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.name + ' ') %><%= to_url(@addressWorking) %>/"><%= @addressDisplay.html_safe %></a>
-									<% else %>
-									<a href="http://maps.google.com/maps?q=<%= to_url(@venue.name + ' ') + to_url(@addressWorking) %>"><%= @addressDisplay.html_safe %></a>
-									<% end %>
-								</address>
-							</div>
-							<div class="col-xs-6">
-								<% if user_signed_in? %>
-									<p>
-										<% if @venue.ratings.where(user_id: current_user.id).present? %>
-										Your Rating:<br>
-										<span id="myrating"><%= render_stars(@venue.ratings.where(user_id: current_user.id).sum('rating')) %></span>
-										<% @thisRating = @venue.ratings.where(user_id: current_user.id).first %>
-										<%= form_for @thisRating, :remote => true do |f| %>
-											<%= f.hidden_field :rating %>
-										<% end %>
-										<% else %>
-											Rate It:<br>
-											<span id="myrating"><%= render_stars(0) %></span>
-											<%= form_for([@venue, @venue.ratings.build]) do |f| %>
+							<div class="col-md-<% if @venue.hasExtras %>8<% else %>12<% end %>">
+								<div class="row">
+									<div class="col-xs-6">
+										<p class="lead"><% if !@venue.price.nil? %><span id="venue-price"><%= render_price(@venue.price) %></span>&nbsp;&bull;&nbsp;<% end %><%= link_to @venue.venuetype do %><%= @venue.venuetype.name %><% end %></p>
+										<address>
+											<%
+												if @venue.hasaddress
+													addressWorking = @venue.fulladdress
+													addressDisplay = @venue.street + '<br/>' + @venue.city + ', ' + @venue.state
+												else
+													addressWorking = ''
+													addressDisplay = ''
+												end %>
+											<% if current_user.try(:hasaddress) %>
+											<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.name + ' ') %><%= to_url(addressWorking) %>/"><%= addressDisplay.html_safe %></a>
+											<% else %>
+											<a href="http://maps.google.com/maps?q=<%= to_url(@venue.name + ' ') + to_url(addressWorking) %>"><%= addressDisplay.html_safe %></a>
+											<% end %>
+										</address>
+									</div>
+									<div class="col-xs-6">
+										<% if user_signed_in? %>
+										<p>
+											<% if @venue.ratings.where(user_id: current_user.id).present? %>
+											Your Rating:<br>
+											<span id="myrating"><%= render_stars(@venue.ratings.where(user_id: current_user.id).sum('rating')) %></span>
+											<% @thisRating = @venue.ratings.where(user_id: current_user.id).first %>
+											<%= form_for @thisRating, :remote => true do |f| %>
 												<%= f.hidden_field :rating %>
 											<% end %>
+											<% else %>
+												Rate It:<br>
+												<span id="myrating"><%= render_stars(0) %></span>
+												<%= form_for([@venue, @venue.ratings.build]) do |f| %>
+													<%= f.hidden_field :rating %>
+												<% end %>
+											<% end %>
+										</p>
 										<% end %>
-									</p>
-								<% end %>
-								<div class="row">
-									<% if @venue.ratings.exists? %>
-									<div class=" col-sm-12">
+										<% if @venue.ratings.exists? %>
 										<p>Our Rating: <%= @venue.ratings.average('rating') %>/5</p>
+										<% end %>
+									</div>
+								</div>
+							</div>
+							<% if @venue.hasExtras %>
+							<div class="col-md-4">
+								<div id="venue-info-checks" class="venue-info-block row">
+									<hr class="visible-xs">
+									<% if @venue.byob %>
+									<div class="col-md-12 col-sm-6 col-xs-6">
+										<p><i class="fa fa-fw fa-beer left"></i>BYOB</p>
+									</div>
+									<% end %>
+									<% if @venue.craftbeer %>
+									<div class="col-md-12 col-sm-6 col-xs-6">
+										<p><i class="fa fa-fw fa-beer left"></i>Craft Beer</p>
+									</div>
+									<% end %>
+									<% if @venue.cocktails %>
+									<div class="col-md-12 col-sm-6 col-xs-6">
+										<p><i class="fa fa-fw fa-glass left"></i>Cocktails</p>
+									</div>
+									<% end %>
+									<% if @venue.latenight %>
+									<div class="col-md-12 col-sm-6 col-xs-6">
+										<p><i class="fa fa-fw fa-clock-o left"></i>Late Night</p>
+									</div>
+									<% end %>
+									<% if @venue.cashonly %>
+									<div class="col-md-12 col-sm-6 col-xs-6">
+										<p><i class="fa fa-fw fa-money left"></i>Cash Only</p>
 									</div>
 									<% end %>
 								</div>
 							</div>
-						</div>
-						<hr>
-						<% if @venue.byob or @venue.craftbeer or @venue.cocktails or @venue.latenight or @venue.cashonly %>
-						<div id="venue-info-checks" class="venue-info-block row">
-							<% if @venue.byob %>
-							<div class="col-sm-4 col-xs-6">
-								<p><i class="fa fa-fw fa-beer left"></i>BYOB</p>
-							</div>
-							<% end %>
-							<% if @venue.craftbeer %>
-							<div class="col-sm-4 col-xs-6">
-								<p><i class="fa fa-fw fa-beer left"></i>Craft Beer</p>
-							</div>
-							<% end %>
-							<% if @venue.cocktails %>
-							<div class="col-sm-4 col-xs-6">
-								<p><i class="fa fa-fw fa-glass left"></i>Cocktails</p>
-							</div>
-							<% end %>
-							<% if @venue.latenight %>
-							<div class="col-sm-4 col-xs-6">
-								<p><i class="fa fa-fw fa-clock-o left"></i>Late Night</p>
-							</div>
-							<% end %>
-							<% if @venue.cashonly %>
-							<div class="col-sm-4 col-xs-6">
-								<p><i class="fa fa-fw fa-money left"></i>Cash Only</p>
-							</div>
 							<% end %>
 						</div>
-						<hr class="visible-xs">
-						<% end %>
 					</div>
-					<div class="col-sm-6">
+					<div class="col-sm-6 hidden-xs">
 						<div id="venue-show-map" class="map"></div>
 					</div>
 					<div class="clearfix"></div>
+					<% if @venue.items.exists? %>
 					<div class="col-sm-6">
 						<%= link_to venue_items_path(@venue), { class: 'btn btn-block btn-warning' } do %>Menu<% end %>
 					</div>
+					<% end %>
 					<div class="col-sm-6">
-						<h3>Eats</h3>
-						<% if user_signed_in? %>
+						<% if user_signed_in? and @venue.items.exists? %>
+							<h3>Eats</h3>
 							<%= render 'eats/form' %>
 						<% end %>
+						<p><%= link_to 'Add New Menu Item', new_venue_item_path(@venue) %></p>
 						<h3>Comments</h3>
 						<% if !@venue.comments.empty? %>
 						<ul class="comments-list">
