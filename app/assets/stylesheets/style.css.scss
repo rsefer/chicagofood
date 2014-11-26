@@ -19,6 +19,7 @@ header {
 }
 
 header #logo {
+	display: inline-block;
 	max-height: 28px;
 	margin-right: 0.75em;
 	vertical-align: middle;
@@ -164,6 +165,8 @@ nav.navbar {
 	border: none;
 	border-radius: 0px;
 }
+
+
 
 .navbar-toggle {
 	margin-right: 0px;
