@@ -3,7 +3,6 @@ class Venue < ActiveRecord::Base
 	has_many :ratings, :dependent => :destroy
 	has_many :tries, :dependent => :destroy
 	has_many :items, :dependent => :destroy
-	has_many :eats, :dependent => :destroy
 
 	belongs_to :venuetype
 	belongs_to :neighborhood
