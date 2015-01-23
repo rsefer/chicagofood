@@ -9,7 +9,7 @@ class WelcomeController < ApplicationController
   end
 
   def map
-    @venues = Venue.all.sort{|a,b| a.latitude <=> b.latitude }
+    @venues = Venue.all
   end
 
 end
