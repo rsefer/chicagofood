@@ -10,6 +10,8 @@ class VenuesController < ApplicationController
   end
 
   def show
+		@addressWorking = @venue.fulladdress
+		@addressDisplay = @venue.street + '<br/>' + @venue.city + ', ' + @venue.state
   end
 
   def new

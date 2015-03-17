@@ -21,21 +21,15 @@
 								<div class="row">
 									<div class="col-xs-6">
 										<p class="lead"><% if !@venue.price.nil? %><span id="venue-price"><%= render_price(@venue.price) %></span>&nbsp;&bull;&nbsp;<% end %><%= link_to @venue.venuetype do %><%= @venue.venuetype.name %><% end %></p>
+										<% if @venue.hasaddress %>
 										<address>
-											<%
-												if @venue.hasaddress
-													addressWorking = @venue.fulladdress
-													addressDisplay = @venue.street + '<br/>' + @venue.city + ', ' + @venue.state
-												else
-													addressWorking = ''
-													addressDisplay = ''
-												end %>
 											<% if current_user.try(:hasaddress) %>
-											<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.name + ' ') %><%= to_url(addressWorking) %>/"><%= addressDisplay.html_safe %></a>
+											<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.name + ' ') %><%= to_url(@addressWorking.to_s) %>/"><%= @addressDisplay.html_safe %></a>
 											<% else %>
-											<a href="http://maps.google.com/maps?q=<%= to_url(@venue.name + ' ') + to_url(addressWorking) %>"><%= addressDisplay.html_safe %></a>
+											<a href="http://maps.google.com/maps?q=<%= to_url(@venue.name + ' ') + to_url(@addressWorking.to_s) %>"><%= @addressDisplay.html_safe %></a>
 											<% end %>
 										</address>
+										<% end %>
 									</div>
 									<div class="col-xs-6">
 										<% if user_signed_in? %>
