@@ -6,7 +6,7 @@ class Venuetype < ActiveRecord::Base
   include Recent
 
   def hasParent
-    if self.parent_type_id
+    unless self.parent_type_id.nil?
       true
     else
       false
@@ -18,6 +18,14 @@ class Venuetype < ActiveRecord::Base
       Venuetype.find(self.parent_type_id)
     else
       nil
+    end
+  end
+
+  def isBar
+    if self.id == 2 or (self.hasParent and self.parent.isBar)
+      true
+    else
+      false
     end
   end
 
