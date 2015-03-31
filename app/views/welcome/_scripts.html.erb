@@ -1,0 +1,35 @@
+<script type="text/javascript">
+google.maps.event.addDomListener(window, 'load', initialize(41.92, -87.65));
+
+locations = [
+  <% @venues.each do |venue| %>
+  [<%= venue.id %>, <%= venue.latitude %>, <%= venue.longitude %>, '<%= venue.name %>', '<%= venue_path(venue) %>', <% if venue.venuetype.isBar %>true<% else %>false<% end %>],
+  <% end %>
+];
+
+for (i = 0; i < locations.length; i++) {
+  var iconSymbol;
+  if (locations[i][5]) {
+    iconSymbol = '/assets/mug.svg';
+  } else {
+    iconSymbol = '/assets/spoon-knife.svg';
+  }
+  marker = new google.maps.Marker({
+    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+    map: map,
+    icon: iconSymbol
+  });
+  marker.set('id', locations[i][0]);
+  marker.set('isBar', locations[i][5]);
+  markerList.push(marker);
+
+  google.maps.event.addListener(marker, 'click', (function(marker, i) {
+    return function() {
+      map.setCenter(marker.getPosition());
+      map.setZoom(17);
+      infowindow.setContent('<div class="map-infowindow"><a href="' + locations[i][4] + '">' + locations[i][3] +'</a></div>');
+      infowindow.open(map, this);
+    }
+  })(marker, i));
+}
+</script>

@@ -37,12 +37,11 @@ h1 {
 	width: 100%;
 	min-height: 200px;
 
-	&#map-overall {
+	&.map-all {
 		height: 600px;
 	}
 
 	.map-infowindow {
-		min-width: 200px;
 		font-weight: bold;
 		text-align: center;
 	}
@@ -59,7 +58,13 @@ a.red {
 }
 
 img {
+
 	max-width: 100%;
+
+	.map & {
+		max-width: none;
+	}
+
 }
 
 ul {
