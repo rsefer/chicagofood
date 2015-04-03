@@ -2,13 +2,16 @@
 <section id="home-main" class="pad">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-2">
+			<div class="map-filters col-sm-12">
+				<a data-target="bars" class="btn btn-success btn-small map-toggle" href="#">Bars<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i></a>
+				<a data-target="restaurants" class="btn btn-success btn-small map-toggle" href="#">Restaurants<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i></a>
+				<a data-target="tries" class="btn btn-default btn-small map-toggle isHidden" href="#">To Try<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i></a>
 			</div>
-			<div class="col-sm-10">
+			<div class="col-sm-12">
 				<div id="google-map" class="map map-all"></div>
 			</div>
 		</div>
 	</div>
 </section>
 
-<%= render 'scripts' %>
+<%= render 'mapscript' %>
