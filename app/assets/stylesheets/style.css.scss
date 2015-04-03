@@ -438,6 +438,34 @@ form.new_comment {
 
 }
 
+.map-filters {
+
+	margin-bottom: 1em;
+
+	.fa-circle-o {
+		display: none;
+	}
+
+	.btn.btn-default {
+		background-color: $white;
+		color: $disabled;
+		border-color: $disabled;
+	}
+
+	a.isHidden {
+
+		.fa-check {
+			display: none;
+		}
+
+		.fa-circle-o {
+			display: inline-block;
+		}
+
+	}
+
+}
+
 @media screen and (min-width: 768px) {
 
 	.navbar-nav > li > a {
