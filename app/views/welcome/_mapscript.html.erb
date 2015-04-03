@@ -18,9 +18,9 @@ locations = [
 for (i = 0; i < locations.length; i++) {
   var iconSymbol;
   if (locations[i]['isBar']) {
-    iconSymbol = '/assets/mug.svg';
+    iconSymbol = '/images/mug.svg';
   } else {
-    iconSymbol = '/assets/spoon-knife.svg';
+    iconSymbol = '/images/spoon-knife.svg';
   }
   marker = new google.maps.Marker({
     position: new google.maps.LatLng(locations[i]['lat'], locations[i]['lng']),
