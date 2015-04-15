@@ -6,7 +6,11 @@ class VenuesController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-  	@venues = Venue.order(sort_column + " " + sort_direction)
+		if params[:sort].present? or params[:direction].present?
+  		@venues = Venue.order(sort_column + " " + sort_direction)
+		else
+			@venues = Venue.all.sort_by { |v| v.sortable_name }
+		end
   end
 
   def show

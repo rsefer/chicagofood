@@ -40,4 +40,8 @@ class Venue < ActiveRecord::Base
 		end
 	end
 
+	def sortable_name
+		self.name.sub(/^(the|a|an)\s+/i, '')
+	end
+
 end
