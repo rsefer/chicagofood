@@ -9,7 +9,25 @@ class WelcomeController < ApplicationController
   end
 
   def map
-    @venues = Venue.all
+    @tries = []
+    if user_signed_in? and params[:totry] == '1'
+      current_user.tries.each do |t|
+        @tries.push(t.venue)
+      end
+    else
+      @tries = Venue.all
+    end
+
+    if params[:restaurants] == '0'
+      @restaurants = Venue.none
+    else
+      @restaurants = Venue.all
+    end
+
+    @venues = @tries + @restaurants
+
+    @restaurantsButtonHTML = 'Restaurants<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
+    @tryButtonHTML = 'To Try<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
   end
 
 end
