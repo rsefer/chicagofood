@@ -4,8 +4,8 @@
 		<div class="row">
 			<div class="map-filters col-sm-12">
 				<a data-target="bars" class="btn btn-success btn-small map-toggle" href="#">Bars<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i></a>
-				<a data-target="restaurants" class="btn btn-success btn-small map-toggle" href="#">Restaurants<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i></a>
-				<a data-target="tries" class="btn btn-default btn-small map-toggle isHidden" href="#">To Try<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i></a>
+				<% if params[:restaurants] == '0' %><%= link_to raw(@restaurantsButtonHTML), params.except(:restaurants), :class => 'btn btn-default btn-small isHidden' %><% else %><%= link_to raw(@restaurantsButtonHTML), params.except(:restaurants).merge(:restaurants => 0), :class => 'btn btn-success btn-small' %><% end %>
+				<% if params[:totry] == '1' %><%= link_to raw(@tryButtonHTML), params.except(:totry), :class => 'btn btn-success btn-small' %><% else %><%= link_to raw(@tryButtonHTML), params.except(:totry).merge(:totry => 1), :class => 'btn btn-default btn-small isHidden' %><% end %>
 			</div>
 			<div class="col-sm-12">
 				<div id="google-map" class="map map-all"></div>
