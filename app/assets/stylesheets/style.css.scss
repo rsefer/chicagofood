@@ -197,6 +197,10 @@ nav.navbar {
 	display: inline;
 }
 
+.menu-btn {
+	margin-top: $margin;
+}
+
 form#new_try,
 form#edit-try {
 	display: inline;
@@ -477,6 +481,10 @@ form.new_comment {
 }
 
 @media screen and (max-width: 767px) {
+
+	.eats-section {
+		margin-top: $margin;
+	}
 
 	header #logo {
 		max-height: 20px;

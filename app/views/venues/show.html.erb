@@ -88,18 +88,19 @@
 								</div>
 							</div>
 							<% end %>
+							<% if @venue.items.exists? %>
+							<div class="col-sm-6">
+								<%= link_to venue_items_path(@venue), { class: 'btn btn-block btn-warning menu-btn' } do %><i class="fa fa-newspaper-o left"></i>Menu<% end %>
+							</div>
+							<% end %>
 						</div>
 					</div>
 					<div class="col-sm-6 hidden-xs">
 						<div id="google-map" class="map map-single"></div>
 					</div>
 					<div class="clearfix"></div>
-					<% if @venue.items.exists? %>
-					<div class="col-sm-6">
-						<%= link_to venue_items_path(@venue), { class: 'btn btn-block btn-warning' } do %>Menu<% end %>
-					</div>
-					<% end %>
-					<div class="col-sm-6">
+
+					<div class="col-sm-6 eats-section">
 						<% if user_signed_in? and @venue.items.exists? %>
 							<h3>Eats</h3>
 							<%= render 'eats/form' %>
