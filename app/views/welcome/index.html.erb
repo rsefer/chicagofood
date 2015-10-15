@@ -48,9 +48,10 @@
 											if activity.updated_at == activity.created_at %> added<% else %> updated<%
 											end %>.<%
 
-										elsif activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment or activity.kind_of? ItemRating
+										elsif activity.kind_of? List or activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment or activity.kind_of? ItemRating
 
 											if activity.kind_of? Try %><i class="fa fa-fw fa-plus left"></i><%
+											elsif activity.kind_of? List %><i class="fa fa-fw fa-list left"></i><%
 											elsif activity.kind_of? Rating %><i class="fa fa-fw fa-star left"></i><%
 											elsif activity.kind_of? Comment %><i class="fa fa-fw fa-quote-left left"></i><%
 											elsif activity.kind_of? ItemRating %><i class="fa fa-fw fa-thumbs-<% if activity.liked %>up green <% else %>down red<% end %> left"></i><%
@@ -61,6 +62,7 @@
 										end
 
 										if activity.kind_of? Try %> added <%= link_to activity.venue do %><%= activity.venue.name %><% end %> to the 'To Try' list.<%
+										elsif activity.kind_of? List %> <% if activity.updated_at == activity.created_at %>created<% else %>updated<% end %> the <%= link_to activity.title, user_list_path(activity.user, activity) %> list.<%
 										elsif activity.kind_of? Rating %> rated <%= link_to activity.venue do %><%= activity.venue.name %><%
 										end
 										%> <%= pluralize(activity.rating, 'star') %>.<%

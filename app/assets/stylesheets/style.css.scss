@@ -192,7 +192,8 @@ nav.navbar {
 	background-color: $white;
 }
 
-.totry-btn {
+.totry-btn,
+.addvenue-btn {
 	display: inline;
 }
 
@@ -552,7 +553,8 @@ form.new_comment {
 
 	}
 
-	.totry-btn {
+	.totry-btn,
+	.addvenue-btn {
 		margin-top: $margin;
 	}
 

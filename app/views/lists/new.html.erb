@@ -1,0 +1,12 @@
+<% provide(:title, "New List") %>
+<section id="list-new" class="pad">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>New List</h1>
+				<%= render 'form' %>
+				<%= link_to 'Back', user_lists_path(@user) %>
+			</div>
+		</div>
+	</div>
+</section>

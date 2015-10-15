@@ -14,6 +14,9 @@ Chicagofood::Application.routes.draw do
   	resources :tries
     resources :item_ratings
     resources :eats
+    resources :lists do
+      resources :list_items
+    end
   end
 
   resources :venues do

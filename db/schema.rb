@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141010184054) do
+ActiveRecord::Schema.define(version: 20151015184914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,29 @@ ActiveRecord::Schema.define(version: 20141010184054) do
   end
 
   add_index "items", ["venue_id"], name: "index_items_on_venue_id", using: :btree
+
+  create_table "list_items", force: true do |t|
+    t.integer  "list_id"
+    t.date     "date"
+    t.text     "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "venue_id"
+  end
+
+  add_index "list_items", ["list_id"], name: "index_list_items_on_list_id", using: :btree
+  add_index "list_items", ["venue_id"], name: "index_list_items_on_venue_id", using: :btree
+
+  create_table "lists", force: true do |t|
+    t.integer  "user_id"
+    t.boolean  "private"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lists", ["user_id"], name: "index_lists_on_user_id", using: :btree
 
   create_table "neighborhoods", force: true do |t|
     t.string   "name"

@@ -53,9 +53,9 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-sass (3.3.3)
+    bootstrap-sass (3.3.5.1)
       autoprefixer-rails (>= 5.0.0.1)
-      sass (>= 3.2.19)
+      sass (>= 3.3.0)
     builder (3.2.2)
     celluloid (0.16.0)
       timers (~> 4.0.0)
@@ -215,7 +215,7 @@ DEPENDENCIES
   aws-sdk
   better_errors
   binding_of_caller
-  bootstrap-sass
+  bootstrap-sass (~> 3.3.5)
   coffee-rails
   devise
   figaro

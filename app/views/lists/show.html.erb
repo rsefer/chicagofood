@@ -1,0 +1,52 @@
+<% provide(:title, "'#{@list.title}' from #{@user.fullname}") %>
+<section id="user-list" class="pad">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<% if @list.private and !is_current_user(@list.user) %>
+				<h1>Private List</h1>
+				<p class="lead">This is a private list. Go <%= link_to 'back', @list.user %>.</p>
+				<% else %>
+				<h1><% if @list.private %><i class="fa fa-lock left"></i><% end %><%= @list.title %> <small>from <%= link_to user_path(@user.id), title: @user.fullname do %><%= @user.fullname %><% end %></small><% if is_current_user(@list.user) %>
+					<%= link_to new_user_list_list_item_path(@user, @list), class: 'btn btn-sm btn-danger addvenue-btn' do %><i class="fa fa-plus left"></i>Add Venue<% end %>
+				<% end %></h1>
+				<% if @list.description.present? %>
+				<p class="lead"><%= @list.description %></p>
+				<% end %>
+				<% if @list.venue_count == 0 %>
+				<p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> not added any places to this list.</p>
+				<% else %>
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th>Name</th>
+				      <th class="hidden-xs">Neighborhood</th>
+				      <th>Date</th>
+				      <% if is_current_user(@user) or user_signed_in? %><th>&nbsp;</th><% end %>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <% @list.list_items.each do |list_item| %>
+				    <tr>
+							<td><%= link_to list_item.venue.name, list_item.venue %></td>
+							<td><%= link_to list_item.venue.neighborhood.name, list_item.venue.neighborhood %></td>
+							<td><% if list_item.date %><%= list_item.date %><% else %>&mdash;<% end %></td>
+							<% if is_current_user(list_item.list.user) or user_signed_in? %><td class="text-center">
+				    		<% if is_current_user(list_item.list.user) %>
+				    			<%= link_to user_list_list_item_path(list_item.list.user, list_item.list, list_item), title: "Remove #{list_item.venue.name} from your list?", method: :delete, class: 'red' do %><i class="fa fa-times fa-lg"></i><% end %><% end %>
+				    	</td><% end %>
+				    </tr>
+				    <% end %>
+				  </tbody>
+				</table>
+				<% end %>
+				<% end %>
+			</div>
+		  <div class="row">
+		    <div class="col-sm-12 text-center">
+		      <p><%= link_to 'Back', user_path, title: 'Back' %><% if is_current_user(@user) %>&nbsp;&bull;&nbsp;<%= link_to edit_user_list_path(@list.user, @list), title: 'Edit' do %>Edit List<% end %><% end %></p>
+		    </div>
+		  </div>
+		</div>
+	</div>
+</section>

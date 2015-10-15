@@ -14,3 +14,11 @@ function initialize(latitude, longitude) {
 
 	map = new google.maps.Map(document.getElementById('google-map'), mapOptions);
 }
+
+jQuery(document).ready(function($) {
+
+	$('.datepicker').datepicker({
+		format: 'yyyy-mm-dd'
+	});
+
+});

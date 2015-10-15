@@ -1,0 +1,29 @@
+<h1>Listing list_items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>List</th>
+      <th>Date</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @list_items.each do |list_item| %>
+      <tr>
+        <td><%= list_item.list %></td>
+        <td><%= list_item.date %></td>
+        <td><%= list_item.notes %></td>
+        <td><%= link_to 'Show', list_item %></td>
+        <td><%= link_to 'Edit', edit_list_item_path(list_item) %></td>
+        <td><%= link_to 'Destroy', list_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New List item', new_list_item_path %>
