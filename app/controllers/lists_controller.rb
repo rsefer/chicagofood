@@ -7,9 +7,9 @@ class ListsController < ApplicationController
 
   def index
     if current_user
-      @lists = List.all
+      @lists = List.where(user_id: @user.id)
     else
-      @lists = List.all.publicLists
+      @lists = List.where(user_id: @user.id).publicLists
     end
 
     respond_with(@lists)
