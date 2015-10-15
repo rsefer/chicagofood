@@ -1,0 +1,12 @@
+<% provide(:title, "New Venue for '#{@list.title}'") %>
+<section id="list-item-new" class="pad">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>New Venue for '<%= @list.title %>'</h1>
+				<%= render 'form' %>
+				<%= link_to 'Back', user_list_path(@list.user, @list) %>
+			</div>
+		</div>
+	</div>
+</section>

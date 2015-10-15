@@ -1,0 +1,32 @@
+<%= form_for([@list.user, @list, @list_item]) do |f| %>
+  <% if @list_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@list_item.errors.count, "error") %> prohibited this list_item from being saved:</h2>
+
+      <ul>
+      <% @list_item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :venue_id, 'Venue' %><br>
+    <%= f.select :venue_id, Venue.all.order(:name).collect {|n| [ n.name, n.id ] }, {}, { :class => 'form-control' } %>
+  </div>
+  <div class="form-group">
+    <%= f.label :date, 'Date (optional)' %>
+    <div class="input-group">
+      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      <%= f.text_field :date, :placeholder => 'YYYY-MM-DD', class: 'form-control datepicker' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :notes %><br>
+    <%= f.text_area :notes, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-success"><i class="fa fa-save left"></i>Save</button>
+  </div>
+<% end %>
