@@ -20,6 +20,7 @@ class ListItemsController < ApplicationController
 
   def destroy
     @list_item.destroy
+    @list.touch
     respond_with(@list.user, @list)
   end
 
