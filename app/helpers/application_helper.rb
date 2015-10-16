@@ -4,24 +4,24 @@ module ApplicationHelper
 		if isUserID
 			user = User.find(user)
 		end
-		
+
 		if !current_user.nil? && user.id == current_user.id
 			true
 		else
 			false
 		end
 	end
-	
+
 	def pluralize_without_count(count, noun, text = nil)
 	  if count != 0
 	    count == 1 ? "an #{noun}#{text}" : "#{noun.pluralize}#{text}"
 	  end
 	end
-	
+
 	def to_url(string)
 		string.gsub(' ', '+').gsub(',', '').gsub('#', '')
 	end
-	
+
 	def sortable(column, title = nil)
 	  title ||= column.titleize
 	  css_class = column == sort_column ? "sortablecol current #{sort_direction}" : "sortablecol"
@@ -29,7 +29,25 @@ module ApplicationHelper
 	  carets = title + '<i class="fa fa-caret-down right"></i><i class="fa fa-caret-up right"></i>'.html_safe
 	  link_to raw(carets), {:sort => column, :direction => direction}, {:class => css_class}
 	end
-	
+
+	def render_venuetype_hierarchy(parent_id, listClasses = '')
+		listcontent = '<ul class="' + listClasses + '">'
+		Venuetype.find(parent_id).childTypes.each do |venuetype|
+			listcontent += '<li>'
+			logger.debug "Name: #{venuetype.name} Parent: #{venuetype.parent.name}"
+			if parent_id != 1 and parent_id != 2
+				listcontent += '<i class="fa fa-fw fa-rotate-90 fa-level-up"></i>'
+			end
+			listcontent += '<a href="' + venuetype_path(venuetype.id) + '">' + venuetype.name + '</a>'
+			if venuetype.childTypes.present?
+				listcontent += render_venuetype_hierarchy(venuetype.id, 'venue-type-list')
+			end
+			listcontent += '</li>'
+		end
+		listcontent += '</ul>'
+		listcontent.html_safe
+	end
+
 	def render_price(price)
 		if price == 4
 			'<i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i>'.html_safe
@@ -39,9 +57,9 @@ module ApplicationHelper
 			'<i class="fa fa-usd"></i><i class="fa fa-usd"></i>'.html_safe
 		elsif price == 1
 			'<i class="fa fa-usd"></i>'.html_safe
-		end 
+		end
 	end
-	
+
 	def render_stars(star_rating)
 		if star_rating >= 4.8
 			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>'.html_safe
@@ -67,7 +85,7 @@ module ApplicationHelper
 			'<i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
 		end
 	end
-	
+
 	def us_states
     [
       ['Alabama', 'AL'],

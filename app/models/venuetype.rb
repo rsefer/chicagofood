@@ -21,6 +21,10 @@ class Venuetype < ActiveRecord::Base
     end
   end
 
+  def childTypes
+    Venuetype.where(parent_type_id: self.id)
+  end
+
   def isBar
     if self.id == 2 or (self.hasParent and self.parent.isBar)
       true

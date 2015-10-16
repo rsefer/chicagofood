@@ -77,11 +77,27 @@ ul {
 		padding-left: 2rem;
 		list-style-type: disc;
 	}
+
+	&.venue-type-list {
+
+		padding-left: 0rem;
+
+		.venue-type-list {
+			padding-left: 2rem;
+		}
+
+	}
+
 }
 
 ul.cols2,
 ol.cols2 {
 	columns: 2;
+}
+
+ul.cols3,
+ol.cols3 {
+	columns: 3;
 }
 
 ul.cols4,
@@ -498,7 +514,9 @@ form.new_comment {
 	}
 
 	ul.cols2,
-	ol.cols2 {
+	ol.cols2,
+	ul.cols3,
+	ol.cols3 {
 		columns: 1;
 	}
 

@@ -5,7 +5,7 @@ class VenuetypesController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @venuetypes = Venuetype.all.sort{ |a,b| a.name <=> b.name }
+    @venuetypes = Venuetype.where(parent_type_id: nil).sort{ |a,b| a.name <=> b.name }
   end
 
   def show
