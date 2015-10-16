@@ -2,6 +2,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
+				<% if !user_signed_in? %>
+				<div class="text-center"><p class="lead">New? Welcome! <%= link_to 'Read about Chicago Food here', about_path %> and then <%= link_to 'register your account', new_user_registration_path %>.</p></div><hr>
+				<% end %>
 				<div class="row">
 					<div class="col-md-8 col-md-push-4">
 						<%= link_to new_venue_path, { :class => 'btn btn-lg btn-block btn-success margin-down' } do %><i class="fa fa-plus left"></i>Add a new Venue<% end %>

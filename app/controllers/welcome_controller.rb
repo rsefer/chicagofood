@@ -30,4 +30,7 @@ class WelcomeController < ApplicationController
     @tryButtonHTML = 'To Try<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
   end
 
+  def about
+  end
+
 end

@@ -68,9 +68,15 @@ img {
 }
 
 ul {
+
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
+
+	&.lead {
+		padding-left: 2rem;
+		list-style-type: disc;
+	}
 }
 
 ul.cols2,

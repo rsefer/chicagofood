@@ -31,6 +31,7 @@ Chicagofood::Application.routes.draw do
   devise_for :users, path_names: { sign_up: 'register' }, :controllers => { :registrations => 'registrations' }
 
 	get 'map' => 'welcome#map'
+  get 'about' => 'welcome#about'
   get 'venues_controller/update_item_rating_display', to: 'venues#update_item_rating_display'
 
 	root "welcome#index"
