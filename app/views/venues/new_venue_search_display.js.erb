@@ -1,1 +1,4 @@
 $('#search-results ul').empty().append("<%= escape_javascript(render(:partial => 'venues/searchresults', collection: @searchresults, as: :venue)) %>");
+if (<%= @searchresults.size %> < 1) {
+  $('#search-results').addClass('hidden');
+}
