@@ -64,6 +64,15 @@ class VenuesController < ApplicationController
   	render :json => data, :status => :ok
   end
 
+  def new_venue_search_display
+    query = params[:q].downcase
+    query.slice! 'the '
+    @searchresults = Venue.where("lower(name) LIKE ?", "%#{query}%").first(5)
+    respond_to do |format|
+      format.js
+    end
+  end
+
 	def update_item_rating_display
 		@item = Item.find(params[:item_id])
     respond_to do |format|

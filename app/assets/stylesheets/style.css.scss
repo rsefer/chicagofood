@@ -352,6 +352,24 @@ a.sortablecol.current.asc i.fa.fa-caret-up {
 
 }
 
+.venue-name-input-wrap {
+	position: relative;
+}
+
+.venue-name-search-wrap {
+	z-index: 1;
+	position: absolute;
+	padding: 4px;
+	width: 100%;
+	background: $white;
+	box-sizing: border-box;
+	border: 1px solid $grey;
+}
+
+.venue-name-search-results a {
+	display: block;
+}
+
 .comment .well p:last-child {
 	margin: 0px;
 }

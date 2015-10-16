@@ -33,6 +33,7 @@ Chicagofood::Application.routes.draw do
 	get 'map' => 'welcome#map'
   get 'about' => 'welcome#about'
   get 'venues_controller/update_item_rating_display', to: 'venues#update_item_rating_display'
+  get 'venues_controller/new_venue_search_display', to: 'venues#new_venue_search_display'
 
 	root "welcome#index"
 

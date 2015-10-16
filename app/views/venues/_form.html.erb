@@ -13,9 +13,10 @@
 
   <div class="row">
   	<div class="col-sm-6">
-		  <div class="form-group">
+		  <div class="form-group venue-name-input-wrap">
 		    <%= f.label :name %><br>
-		    <%= f.text_field :name, { :class => 'form-control', :required => 'required' } %>
+		    <%= f.text_field :name, { :class => 'form-control', :required => 'required', :autocomplete => 'off' } %>
+				<div id="search-results" class="hidden venue-name-search-wrap"></div>
 		  </div>
       <%= render :partial => 'typeandprice' %>
 		  <div class="form-group">

@@ -8,11 +8,16 @@ class Venue < ActiveRecord::Base
 	belongs_to :neighborhood
 
 	validates :street, :city, :state, presence: true
+	validates :name, uniqueness: { case_sensitive: false, message: ' - This venue already exists!' }
 
 	geocoded_by :fulladdress
 	after_validation :geocode
 
 	include Recent
+
+	def self.search(q)
+		where("name LIKE ?", "%" + q + "%")
+	end
 
 	def hasaddress
 		if !self.street.blank?

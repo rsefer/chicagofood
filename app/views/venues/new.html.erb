@@ -9,3 +9,25 @@
 		</div>
 	</div>
 </section>
+
+<script>
+jQuery(document).ready(function($) {
+
+	$('input#venue_name').on('input',function(e) {
+		if ($(this).val().length > 2) {
+			$('#search-results').removeClass('hidden');
+			$('#search-results').html('<ul class="venue-name-search-results"></ul>');
+			$.ajax('/venues_controller/new_venue_search_display', {
+				type: 'GET',
+				dataType: 'script',
+				data: {
+					q: $(this).val()
+				}
+			});
+		} else {
+			$('#search-results').addClass('hidden');
+		}
+	});
+
+});
+</script>
