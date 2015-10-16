@@ -34,7 +34,7 @@ for (i = 0; i < locations.length; i++) {
 
   google.maps.event.addListener(marker, 'click', (function(marker, i) {
     return function() {
-      map.setCenter(marker.getPosition());
+      map.panTo(marker.getPosition());
       infowindow.setContent('<div class="map-infowindow"><a href="' + locations[i]['path'] + '">' + locations[i]['name'] +'</a></div>');
       infowindow.open(map, this);
     }

@@ -9,7 +9,8 @@ function initialize(latitude, longitude) {
 		center: new google.maps.LatLng(latitude, longitude),
 		zoom: 13,
     minZoom: 11,
-    maxZoom: 19
+    maxZoom: 19,
+		mapTypeControl: false
 	};
 
 	map = new google.maps.Map(document.getElementById('google-map'), mapOptions);

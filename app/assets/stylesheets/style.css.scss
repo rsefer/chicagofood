@@ -37,8 +37,18 @@ h1 {
 	width: 100%;
 	min-height: 200px;
 
+	&.map-neighborhood {
+		height: 400px;
+	}
+
 	&.map-all {
+
 		height: 600px;
+
+		&.map-neighborhood {
+			height: 400px;
+		}
+
 	}
 
 	.map-infowindow {
@@ -498,6 +508,22 @@ form.new_comment {
 	.navbar-nav > li > a {
 		padding-top: 18px;
 		padding-bottom: 18px;
+	}
+
+}
+
+@media screen and (max-width: 991px) {
+
+	.map {
+
+		&.map-all {
+
+			&.map-neighborhood {
+				margin-top: $margin;
+			}
+
+		}
+
 	}
 
 }

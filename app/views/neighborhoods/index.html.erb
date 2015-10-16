@@ -4,14 +4,23 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<h1>Neighborhoods</h1>
-				<ul class="neighborhoods-list cols2">
-					<% @neighborhoods.each do |neighborhood| %>
-					<li><%= link_to neighborhood_path(neighborhood), title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
-					<% end %>
-				</ul>
+				<div class="row">
+					<div class="col-md-6">
+						<ul class="neighborhoods-list cols2">
+							<% @neighborhoods.each do |neighborhood| %>
+							<li><%= link_to neighborhood_path(neighborhood), title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
+							<% end %>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<div id="google-map" class="map map-all map-neighborhood"></div>
+					</div>
+				</div>
 				<hr>
 				<%= link_to new_neighborhood_path, :class => 'btn btn-success' do %><i class="fa fa-plus left"></i>New Neighborhood<% end %>
 			</div>
 		</div>
 	</div>
 </section>
+
+<%= render 'welcome/mapscript' %>
