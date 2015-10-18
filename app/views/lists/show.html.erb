@@ -16,31 +16,40 @@
 				<% if @list.venue_count == 0 %>
 				<p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> not added any places to this list.</p>
 				<% else %>
-				<table class="table">
-				  <thead>
-				    <tr>
-				      <th>Name</th>
-							<th>Type</th>
-				      <th>Neighborhood</th>
-				      <th class="hidden-xs">Date</th>
-				      <% if is_current_user(@user) or user_signed_in? %><th>&nbsp;</th><% end %>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <% @list.list_items.each do |list_item| %>
-				    <tr>
-							<td><%= link_to list_item.venue.name, list_item.venue %></td>
-							<td><%= link_to list_item.venue.venuetype.name, list_item.venue.venuetype %></td>
-							<td><%= link_to list_item.venue.neighborhood.name, list_item.venue.neighborhood %></td>
-							<td class="hidden-xs"><% if list_item.date %><%= list_item.date %><% else %>&mdash;<% end %></td>
-							<% if is_current_user(list_item.list.user) or user_signed_in? %><td class="text-center">
-				    		<% if is_current_user(list_item.list.user) %>
-				    			<%= link_to user_list_list_item_path(list_item.list.user, list_item.list, list_item), title: "Remove #{list_item.venue.name} from your list?", method: :delete, class: 'red' do %><i class="fa fa-times fa-lg"></i><% end %><% end %>
-				    	</td><% end %>
-				    </tr>
-				    <% end %>
-				  </tbody>
-				</table>
+				<div class="row">
+					<div class="<% if @list.showmap %>col-md-8<% else %>col-sm-12<% end %>">
+						<table class="table">
+						  <thead>
+						    <tr>
+						      <th>Name</th>
+									<th>Type</th>
+						      <th>Neighborhood</th>
+						      <th class="hidden-xs">Date</th>
+						      <% if is_current_user(@user) or user_signed_in? %><th>&nbsp;</th><% end %>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <% @list.list_items.each do |list_item| %>
+						    <tr>
+									<td><%= link_to list_item.venue.name, list_item.venue %></td>
+									<td><%= link_to list_item.venue.venuetype.name, list_item.venue.venuetype %></td>
+									<td><%= link_to list_item.venue.neighborhood.name, list_item.venue.neighborhood %></td>
+									<td class="hidden-xs"><% if list_item.date %><%= list_item.date %><% else %>&mdash;<% end %></td>
+									<% if is_current_user(list_item.list.user) or user_signed_in? %><td class="text-center">
+						    		<% if is_current_user(list_item.list.user) %>
+						    			<%= link_to user_list_list_item_path(list_item.list.user, list_item.list, list_item), title: "Remove #{list_item.venue.name} from your list?", method: :delete, class: 'red' do %><i class="fa fa-times fa-lg"></i><% end %><% end %>
+						    	</td><% end %>
+						    </tr>
+						    <% end %>
+						  </tbody>
+						</table>
+					</div>
+					<% if @list.showmap %>
+					<div class="col-md-4">
+						<div id="google-map" class="map map-list"></div>
+					</div>
+					<% end %>
+				</div>
 				<% end %>
 				<% end %>
 			</div>
@@ -52,3 +61,51 @@
 		</div>
 	</div>
 </section>
+
+<% if @list.showmap %>
+<script type="text/javascript">
+google.maps.event.addDomListener(window, 'load', initialize(41.92, -87.65));
+
+var nBounds = new google.maps.LatLngBounds();
+
+locations = [
+  <% @list.venues.each do |venue| %>
+  {
+    id: <%= venue.id %>,
+    lat: '<%= venue.latitude %>',
+    lng: '<%= venue.longitude %>',
+    name: '<%= venue.name %>',
+    path: '<%= venue_path(venue) %>'
+  },
+  <% end %>
+];
+
+for (i = 0; i < locations.length; i++) {
+  var iconSymbol;
+  if (locations[i]['isBar']) {
+    iconSymbol = '/images/mug.svg';
+  } else {
+    iconSymbol = '/images/spoon-knife.svg';
+  }
+	var thisLatLng = new google.maps.LatLng(locations[i]['lat'], locations[i]['lng'])
+  marker = new google.maps.Marker({
+    position: thisLatLng,
+    map: map,
+    icon: iconSymbol
+  });
+	nBounds.extend(thisLatLng);
+  marker.set('id', locations[i]['id']);
+  markerList.push(marker);
+
+  google.maps.event.addListener(marker, 'click', (function(marker, i) {
+    return function() {
+      map.panTo(marker.getPosition());
+      infowindow.setContent('<div class="map-infowindow"><a href="' + locations[i]['path'] + '">' + locations[i]['name'] +'</a></div>');
+      infowindow.open(map, this);
+    }
+  })(marker, i));
+}
+
+map.fitBounds(nBounds);
+</script>
+<% end %>
