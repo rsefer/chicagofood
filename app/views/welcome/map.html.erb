@@ -14,4 +14,52 @@
 	</div>
 </section>
 
-<%= render 'mapscript' %>
+<%= render 'layouts/mapscript', :mapvenues => @venues %>
+<script>
+jQuery(document).ready(function($) {
+
+  $('.map-toggle').on('click', function(e) {
+    e.preventDefault();
+    var target = $(this).data('target');
+    var action = null;
+
+    if (target == 'tries') {
+      if ($(this).hasClass('isHidden')) {
+        $(this).removeClass('btn-default').addClass('btn-success');
+        for (i = 0; i < markerList.length; i++) {
+          if (target == 'tries' && !markerList[i].isTry) {
+            markerList[i].setMap(action);
+          }
+        }
+      } else {
+        action = map;
+        $(this).removeClass('btn-success').addClass('btn-default');
+        for (i = 0; i < markerList.length; i++) {
+          if (target == 'tries') {
+            markerList[i].setMap(action);
+          }
+        }
+      }
+      $(this).toggleClass('isHidden');
+    } else {
+      if ($(this).hasClass('isHidden')) {
+        $(this).removeClass('btn-default').addClass('btn-success');
+        action = map;
+      } else {
+        $(this).removeClass('btn-success').addClass('btn-default');
+      }
+      for (i = 0; i < markerList.length; i++) {
+        if (
+          (target == 'bars' && markerList[i].isBar)
+          || (target == 'restaurants' && !markerList[i].isBar)
+        ) {
+          markerList[i].setMap(action);
+        }
+      }
+      $(this).toggleClass('isHidden');
+    }
+
+  });
+
+});
+</script>

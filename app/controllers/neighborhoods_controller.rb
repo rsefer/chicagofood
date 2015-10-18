@@ -4,7 +4,6 @@ class NeighborhoodsController < ApplicationController
 
   def index
     @neighborhoods = Neighborhood.all
-    @venues = Venue.all
   end
 
   def show
