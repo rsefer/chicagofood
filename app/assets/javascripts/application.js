@@ -4,5 +4,6 @@
 //= require turbolinks_transitions
 //= require bootstrap
 //= require bootstrap-datepicker
+//= require markerclusterer
 //= require scripts
 //= require_tree .
