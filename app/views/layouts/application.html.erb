@@ -39,9 +39,10 @@
 
 <%= render 'layouts/header' %>
 
-<%= yield %>
-
-<%= render 'layouts/footer' %>
+<div id="transition-wrap">
+  <%= yield %>
+  <%= render 'layouts/footer' %>
+</div>
 
 </body>
 </html>
