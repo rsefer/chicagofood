@@ -25,7 +25,9 @@
 						      <th>Name</th>
 									<th>Type</th>
 						      <th>Neighborhood</th>
+									<% if @list.hasDates %>
 						      <th class="hidden-xs">Date</th>
+									<% end %>
 						      <% if is_current_user(@user) or user_signed_in? %><th>&nbsp;</th><% end %>
 						    </tr>
 						  </thead>
@@ -35,7 +37,9 @@
 									<td><%= link_to list_item.venue.name, list_item.venue %></td>
 									<td><%= link_to list_item.venue.venuetype.name, list_item.venue.venuetype %></td>
 									<td><%= link_to list_item.venue.neighborhood.name, list_item.venue.neighborhood %></td>
+									<% if @list.hasDates %>
 									<td class="hidden-xs"><% if list_item.date %><%= list_item.date %><% else %>&mdash;<% end %></td>
+									<% end %>
 									<% if is_current_user(list_item.list.user) or user_signed_in? %><td class="text-center">
 						    		<% if is_current_user(list_item.list.user) %>
 						    			<%= link_to user_list_list_item_path(list_item.list.user, list_item.list, list_item), title: "Remove #{list_item.venue.name} from your list?", method: :delete, class: 'red' do %><i class="fa fa-times fa-lg"></i><% end %><% end %>
