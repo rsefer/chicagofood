@@ -12,30 +12,37 @@
 				<% end %>
 				<p><% if @venuetype.hasParent %>Part of <%= link_to @venuetype.parent do %><%= @venuetype.parent.name %><% end %>. <% end %><% if !@childTypes.empty? %>Includes <%= @childTypes.map { |vtype| link_to vtype.name, vtype }.join(', ').html_safe %>.<% end %></p>
 				<% if !@scopeTotal.empty? %>
-				<table class="table">
-				  <thead>
-				    <tr>
-				      <th>Name</th>
-				      <% if @venuetype.id == 1 || @venuetype.id == 2 %><th>Type</th><% end %>
-				      <th class="hidden-xs">Neighborhood</th>
-				      <th class="hidden-xs text-center">Rating</th>
-				      <th class="text-center">Price</th>
-				      <th class="hidden-xs text-center">BYOB</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-						<% @scopeTotal.each do |venue| %>
-			      <tr>
-			        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
-			        <% if @venuetype.id == 1 || @venuetype.id == 2 %><td><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td><% end %>
-			        <td class="hidden-xs"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
-			        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
-			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
-			        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
-			      </tr>
-				    <% end %>
-				  </tbody>
-				</table>
+				<div class="row">
+					<div class="col-md-8">
+						<table class="table">
+						  <thead>
+						    <tr>
+						      <th>Name</th>
+						      <% if @venuetype.id == 1 || @venuetype.id == 2 %><th>Type</th><% end %>
+						      <th class="hidden-xs">Neighborhood</th>
+						      <th class="hidden-xs text-center">Rating</th>
+						      <th class="text-center">Price</th>
+						      <th class="hidden-xs text-center">BYOB</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+								<% @scopeTotal.each do |venue| %>
+					      <tr>
+					        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
+					        <% if @venuetype.id == 1 || @venuetype.id == 2 %><td><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td><% end %>
+					        <td class="hidden-xs"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
+					        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
+					        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
+					        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
+					      </tr>
+						    <% end %>
+						  </tbody>
+						</table>
+					</div>
+					<div class="col-md-4">
+						<div id="google-map" class="map map-neighborhood"></div>
+					</div>
+				</div>
 				<% end %>
 				<p class="text-center">
 					<%= link_to 'Edit', edit_venuetype_path(@venuetype) %>&nbsp;&bull;&nbsp;<%= link_to new_venue_path({ :venuetype_id => @venuetype.id }) do %>Add a new <%= @venuetype.name %> venue<% end %>
@@ -44,3 +51,5 @@
 		</div>
 	</div>
 </section>
+
+<%= render 'layouts/mapscript', :mapvenues => @scopeTotal %>
