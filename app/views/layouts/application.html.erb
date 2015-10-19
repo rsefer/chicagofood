@@ -34,20 +34,19 @@
 
 <%= render 'layouts/header' %>
 
-<% if current_user.try(:admin?) %>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12">
-        <% if notice %><p class="notice"><%= notice %></p><% end %>
-        <% if alert %><p class="alert"><%= alert %></p><% end %>
+<div id="transition-wrap">
+  <% if current_user.try(:admin?) and (notice or alert) %>
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <% if notice %><p class="notice"><%= notice %></p><% end %>
+          <% if alert %><p class="alert"><%= alert %></p><% end %>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-<% end %>
-
-<div id="transition-wrap">
+  </section>
+  <% end %>
   <%= yield %>
   <%= render 'layouts/footer' %>
 </div>
