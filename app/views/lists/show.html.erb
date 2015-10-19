@@ -10,6 +10,7 @@
 				<h1><% if @list.private %><i class="fa fa-lock left"></i><% end %><%= @list.title %> <small>from <%= link_to user_path(@user.id), title: @user.fullname do %><%= @user.fullname %><% end %></small><% if is_current_user(@list.user) %>
 					<%= link_to new_user_list_list_item_path(@user, @list), class: 'btn btn-sm btn-danger addvenue-btn' do %><i class="fa fa-plus left"></i>Add Venue<% end %>
 				<% end %></h1>
+				<p>Last Updated: <%= @list.updated_at.strftime("%B %d, %Y") %></p>
 				<% if @list.description.present? %>
 				<p class="lead"><%= @list.description %></p>
 				<% end %>
