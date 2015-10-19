@@ -662,6 +662,19 @@ form.new_comment {
 
 }
 
+@media screen and (max-width: 600px) {
+
+	#footer-nav ul li {
+		display: block;
+
+		&:after {
+			content: '';
+			display: none;
+		}
+	}
+
+}
+
 @media screen and (-webkit-min-device-pixel-ratio: 2) {
 
 	body {

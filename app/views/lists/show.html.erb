@@ -54,10 +54,8 @@
 				<% end %>
 				<% end %>
 			</div>
-		  <div class="row">
-		    <div class="col-sm-12 text-center">
-		      <p><%= link_to 'Back', user_path, title: 'Back' %><% if is_current_user(@user) %>&nbsp;&bull;&nbsp;<%= link_to edit_user_list_path(@list.user, @list), title: 'Edit' do %>Edit List<% end %><% end %></p>
-		    </div>
+			<div class="col-sm-12 text-center">
+				<p><%= link_to 'Back', user_path, title: 'Back' %><% if is_current_user(@user) %>&nbsp;&bull;&nbsp;<%= link_to edit_user_list_path(@list.user, @list), title: 'Edit' do %>Edit List<% end %><% end %></p>
 		  </div>
 		</div>
 	</div>
