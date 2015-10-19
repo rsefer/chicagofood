@@ -102,7 +102,7 @@
 
 					<div class="col-sm-6 eats-section">
 						<% if user_signed_in? and @venue.items.exists? %>
-							<h3>Eats</h3>
+							<h3 class="eats-title">Eats</h3>
 							<%= render 'eats/form' %>
 						<% end %>
 						<p><%= link_to 'Add New Menu Item', new_venue_item_path(@venue) %></p>
