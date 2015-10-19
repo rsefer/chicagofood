@@ -32,12 +32,20 @@
 </head>
 <body>
 
-<% if current_user.try(:admin?) %>
-	<% if notice %><p class="notice"><%= notice %></p><% end %>
-	<% if alert %><p class="alert"><%= alert %></p><% end %>
-<% end %>
-
 <%= render 'layouts/header' %>
+
+<% if current_user.try(:admin?) %>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <% if notice %><p class="notice"><%= notice %></p><% end %>
+        <% if alert %><p class="alert"><%= alert %></p><% end %>
+      </div>
+    </div>
+  </div>
+</section>
+<% end %>
 
 <div id="transition-wrap">
   <%= yield %>
