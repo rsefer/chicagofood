@@ -2,18 +2,14 @@ var infowindow, map;
 var markerList = [];
 
 function initialize(latitude, longitude) {
-
 	infowindow = new google.maps.InfoWindow({ content: 'Loading...' });
-
-	var mapOptions = {
+	map = new google.maps.Map(document.getElementById('google-map'), {
 		center: new google.maps.LatLng(latitude, longitude),
 		zoom: 13,
     minZoom: 11,
     maxZoom: 19,
 		mapTypeControl: false
-	};
-
-	map = new google.maps.Map(document.getElementById('google-map'), mapOptions);
+	});
 }
 
 function changeRatingStars(whichStars, starNum) {
