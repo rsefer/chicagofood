@@ -3,7 +3,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="map-filters col-sm-12">
-				<% if user_signed_in? %><% if params[:totry] == '1' %><%= link_to raw(@tryButtonHTML), params.except(:totry), :class => 'btn btn-success btn-small' %><% else %><%= link_to raw(@tryButtonHTML), params.except(:totry).merge(:totry => 1), :class => 'btn btn-default btn-small isHidden' %><% end %><% end %>
+				<% if user_signed_in? %><% if params[:totry] == '1' %><%= link_to raw(@tryButtonHTML), params.except(:totry), :class => 'btn btn-success btn-small', :title => 'On Your To Try List?' %><% else %><%= link_to raw(@tryButtonHTML), params.except(:totry).merge(:totry => 1), :class => 'btn btn-default btn-small isHidden', :title => 'On Your To Try List?' %><% end %><% end %>
+        <% if params[:byob] == '1' %><%= link_to raw(@byobButtonHTML), params.except(:byob), :class => 'btn btn-success btn-small', :title => 'BYOB?' %><% else %><%= link_to raw(@byobButtonHTML), params.except(:byob).merge(:byob => 1), :class => 'btn btn-default btn-small isHidden', :title => 'BYOB?' %><% end %>
         <div class="btn-group" role="group">
           <%= link_to params.except(:maxPrice).merge(:maxPrice => 1), :class => ((@includeAllPrices or params[:maxPrice].to_f >= 1) ? 'btn-success' : 'btn-default') + ' btn btn-small' do %><%= render_price(1) %><% end %>
           <%= link_to params.except(:maxPrice).merge(:maxPrice => 2), :class => ((@includeAllPrices or params[:maxPrice].to_f >= 2) ? 'btn-success' : 'btn-default') + ' btn btn-small' do %><%= render_price(2) %><% end %>

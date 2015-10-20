@@ -13,11 +13,15 @@ class WelcomeController < ApplicationController
 
     @restaurants = []
     if params[:maxPrice].to_f >= 1 and params[:maxPrice].to_f <= 3
-      logger.debug "PRICE"
       @restaurants = Venue.where("price <= ?", params[:maxPrice].to_f)
     else
       @includeAllPrices = true
       @restaurants = Venue.all
+    end
+
+    @byob = []
+    if params[:byob] == '1'
+      @restaurants = @restaurants & Venue.where(byob: true)
     end
 
     @tries = []
@@ -35,6 +39,7 @@ class WelcomeController < ApplicationController
 
     @restaurantsButtonHTML = 'Restaurants<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
     @tryButtonHTML = 'To Try<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
+    @byobButtonHTML = '<i class="fa fa-fw fa-beer left"></i>BYOB<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
   end
 
   def about
