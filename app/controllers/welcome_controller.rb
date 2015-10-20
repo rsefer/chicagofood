@@ -9,22 +9,29 @@ class WelcomeController < ApplicationController
   end
 
   def map
+
+
+    @restaurants = []
+    if params[:maxPrice].to_f >= 1 and params[:maxPrice].to_f <= 3
+      logger.debug "PRICE"
+      @restaurants = Venue.where("price <= ?", params[:maxPrice].to_f)
+    else
+      @includeAllPrices = true
+      @restaurants = Venue.all
+    end
+
     @tries = []
     if user_signed_in? and params[:totry] == '1'
       current_user.tries.each do |t|
         @tries.push(t.venue)
       end
-    else
-      @tries = Venue.all
     end
 
-    if params[:restaurants] == '0'
-      @restaurants = Venue.none
+    if @tries.length >= 1
+      @venues = @tries & @restaurants
     else
-      @restaurants = Venue.all
+      @venues = @restaurants
     end
-
-    @venues = @tries + @restaurants
 
     @restaurantsButtonHTML = 'Restaurants<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
     @tryButtonHTML = 'To Try<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'

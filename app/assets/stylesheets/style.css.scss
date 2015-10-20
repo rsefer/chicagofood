@@ -454,7 +454,7 @@ form.new_comment {
 	.eats-title {
 		margin-top: $margin;
 	}
-	
+
 }
 
 .likedislike.input-group {
@@ -606,6 +606,11 @@ form.new_comment {
 	section .btn {
 		display: block;
 		width: 100%;
+	}
+
+	section .btn-group .btn {
+		display: inline-block;
+		width: auto;
 	}
 
 	ul.user-list {
