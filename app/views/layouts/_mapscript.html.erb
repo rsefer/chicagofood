@@ -2,6 +2,7 @@
 google.maps.event.addDomListener(window, 'load', initialize(41.92, -87.65));
 
 var nBounds = new google.maps.LatLngBounds();
+var mapIsSolo = false;
 
 locations = [
   <% mapvenues.each do |venue| %>
@@ -12,6 +13,7 @@ locations = [
     name: '<%= venue.name %>',
     path: '<%= venue_path(venue) %>',
     isTry: <% if user_signed_in? and Try.where('user_id = ? AND venue_id = ?', current_user.id, venue.id).exists? %>true<% else %>false<% end %>,
+    isSolo: <% if defined? isSolo and isSolo %>true<% else %>false<% end %>,
     isBar: <% if venue.venuetype.isBar %>true<% else %>false<% end %>
   },
   <% end %>
@@ -19,10 +21,13 @@ locations = [
 
 for (i = 0; i < locations.length; i++) {
   var iconSymbol;
-  if (locations[i]['isBar']) {
-    iconSymbol = '/images/mug.svg';
+  if (locations[i]['isSolo']) {
+    iconSymbol = null;
+    mapIsSolo = true;
+  } else if (locations[i]['isBar']) {
+    iconSymbol = '<%= asset_path("mug.svg") %>';
   } else {
-    iconSymbol = '/images/spoon-knife.svg';
+    iconSymbol = '<%= asset_path("spoon-knife.svg") %>';
   }
 	var thisLatLng = new google.maps.LatLng(locations[i]['lat'], locations[i]['lng'])
   marker = new google.maps.Marker({
@@ -36,13 +41,16 @@ for (i = 0; i < locations.length; i++) {
   marker.set('isTry', locations[i]['isTry']);
   markerList.push(marker);
 
-  google.maps.event.addListener(marker, 'click', (function(marker, i) {
-    return function() {
-      map.panTo(marker.getPosition());
-      infowindow.setContent('<div class="map-infowindow"><a href="' + locations[i]['path'] + '">' + locations[i]['name'] +'</a></div>');
-      infowindow.open(map, this);
-    }
-  })(marker, i));
+  if (!mapIsSolo) {
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      return function() {
+        map.panTo(marker.getPosition());
+        infowindow.setContent('<div class="map-infowindow"><a href="' + locations[i]['path'] + '">' + locations[i]['name'] +'</a></div>');
+        infowindow.open(map, this);
+      }
+    })(marker, i));
+  }
+
 }
 /*var markerCluster = new MarkerClusterer(map, markerList, {
   maxZoom: 13,
@@ -50,5 +58,9 @@ for (i = 0; i < locations.length; i++) {
   minimumClusterSize: 2
 });*/
 
-map.fitBounds(nBounds);
+if (mapIsSolo) {
+  map.panTo(new google.maps.LatLng(locations[0]['lat'], locations[0]['lng']));
+  map.setZoom(15);
+}
+
 </script>

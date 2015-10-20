@@ -99,7 +99,6 @@
 						<div id="google-map" class="map map-single"></div>
 					</div>
 					<div class="clearfix"></div>
-
 					<div class="col-sm-6 eats-section">
 						<% if user_signed_in? and @venue.items.exists? %>
 							<h3 class="eats-title">Eats</h3>
@@ -152,61 +151,4 @@
 	</div>
 </section>
 
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-
-	var myratingHTML = $('#myrating').html();
-
-	$('#myrating i.fa').click(function() {
-		var thisClickIndex = $('#myrating i.fa').index(this) + 1;
-		$('input#rating_rating').val(thisClickIndex);
-		$('form.edit_rating, form.new_rating').submit();
-		$('form.edit_rating, form.new_rating').bind('ajax:complete', function() {
-			$.get(window.location.pathname + '/rating_average', function(data) {
-				var newRatingIndex = $('#ourrating i.fa').index(data.rating_average);
-				changeRatingStars('#ourrating', data.rating_average - 1);
-			});
-		});
-
-		myratingHTML = $('#myrating').html();
-
-	});
-
-	$('#myrating i.fa').hover(function() {
-		var thisClickIndex = $('#myrating i.fa').index(this);
-		changeRatingStars('#myrating', thisClickIndex);
-	}, function() {
-	});
-
-	$('#totrysubmit').click(function(e) {
-		e.preventDefault();
-		$('form#new_try').submit();
-	});
-
-	map.setOptions({
-		zoom: 14
-	});
-
-	locations = [
-		[<%= @venue.id %>, <%= @venue.latitude %>, <%= @venue.longitude %>]
-	];
-
-	for (i = 0; i < locations.length; i++) {
-		marker = new google.maps.Marker({
-			position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-			map: map
-		});
-		marker.set('id', locations[i][0]);
-	}
-
-});
-
-function changeRatingStars(whichStars, starNum) {
-	var thisStar = $(whichStars + ' i.fa:eq(' + starNum + ')');
-	thisStar.removeClass().addClass('fa fa-star');
-	thisStar.prevAll(whichStars + ' i.fa').removeClass().addClass('fa fa-star');
-	thisStar.nextAll(whichStars + ' i.fa').removeClass().addClass('fa fa-star-o');
-}
-
-google.maps.event.addDomListener(window, 'load', initialize(<%= @venue.latitude %>, <%= @venue.longitude %>));
-</script>
+<%= render 'layouts/mapscript', :mapvenues => [@venue], :isSolo => true %>
