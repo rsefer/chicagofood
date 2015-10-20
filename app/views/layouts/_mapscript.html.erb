@@ -61,6 +61,8 @@ for (i = 0; i < locations.length; i++) {
 if (mapIsSolo) {
   map.panTo(new google.maps.LatLng(locations[0]['lat'], locations[0]['lng']));
   map.setZoom(15);
+} else {
+  map.fitBounds(nBounds);
 }
 
 </script>
