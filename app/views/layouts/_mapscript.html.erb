@@ -66,6 +66,9 @@ if (locations.length >= 1) {
     map.fitBounds(nBounds);
   }
 } else {
-  $('#google-map').hide().after('<p class="lead">No venues match your filter criteria. Please try again.</p>');
+  $('#google-map').hide();
+  if ($('#google-map').hasClass('map-all')) {
+    $('#google-map').after('<p class="lead">No venues match your filter criteria. Please try again.</p>');
+  }
 }
 </script>
