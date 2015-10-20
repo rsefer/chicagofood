@@ -19,50 +19,53 @@ locations = [
   <% end %>
 ];
 
-for (i = 0; i < locations.length; i++) {
-  var iconSymbol;
-  if (locations[i]['isSolo']) {
-    iconSymbol = null;
-    mapIsSolo = true;
-  } else if (locations[i]['isBar']) {
-    iconSymbol = '<%= asset_path("mug.svg") %>';
+if (locations.length >= 1) {
+  for (i = 0; i < locations.length; i++) {
+    var iconSymbol;
+    if (locations[i]['isSolo']) {
+      iconSymbol = null;
+      mapIsSolo = true;
+    } else if (locations[i]['isBar']) {
+      iconSymbol = '<%= asset_path("mug.svg") %>';
+    } else {
+      iconSymbol = '<%= asset_path("spoon-knife.svg") %>';
+    }
+  	var thisLatLng = new google.maps.LatLng(locations[i]['lat'], locations[i]['lng'])
+    marker = new google.maps.Marker({
+      position: thisLatLng,
+      map: map,
+      icon: iconSymbol
+    });
+  	nBounds.extend(thisLatLng);
+    marker.set('id', locations[i]['id']);
+    marker.set('isBar', locations[i]['isBar']);
+    marker.set('isTry', locations[i]['isTry']);
+    markerList.push(marker);
+
+    if (!mapIsSolo) {
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          map.panTo(marker.getPosition());
+          infowindow.setContent('<div class="map-infowindow"><a href="' + locations[i]['path'] + '">' + locations[i]['name'] +'</a></div>');
+          infowindow.open(map, this);
+        }
+      })(marker, i));
+    }
+
+  }
+  /*var markerCluster = new MarkerClusterer(map, markerList, {
+    maxZoom: 13,
+    gridSize: 20,
+    minimumClusterSize: 2
+  });*/
+
+  if (mapIsSolo) {
+    map.panTo(new google.maps.LatLng(locations[0]['lat'], locations[0]['lng']));
+    map.setZoom(15);
   } else {
-    iconSymbol = '<%= asset_path("spoon-knife.svg") %>';
+    map.fitBounds(nBounds);
   }
-	var thisLatLng = new google.maps.LatLng(locations[i]['lat'], locations[i]['lng'])
-  marker = new google.maps.Marker({
-    position: thisLatLng,
-    map: map,
-    icon: iconSymbol
-  });
-	nBounds.extend(thisLatLng);
-  marker.set('id', locations[i]['id']);
-  marker.set('isBar', locations[i]['isBar']);
-  marker.set('isTry', locations[i]['isTry']);
-  markerList.push(marker);
-
-  if (!mapIsSolo) {
-    google.maps.event.addListener(marker, 'click', (function(marker, i) {
-      return function() {
-        map.panTo(marker.getPosition());
-        infowindow.setContent('<div class="map-infowindow"><a href="' + locations[i]['path'] + '">' + locations[i]['name'] +'</a></div>');
-        infowindow.open(map, this);
-      }
-    })(marker, i));
-  }
-
-}
-/*var markerCluster = new MarkerClusterer(map, markerList, {
-  maxZoom: 13,
-  gridSize: 20,
-  minimumClusterSize: 2
-});*/
-
-if (mapIsSolo) {
-  map.panTo(new google.maps.LatLng(locations[0]['lat'], locations[0]['lng']));
-  map.setZoom(15);
 } else {
-  map.fitBounds(nBounds);
+  $('#google-map').hide().after('<p class="lead">No venues match your filter criteria. Please try again.</p>');
 }
-
 </script>
