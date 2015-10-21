@@ -27,6 +27,7 @@ class VenuesController < ApplicationController
 
   def create
     @venue = Venue.new(venue_params)
+		@venue.street = @venue.street.titlecase
 
     respond_to do |format|
       if @venue.save
