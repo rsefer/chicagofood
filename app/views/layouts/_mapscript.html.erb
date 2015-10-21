@@ -8,8 +8,8 @@ locations = [
   <% mapvenues.each do |venue| %>
   {
     id: <%= venue.id %>,
-    lat: '<%= venue.latitude %>',
-    lng: '<%= venue.longitude %>',
+    lat: <%= venue.latitude %>,
+    lng: <%= venue.longitude %>,
     name: '<%= venue.name %>',
     path: '<%= venue_path(venue) %>',
     isTry: <% if user_signed_in? and Try.where('user_id = ? AND venue_id = ?', current_user.id, venue.id).exists? %>true<% else %>false<% end %>,
