@@ -16,8 +16,8 @@ class VenuetypesController < ApplicationController
 
 		@scopeTotal = @scopeTop + @scope2nd + @scope3rd + @scope4th
 
-  	@scopeTotal.sort! { |a,b| a.name.downcase <=> b.name.downcase }
-  	@childTypes = Venuetype.where(parent_type_id: @venuetype.id)#.sort! { |a, b| a.name <=> b.name }
+  	@scopeTotal.sort! { |a,b| a.sortable_name <=> b.sortable_name }
+  	@childTypes = Venuetype.where(parent_type_id: @venuetype.id)
   end
 
   def new

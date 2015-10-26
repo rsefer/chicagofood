@@ -46,7 +46,7 @@ class Venue < ActiveRecord::Base
 	end
 
 	def sortable_name
-		self.name.sub(/^(the|a|an)\s+/i, '')
+		self.name.sub(/^(the|a|an)\s+/i, '').downcase
 	end
 
 end
