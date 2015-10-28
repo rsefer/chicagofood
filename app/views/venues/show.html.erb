@@ -6,7 +6,7 @@
 				<h2 class="venue-title"><%= @venue.name %> <small>in <%= link_to @venue.neighborhood do %><%= @venue.neighborhood.name %><% end %></small><% if user_signed_in? %>
 					<% if @venue.tries.where(user_id: current_user.id).present? %>
 						<% @thisTry = @venue.tries.where(user_id: current_user.id).first %>
-						<%= link_to @thisTry, title: 'Delete', method: :delete, class: 'btn btn-sm btn-danger margin-down totry-btn' do %><i class="fa fa-check fa-fw left"></i>To Try<% end %>
+						<%= link_to @thisTry, title: 'Delete', method: :delete, class: 'btn btn-sm btn-danger totry-btn' do %><i class="fa fa-check fa-fw left"></i>To Try<% end %>
 					<% else %>
 						<button id="totrysubmit" class="btn btn-sm btn-danger totry-btn"><i class="fa fa-plus fa-fw left"></i>To Try</button>
 						<%= form_for([@venue, @venue.tries.build]) do |f| %>
