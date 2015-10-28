@@ -8,7 +8,7 @@
 						<% @thisTry = @venue.tries.where(user_id: current_user.id).first %>
 						<%= link_to @thisTry, title: 'Delete', method: :delete, class: 'btn btn-sm btn-danger margin-down totry-btn' do %><i class="fa fa-check fa-fw left"></i>To Try<% end %>
 					<% else %>
-						<a id="totrysubmit" href="#" class="btn btn-sm btn-danger margin-down totry-btn"><i class="fa fa-plus fa-fw left"></i>To Try</a>
+						<button id="totrysubmit" class="btn btn-sm btn-danger totry-btn"><i class="fa fa-plus fa-fw left"></i>To Try</button>
 						<%= form_for([@venue, @venue.tries.build]) do |f| %>
 							<% f.hidden_field :user_id, value: current_user.id %>
 						<% end %>
