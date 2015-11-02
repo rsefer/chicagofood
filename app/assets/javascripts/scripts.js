@@ -1,5 +1,4 @@
-var infowindow, map;
-var markerList = [];
+var map;
 
 function initialize(latitude, longitude) {
 	infowindow = new google.maps.InfoWindow({ content: 'Loading...' });
