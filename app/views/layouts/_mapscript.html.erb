@@ -55,16 +55,24 @@ if (locations.length >= 1) {
     }
 
   }
-  /*var markerCluster = new MarkerClusterer(map, markerList, {
-    maxZoom: 13,
-    gridSize: 20,
-    minimumClusterSize: 2
-  });*/
+
 
   if (mapIsSolo) {
     map.panTo(new google.maps.LatLng(locations[0].lat, locations[0].lng));
     map.setZoom(15);
   } else {
+    var markerCluster = new MarkerClusterer(map, markerList, {
+      maxZoom: 13,
+      gridSize: 35,
+      minimumClusterSize: 2,
+      styles: [{
+        url: '<%= asset_path("circle.svg") %>',
+        height: 30,
+        width: 30,
+        textColor: '#000',
+        textSize: 15
+      }]
+    });
     map.fitBounds(nBounds);
   }
 } else {
