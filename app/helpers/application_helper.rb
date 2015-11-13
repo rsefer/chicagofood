@@ -34,7 +34,6 @@ module ApplicationHelper
 		listcontent = '<ul class="' + listClasses + '">'
 		Venuetype.find(parent_id).childTypes.each do |venuetype|
 			listcontent += '<li>'
-			logger.debug "Name: #{venuetype.name} Parent: #{venuetype.parent.name}"
 			if parent_id != 1 and parent_id != 2
 				listcontent += '<i class="fa fa-fw fa-rotate-90 fa-level-up"></i>'
 			end

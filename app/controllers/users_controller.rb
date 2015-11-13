@@ -12,7 +12,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     #@userListItems = ListItem.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
     @userLists = List.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
-    logger.debug @userLists.map(&:id)
     @userTries = Try.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
     @userRatings = Rating.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
     @userComments = Comment.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
