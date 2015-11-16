@@ -315,6 +315,38 @@ ul.user-list {
 
 }
 
+.search-input-form {
+
+	padding-top: 20px;
+
+	.search-results & {
+		padding-top: 0px;
+		margin-bottom: 1em;
+	}
+
+	input,
+	button {
+		float: left;
+		display: inline-block;
+		box-sizing: border-box;
+	}
+
+	input {
+		width: 80%;
+		border-right: 0;
+		border-top-right-radius: 0px;
+		border-bottom-right-radius: 0px;
+	}
+
+	button {
+		width: 20%;
+		border-left: 0;
+		border-top-left-radius: 0px;
+		border-bottom-left-radius: 0px;
+	}
+
+}
+
 .comment .comment-body {
 	margin-top: 1em;
 }

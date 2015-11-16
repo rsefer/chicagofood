@@ -1,0 +1,48 @@
+<% provide(:title, 'Search') %>
+<section id="search-main" class="pad search-results">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>Search Results for '<%= @original_query %>'</h1>
+				<%= render 'searchinput' %>
+				<% if @searchresults.length > 0 %>
+				<div class="row">
+					<div class="col-md-8">
+						<table class="table">
+						  <thead>
+						    <tr>
+						      <th>Name</th>
+						      <th>Type</th>
+						      <th class="hidden-xs">Neighborhood</th>
+						      <th class="hidden-xs text-center">Rating</th>
+						      <th class="text-center">Price</th>
+						      <th class="hidden-xs text-center">BYOB</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <% @searchresults.each do |venue| %>
+					      <tr>
+					        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
+					        <td><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td>
+					        <td class="hidden-xs"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
+					        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
+					        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
+					        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
+					      </tr>
+						    <% end %>
+						  </tbody>
+						</table>
+					</div>
+					<div class="col-md-4">
+						<div id="google-map" class="map map-search"></div>
+					</div>
+				</div>
+				<% else %>
+				<h2>No results found. Search again.</h2>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</section>
+
+<% if @searchresults.length > 0 %><%= render 'layouts/mapscript', :mapvenues => @searchresults %><% end %>

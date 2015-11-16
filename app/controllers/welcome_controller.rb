@@ -8,9 +8,56 @@ class WelcomeController < ApplicationController
     @recentActivity.sort_by(&:updated_at)
   end
 
+  def search
+    if params[:q]
+      @searchresults = []
+      @original_query = params[:q]
+      query = params[:q].downcase.split(' ').map(&:strip).uniq
+
+      query.delete('the')
+
+      byob_results = []
+      if query.include? 'byob'
+        byob = true
+        query.delete('byob')
+        byob_results = Venue.where(byob: true).all
+      end
+
+      n_results = []
+      vtypes_results = []
+      query.each do |qw|
+        Neighborhood.where("lower(name) LIKE ?", "%#{qw}%").each do |n|
+          n.venues_with_children.each do |v|
+            n_results.push(v)
+          end
+        end
+        Venuetype.where("lower(name) LIKE ?", "%#{qw}%").each do |vt|
+          vt.venues.each do |v|
+            vtypes_results.push(v)
+          end
+        end
+      end
+
+      if byob_results.length > 0 and n_results.length > 0 and vtypes_results.length > 0
+        @searchresults = byob_results & n_results & vtypes_results
+      elsif byob_results.length > 0 and vtypes_results.length > 0
+        @searchresults = byob_results & vtypes_results
+      elsif byob_results.length > 0 and n_results.length > 0
+        @searchresults = byob_results & n_results
+      elsif n_results.length > 0 and vtypes_results.length > 0
+        @searchresults = n_results & vtypes_results
+      elsif byob_results.length > 0
+        @searchresults = byob_results
+      elsif n_results.length > 0
+        @searchresults = n_results
+      elsif vtypes_results.length > 0
+        @searchresults = vtypes_results
+      end
+
+    end
+  end
+
   def map
-
-
     @restaurants = []
     if params[:maxPrice].to_f >= 1 and params[:maxPrice].to_f <= 3
       @restaurants = Venue.where("price <= ?", params[:maxPrice].to_f)
