@@ -8,17 +8,14 @@ class VenuesController < ApplicationController
   def index
 		if params[:sort].present? or params[:direction].present?
       if params[:sort] == 'name'
-        if params[:direction] == 'desc'
-          @venues = Venue.all.sort_by { |v| v.sortable_name }.reverse
-        else
-          @venues = Venue.all.sort_by { |v| v.sortable_name }
-        end
+				@venues = Venue.all.sort_by { |v| v.sortable_name }
       else
-        @venues = Venue.order(sort_column + " " + sort_direction)
+        @venues = Venue.all.sort_by(&:"#{params[:sort]}")
       end
 		else
 			@venues = Venue.all.sort_by { |v| v.sortable_name }
 		end
+    @venues = @venues.reverse if params[:direction] == 'desc'
   end
 
   def show
