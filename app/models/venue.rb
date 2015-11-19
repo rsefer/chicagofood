@@ -19,6 +19,14 @@ class Venue < ActiveRecord::Base
 		where("name LIKE ?", "%" + q + "%")
 	end
 
+	def rating(rounded = true)
+		if self.ratings.length > 0
+			self.ratings.average('rating')
+		else
+			0
+		end
+	end
+
 	def hasaddress
 		if !self.street.blank?
 			true

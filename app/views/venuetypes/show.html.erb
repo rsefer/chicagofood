@@ -20,7 +20,7 @@
 						      <th><%= sortable 'name' do %>Name<% end %></th>
 						      <% if @venuetype.id == 1 || @venuetype.id == 2 %><th>Type</th><% end %>
 						      <th class="hidden-xs">Neighborhood</th>
-						      <th class="hidden-xs text-center">Rating</th>
+						      <th class="hidden-xs text-center"><%= sortable 'rating', 'Rating' %></th>
 						      <th class="text-center"><%= sortable 'price', 'Price' %></th>
 						      <th class="hidden-xs text-center">BYOB</th>
 						    </tr>
@@ -31,7 +31,7 @@
 					        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
 					        <% if @venuetype.id == 1 || @venuetype.id == 2 %><td><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td><% end %>
 					        <td class="hidden-xs"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
-					        <td class="hidden-xs text-center"><%= number_with_precision(venue.ratings.average('rating'), precision: 2) %></td>
+					        <td class="hidden-xs text-center"><%= rating_display(venue) %></td>
 					        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
 					        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
 					      </tr>

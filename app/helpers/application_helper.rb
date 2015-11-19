@@ -24,6 +24,8 @@ module ApplicationHelper
 
 	def sortable(column, title = nil)
 	  title ||= column.titleize
+		logger.debug 'columns'
+		logger.debug column
 	  css_class = column == sort_column ? "sortablecol current #{sort_direction}" : "sortablecol"
 	  direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
 	  carets = title + '<i class="fa fa-caret-down right"></i><i class="fa fa-caret-up right"></i>'.html_safe

@@ -51,7 +51,7 @@
 										</p>
 										<% end %>
 										<% if @venue.ratings.exists? %>
-										<p>Our Rating: <%= @venue.ratings.average('rating') %>/5</p>
+										<p>Our Rating: <%= rating_display(@venue) %>/5</p>
 										<% end %>
 									</div>
 								</div>

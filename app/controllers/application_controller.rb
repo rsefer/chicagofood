@@ -34,7 +34,10 @@ class ApplicationController < ActionController::Base
 	  end
 
     def sort_column
-      Venue.column_names.include?(params[:sort]) ? params[:sort] : "name"
+      full_sort_list = Venue.column_names + ['rating']
+      logger.debug "SORTING"
+      logger.debug params[:sort]
+      full_sort_list.include?(params[:sort]) ? params[:sort] : "name"
     end
 
     def sort_direction
