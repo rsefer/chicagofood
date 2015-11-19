@@ -27,6 +27,14 @@ class Venue < ActiveRecord::Base
 		end
 	end
 
+	def neighborhood_name
+		self.neighborhood.sortable_name
+	end
+
+	def vt_name
+		self.venuetype.sortable_name
+	end
+
 	def hasaddress
 		if !self.street.blank?
 			true

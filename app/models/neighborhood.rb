@@ -51,4 +51,8 @@ class Neighborhood < ActiveRecord::Base
     venuesList
   end
 
+  def sortable_name
+		self.name.sub(/^(the|a|an)\s+/i, '').downcase
+	end
+
 end
