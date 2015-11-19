@@ -636,8 +636,29 @@ form.new_comment {
 	}
 
 	section .btn {
-		display: block;
-		width: 100%;
+
+		&:not(.search-inline-btn) {
+			display: block;
+			width: 100%;
+		}
+
+	}
+
+	.search-input-form {
+
+		input {
+			width: 70%;
+		}
+
+		input[placeholder] {
+			font-size: 14px;
+			line-height: 21px;
+		}
+
+		button {
+			width: 30%;
+		}
+
 	}
 
 	section .btn-group .btn {
