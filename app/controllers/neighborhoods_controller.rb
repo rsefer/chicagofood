@@ -14,7 +14,7 @@ class NeighborhoodsController < ApplicationController
 
 		@scopeTotal = @scopeTop + @scope2nd + @scope3rd + @scope4th
 
-		@scopeTotal.sort! { |a,b| a.sortable_name <=> b.sortable_name }
+    @scopeTotal = sortable_venues_array(@scopeTotal)
 		@childTypes = Neighborhood.where(parent_neighborhood_id: @neighborhood.id)
   end
 

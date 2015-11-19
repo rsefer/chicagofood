@@ -2,8 +2,6 @@ class VenuetypesController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
   before_action :set_venuetype, only: [:show, :edit, :update, :destroy]
 
-  helper_method :sort_column, :sort_direction
-
   def index
     @venuetypes = Venuetype.where(parent_type_id: nil).sort{ |a,b| a.name <=> b.name }
   end
@@ -16,7 +14,7 @@ class VenuetypesController < ApplicationController
 
 		@scopeTotal = @scopeTop + @scope2nd + @scope3rd + @scope4th
 
-  	@scopeTotal.sort! { |a,b| a.sortable_name <=> b.sortable_name }
+    @scopeTotal = sortable_venues_array(@scopeTotal)
   	@childTypes = Venuetype.where(parent_type_id: @venuetype.id)
   end
 
@@ -57,14 +55,6 @@ class VenuetypesController < ApplicationController
   end
 
   private
-  	def sort_column
-	    Venue.column_names.include?(params[:sort]) ? params[:sort] : "name"
-	  end
-
-	  def sort_direction
-	    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-	  end
-
     def set_venuetype
       @venuetype = Venuetype.find(params[:id])
     end

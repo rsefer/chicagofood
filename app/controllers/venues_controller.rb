@@ -3,19 +3,8 @@ class VenuesController < ApplicationController
   before_action :set_venue, only: [:show, :edit, :update, :destroy]
 	after_action :update_geocoder, only: [:create, :update]
 
-  helper_method :sort_column, :sort_direction
-
   def index
-		if params[:sort].present? or params[:direction].present?
-      if params[:sort] == 'name'
-				@venues = Venue.all.sort_by { |v| v.sortable_name }
-      else
-        @venues = Venue.all.sort_by(&:"#{params[:sort]}")
-      end
-		else
-			@venues = Venue.all.sort_by { |v| v.sortable_name }
-		end
-    @venues = @venues.reverse if params[:direction] == 'desc'
+    @venues = sortable_venues_array(Venue.all)
   end
 
   def show
@@ -87,14 +76,6 @@ class VenuesController < ApplicationController
   end
 
   private
-  	def sort_column
-	    Venue.column_names.include?(params[:sort]) ? params[:sort] : "name"
-	  end
-
-	  def sort_direction
-	    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-	  end
-
     def set_venue
       @venue = Venue.find(params[:id])
     end

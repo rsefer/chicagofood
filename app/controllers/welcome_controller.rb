@@ -1,7 +1,5 @@
 class WelcomeController < ApplicationController
 
-  helper_method :sort_column, :sort_direction
-
   def index
   	@venuetypes = Venuetype.all
   	@neighborhoods = Neighborhood.all
@@ -56,21 +54,11 @@ class WelcomeController < ApplicationController
       elsif vtypes_results.length > 0
         searchresultsSet = vtypes_results
       end
-      
+
       searchresultsSet.each do |vs|
         @searchresults.push(vs)
       end
-
-      if params[:sort].present? or params[:direction].present?
-        if params[:sort] == 'name'
-          @searchresults = @searchresults.sort_by { |v| v.sortable_name }
-        else
-          @searchresults = @searchresults.sort_by(&:"#{params[:sort]}")
-        end
-      else
-        @searchresults = @searchresults.sort_by { |v| v.sortable_name }
-      end
-      @searchresults = @searchresults.reverse if params[:direction] == 'desc'
+      @searchresults = sortable_venues_array(@searchresults)
 
     end
   end
@@ -109,14 +97,5 @@ class WelcomeController < ApplicationController
 
   def about
   end
-
-  private
-    def sort_column
-      Venue.column_names.include?(params[:sort]) ? params[:sort] : "name"
-    end
-
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-    end
 
 end

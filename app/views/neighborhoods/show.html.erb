@@ -12,11 +12,11 @@
 						<table class="table">
 						  <thead>
 						    <tr>
-						      <th>Name</th>
+						      <th><%= sortable 'name' do %>Name<% end %></th>
 						      <th class="hidden-xs">Category</th>
 									<th>Type</th>
 						      <th class="hidden-xs text-center">Rating</th>
-						      <th class="text-center">Price</th>
+						      <th class="text-center"><%= sortable 'price', 'Price' %></th>
 						      <th class="hidden-xs text-center">BYOB</th>
 						    </tr>
 						  </thead>
