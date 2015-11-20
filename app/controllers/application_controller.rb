@@ -26,7 +26,6 @@ class ApplicationController < ActionController::Base
           sorted_object_list = object_list.sort_by { |r| r.rating }
         elsif params[:sort] == 'venue_count'
           sorted_object_list = object_list.sort_by { |l| l.venue_count }
-          logger.debug "vc"
         elsif params[:controller] == 'lists' and params[:action] == 'index' and params[:sort] == 'name'
           sorted_object_list = object_list.sort_by { |l| l.title }
         else
