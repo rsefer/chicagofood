@@ -7,14 +7,31 @@ class ApplicationController < ActionController::Base
 
   helper_method :sort_column, :sort_direction
 
-  def sortable_venues_array(object_list)
+  def sortable_venues_array(object_list, other_model = false)
 		sorted_object_list = []
+    other_model_options = ['try', 'rating']
 		if params[:sort].present? or params[:direction].present?
-      if params[:sort] == 'name'
+      if other_model_options.include?(other_model)
+        if params[:sort] == 'price'
+          sorted_object_list = object_list.sort_by { |t| t.venue.price }
+        elsif params[:sort] == 'vt_name'
+          sorted_object_list = object_list.sort_by { |t| t.venue.venuetype.sortable_name }
+        elsif params[:sort] == 'neighborhood_name'
+          sorted_object_list = object_list.sort_by { |t| t.venue.neighborhood.sortable_name }
+        elsif params[:sort] == 'updated_at'
+          sorted_object_list = object_list.sort_by { |t| t.updated_at }
+        elsif params[:sort] == 'rating'
+          sorted_object_list = object_list.sort_by { |r| r.rating }
+        else
+          sorted_object_list = object_list.sort_by { |t| t.venue.sortable_name }
+        end
+      elsif params[:sort] == 'name'
 				sorted_object_list = object_list.sort_by { |v| v.sortable_name }
       else
         sorted_object_list = object_list.sort_by(&:"#{params[:sort]}")
       end
+    elsif other_model_options.include?(other_model)
+      sorted_object_list = object_list
 		else
 			sorted_object_list = object_list.sort_by { |v| v.sortable_name }
 		end
@@ -35,11 +52,23 @@ class ApplicationController < ActionController::Base
 
     def sort_column
       full_sort_list = Venue.column_names + ['rating', 'neighborhood_name', 'vt_name']
-      full_sort_list.include?(params[:sort]) ? params[:sort] : "name"
+      if full_sort_list.include?(params[:sort])
+        params[:sort]
+      elsif params[:controller] == 'tries' or 'ratings'
+        "updated_at"
+      else
+        "name"
+      end
     end
 
     def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+      if %w[asc desc].include?(params[:direction])
+        params[:direction]
+      elsif params[:controller] == 'tries' or 'ratings'
+        "desc"
+      else
+        "asc"
+      end
     end
 
 end

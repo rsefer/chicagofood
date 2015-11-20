@@ -4,7 +4,7 @@ class TriesController < ApplicationController
 	before_action :set_display_user, only: [:index]
 
 	def index
-		@tries = Try.where(user_id: @user.id)
+		@tries = sortable_venues_array(Try.where(user_id: @user.id), 'try')
 	end
 
 	def create

@@ -4,7 +4,7 @@ class RatingsController < ApplicationController
 	before_action :set_display_user, only: [:index]
 
 	def index
-		@ratings = Rating.where(user_id: @user.id)
+		@ratings = sortable_venues_array(Rating.where(user_id: @user.id), 'rating')
 	end
 
 	def create
