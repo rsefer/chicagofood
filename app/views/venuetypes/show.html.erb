@@ -17,7 +17,7 @@
 						<table class="table">
 						  <thead>
 						    <tr>
-						      <th><%= sortable 'name' do %>Name<% end %></th>
+						      <th><%= sortable 'name', 'Name' %></th>
 						      <% if @venuetype.id == 1 || @venuetype.id == 2 %><th><%= sortable 'vt_name', 'Type' %></th><% end %>
 						      <th class="hidden-xs"><%= sortable 'neighborhood_name', 'Neighborhood' %></th>
 						      <th class="hidden-xs text-center"><%= sortable 'rating', 'Rating' %></th>

@@ -22,17 +22,17 @@
 						<table class="table">
 						  <thead>
 						    <tr>
-						      <th>Name</th>
-									<th>Type</th>
-						      <th>Neighborhood</th>
+						      <th><%= sortable 'name', 'Name' %></th>
+									<th><%= sortable 'vt_name', 'Type' %></th>
+						      <th><%= sortable 'neighborhood_name', 'Neighborhood' %></th>
 									<% if @list.hasDates %>
-						      <th class="hidden-xs">Date</th>
+						      <th class="hidden-xs"><%= sortable 'date', 'Date' %></th>
 									<% end %>
 						      <% if is_current_user(@user) or user_signed_in? %><th>&nbsp;</th><% end %>
 						    </tr>
 						  </thead>
 						  <tbody>
-						    <% @list.list_items.each do |list_item| %>
+						    <% @sorted_list.each do |list_item| %>
 						    <tr>
 									<td><%= link_to list_item.venue.name, list_item.venue %></td>
 									<td><%= link_to list_item.venue.venuetype.name, list_item.venue.venuetype %></td>

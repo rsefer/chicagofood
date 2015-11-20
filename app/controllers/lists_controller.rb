@@ -7,15 +7,16 @@ class ListsController < ApplicationController
 
   def index
     if current_user
-      @lists = List.where(user_id: @user.id)
+      @lists = sortable_venues_array(List.where(user_id: @user.id), 'list')
     else
-      @lists = List.where(user_id: @user.id).publicLists
+      @lists = sortable_venues_array(List.where(user_id: @user.id).publicLists, 'list')
     end
 
     respond_with(@lists)
   end
 
   def show
+    @sorted_list = sortable_venues_array(@list.list_items, 'list_item')
     respond_with(@list.user, @list)
   end
 

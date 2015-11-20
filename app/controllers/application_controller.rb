@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   def sortable_venues_array(object_list, other_model = false)
 		sorted_object_list = []
-    other_model_options = ['try', 'rating']
+    other_model_options = ['try', 'rating', 'list', 'list_item']
 		if params[:sort].present? or params[:direction].present?
       if other_model_options.include?(other_model)
         if params[:sort] == 'price'
@@ -20,8 +20,15 @@ class ApplicationController < ActionController::Base
           sorted_object_list = object_list.sort_by { |t| t.venue.neighborhood.sortable_name }
         elsif params[:sort] == 'updated_at'
           sorted_object_list = object_list.sort_by { |t| t.updated_at }
+        elsif params[:sort] == 'date'
+          sorted_object_list = object_list.sort_by { |li| li.date }
         elsif params[:sort] == 'rating'
           sorted_object_list = object_list.sort_by { |r| r.rating }
+        elsif params[:sort] == 'venue_count'
+          sorted_object_list = object_list.sort_by { |l| l.venue_count }
+          logger.debug "vc"
+        elsif params[:controller] == 'lists' and params[:action] == 'index' and params[:sort] == 'name'
+          sorted_object_list = object_list.sort_by { |l| l.title }
         else
           sorted_object_list = object_list.sort_by { |t| t.venue.sortable_name }
         end
@@ -51,11 +58,17 @@ class ApplicationController < ActionController::Base
 	  end
 
     def sort_column
-      full_sort_list = Venue.column_names + ['rating', 'neighborhood_name', 'vt_name']
+      full_sort_list = Venue.column_names + ['rating', 'neighborhood_name', 'vt_name', 'venue_count']
       if full_sort_list.include?(params[:sort])
         params[:sort]
-      elsif params[:controller] == 'tries' or 'ratings'
+      elsif params[:controller] == 'tries' or params[:controller] == 'ratings'
         "updated_at"
+      elsif params[:controller] == 'lists' and params[:action] == 'show'
+        if List.find(params[:id]).hasDates
+          "date"
+        else
+          "name"
+        end
       else
         "name"
       end
@@ -64,8 +77,12 @@ class ApplicationController < ActionController::Base
     def sort_direction
       if %w[asc desc].include?(params[:direction])
         params[:direction]
-      elsif params[:controller] == 'tries' or 'ratings'
-        "desc"
+      elsif params[:controller] == 'tries' or params[:controller] == 'ratings' or (params[:controller] == 'lists' and params[:action] == 'show')
+        if params[:controller] == 'lists' and params[:action] == 'show' and !List.find(params[:id]).hasDates
+          "asc"
+        else
+          "desc"
+        end
       else
         "asc"
       end
