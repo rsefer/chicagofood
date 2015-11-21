@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   def sortable_venues_array(object_list, other_model = false)
 		sorted_object_list = []
-    other_model_options = ['try', 'rating', 'list', 'list_item']
+    other_model_options = ['try', 'rating', 'list', 'list_item', 'item_rating']
 		if params[:sort].present? or params[:direction].present?
       if other_model_options.include?(other_model)
         if params[:sort] == 'price'
@@ -28,6 +28,12 @@ class ApplicationController < ActionController::Base
           sorted_object_list = object_list.sort_by { |l| l.venue_count }
         elsif params[:controller] == 'lists' and params[:action] == 'index' and params[:sort] == 'name'
           sorted_object_list = object_list.sort_by { |l| l.title }
+        elsif params[:controller] == 'item_ratings'
+          if params[:sort] == 'name'
+            sorted_object_list = object_list.sort_by { |ir| ir.item.name }
+          elsif params[:sort] == 'venue_name'
+            sorted_object_list = object_list.sort_by { |ir| ir.item.venue.sortable_name }
+          end
         else
           sorted_object_list = object_list.sort_by { |t| t.venue.sortable_name }
         end
@@ -57,7 +63,7 @@ class ApplicationController < ActionController::Base
 	  end
 
     def sort_column
-      full_sort_list = Venue.column_names + ['rating', 'neighborhood_name', 'vt_name', 'venue_count']
+      full_sort_list = Venue.column_names + ['rating', 'neighborhood_name', 'vt_name', 'venue_count', 'venue_name']
       if full_sort_list.include?(params[:sort])
         params[:sort]
       elsif params[:controller] == 'tries' or params[:controller] == 'ratings'

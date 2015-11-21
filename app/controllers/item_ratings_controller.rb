@@ -3,7 +3,7 @@ class ItemRatingsController < ApplicationController
   before_action :set_display_user, only: [:index]
 
   def index
-    @item_ratings = ItemRating.where(user_id: @user.id)
+    @item_ratings = sortable_venues_array(ItemRating.where(user_id: @user.id), 'item_rating')
   end
 
   def show

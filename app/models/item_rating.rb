@@ -5,4 +5,6 @@ class ItemRating < ActiveRecord::Base
 
   include Recent
 
+  default_scope { joins(:item).order('items.name') }
+
 end
