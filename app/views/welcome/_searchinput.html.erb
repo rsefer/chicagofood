@@ -1,5 +1,5 @@
 <form class="search-input-form" action="<%= search_path %>" method="GET">
-  <input type="search" id="q" name="q" class="form-control input-lg" placeholder="Search: ex. byob Lakeview" autofocus="true" value="<%= params[:q] %>" onfocus="this.value = this.value;">
+  <input type="search" id="q" name="q" class="form-control input-lg" placeholder="Search: ex. byob Lakeview" autofocus="true" required="required" value="<%= params[:q] %>" onfocus="this.value = this.value;">
   <button type="submit" class="btn btn-lg btn-danger search-inline-btn">Search</button>
   <div class="clearfix"></div>
 </form>
