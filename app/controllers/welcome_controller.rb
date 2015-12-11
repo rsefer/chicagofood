@@ -40,13 +40,13 @@ class WelcomeController < ApplicationController
       end
 
       if byob_results.length > 0 and n_results.length > 0 and vtypes_results.length > 0
-        searchresultsSet = byob_results & n_results & vtypes_results
+        searchresultsSet = byob_results.to_a & n_results.to_a & vtypes_results.to_a
       elsif byob_results.length > 0 and vtypes_results.length > 0
-        searchresultsSet = byob_results & vtypes_results
+        searchresultsSet = byob_results.to_a & vtypes_results.to_a
       elsif byob_results.length > 0 and n_results.length > 0
-        searchresultsSet = byob_results & n_results
+        searchresultsSet = byob_results.to_a & n_results.to_a
       elsif n_results.length > 0 and vtypes_results.length > 0
-        searchresultsSet = n_results & vtypes_results
+        searchresultsSet = n_results.to_a & vtypes_results.to_a
       elsif byob_results.length > 0
         searchresultsSet = byob_results
       elsif n_results.length > 0
