@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '2.1.5'
+ruby '2.2.3'
 
 gem 'rails', '4.1.8'
 gem 'pg'
@@ -30,7 +30,7 @@ end
 gem 'geocoder'
 gem 'devise'
 gem 'paperclip', github: 'thoughtbot/paperclip'
-gem 'aws-sdk'
+gem 'aws-sdk', '~> 2.2.5'
 gem 'figaro'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'autoprefixer-rails'
