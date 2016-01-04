@@ -39,7 +39,7 @@
 						<p>No recent activity.</p>
 						<% else %>
 						<ul class="activity-list nolast">
-							<% @recentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(10).each do |activity| %>
+							<% @recentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(18).each do |activity| %>
 								<% if !activity.kind_of? Comment or (activity.kind_of? Comment and (!activity.private or is_current_user(activity.user, true))) %>
 									<li<% if activity.kind_of? Comment and activity.private %> class="private"<% end %>><%
 										if activity.kind_of? Venue or activity.kind_of? Neighborhood or activity.kind_of? Venuetype

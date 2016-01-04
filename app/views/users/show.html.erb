@@ -41,7 +41,7 @@
 						<p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> no recent activity.</p>
 						<% else %>
 						<ul class="activity-list nolast">
-							<% @userRecentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(10).each do |activity| %>
+							<% @userRecentActivity.sort{|a,b| b.updated_at <=> a.updated_at }.first(18).each do |activity| %>
 								<% if (activity.kind_of? Comment and (!activity.private or (activity.private and is_current_user(activity.user, true)))) or (!activity.kind_of? Comment and !activity.kind_of? Eat) or (activity.kind_of? Eat and !activity.item_rating.present?) or (activity.kind_of? List) or (activity.kind_of? ListItem) %>
 								<li<% if activity.kind_of? Comment and activity.private %> class="private"<% end %>>
 									<div class="activity-date pull-right"><small><%= time_ago_in_words(activity.updated_at).titleize %> ago</small></div>
