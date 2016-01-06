@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     @userItemRatings = ItemRating.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
     @userEatsWithoutRatings = Eat.where(user_id: @user.id).sort{ |a,b| b.updated_at <=> a.updated_at }
     @userRecentActivity = @userLists + @userTries + @userRatings + @userComments + @userItemRatings + @userEatsWithoutRatings
-    @userRecentActivity.sort_by(&:updated_at)
+    @userRecentActivity = @userRecentActivity.sort{ |a,b| b.updated_at <=> a.updated_at }
 
     respond_to do |format|
       format.html

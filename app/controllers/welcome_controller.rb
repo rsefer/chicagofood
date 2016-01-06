@@ -4,8 +4,12 @@ class WelcomeController < ApplicationController
   	@venuetypes = Venuetype.all
   	@neighborhoods = Neighborhood.all
 
-  	@recentActivity = List.recent + Venue.recent + Neighborhood.recent + Venuetype.recent + Try.recent + Rating.recent + Comment.recent + ItemRating.recent
-    @recentActivity.sort_by(&:updated_at)
+    if user_signed_in?
+      @recentActivity = List.recent + Venue.recent + Neighborhood.recent + Venuetype.recent + Try.recent + Rating.recent + Comment.recent + ItemRating.recent
+    else
+      @recentActivity = Venue.recent + Neighborhood.recent + Venuetype.recent
+    end
+    @recentActivity = @recentActivity.sort{ |a,b| b.updated_at <=> a.updated_at }
   end
 
   def search
