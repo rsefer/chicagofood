@@ -28,9 +28,13 @@ class WelcomeController < ApplicationController
         byob_results = Venue.where(byob: true).all
       end
 
+      v_results = Set.new
       n_results = Set.new
       vtypes_results = Set.new
       query.each do |qw|
+        Venue.where("lower(name) LIKE ?", "%#{qw}%").each do |v|
+          v_results.add(v)
+        end
         Neighborhood.where("lower(name) LIKE ?", "%#{qw}%").each do |n|
           n.venues_with_children.each do |v|
             n_results.add(v)
@@ -43,14 +47,28 @@ class WelcomeController < ApplicationController
         end
       end
 
-      if byob_results.length > 0 and n_results.length > 0 and vtypes_results.length > 0
+      if byob_results.length > 0 and v_results.length > 0 and n_results.length > 0 and vtypes_results.length > 0
+        searchresultsSet = byob_results.to_a & v_results.to_a & n_results.to_a & vtypes_results.to_a
+      elsif byob_results.length > 0 and v_results.length > 0 and vtypes_results.length > 0
+        searchresultsSet = byob_results.to_a & v_results.to_a & vtypes_results.to_a
+      elsif byob_results.length > 0 and v_results.length > 0 and n_results.length > 0
+        searchresultsSet = byob_results.to_a & v_results.to_a & n_results.to_a
+      elsif byob_results.length > 0 and n_results.length > 0 and vtypes_results.length > 0
         searchresultsSet = byob_results.to_a & n_results.to_a & vtypes_results.to_a
+      elsif byob_results.length > 0 and v_results.length > 0
+        searchresultsSet = byob_results.to_a & v_results.to_a
       elsif byob_results.length > 0 and vtypes_results.length > 0
         searchresultsSet = byob_results.to_a & vtypes_results.to_a
       elsif byob_results.length > 0 and n_results.length > 0
         searchresultsSet = byob_results.to_a & n_results.to_a
       elsif n_results.length > 0 and vtypes_results.length > 0
         searchresultsSet = n_results.to_a & vtypes_results.to_a
+      elsif n_results.length > 0 and v_results.length > 0
+        searchresultsSet = n_results.to_a & v_results.to_a
+      elsif v_results.length > 0 and vtypes_results.length > 0
+        searchresultsSet = v_results.to_a & vtypes_results.to_a
+      elsif v_results.length > 0
+        searchresultsSet = v_results
       elsif byob_results.length > 0
         searchresultsSet = byob_results
       elsif n_results.length > 0
