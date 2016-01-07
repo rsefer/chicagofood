@@ -1,5 +1,13 @@
 Chicagofood::Application.routes.draw do
 
+  if Rails.env.production?
+    constraints(:host => /^(?!chicagofood\.co)/i) do
+      match "/(*path)" => redirect {
+        |params, req| "http://chicagofood.co/#{params[:path]}"
+      },  via: [:get, :post]
+    end
+  end
+
   resources :neighborhoods
   resources :venuetypes
   resources :ratings
