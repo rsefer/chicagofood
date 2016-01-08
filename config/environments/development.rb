@@ -27,7 +27,7 @@ Chicagofood::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  config.action_mailer.default_url_options = { :host => 'chicagofood.dev:88' }
+  config.action_mailer.default_url_options = { :host => 'chicagofood.dev' }
 
   Paperclip.options[:command_path] = "/usr/local/bin/"
 
