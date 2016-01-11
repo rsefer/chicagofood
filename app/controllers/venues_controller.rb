@@ -47,10 +47,12 @@ class VenuesController < ApplicationController
   end
 
   def destroy
-    @venue.destroy
-    respond_to do |format|
-      format.html { redirect_to venues_url }
-    end
+		if current_user.try(:admin?)
+			@venue.destroy
+			respond_to do |format|
+				format.html { redirect_to venues_url }
+			end
+		end
   end
 
   def rating_average

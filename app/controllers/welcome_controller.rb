@@ -117,6 +117,24 @@ class WelcomeController < ApplicationController
     @byobButtonHTML = '<i class="fa fa-fw fa-beer left"></i>BYOB<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
   end
 
+  def deletion_request
+    if params[:type] == 'venue'
+      @requested = Venue.find(params[:id])
+      @requested_text_label = 'venue'
+    elsif params[:type] == 'venuetype'
+      @requested = Venuetype.find(params[:id])
+      @requested_text_label = 'venue type'
+    elsif params[:type] == 'neighborhood'
+      @requested = Neighborhood.find(params[:id])
+      @requested_text_label = 'neighborhood'
+    end
+
+    if request.method == 'POST'
+      DeletionRequestMailer.deletion_request_email(current_user, params[:type], @requested.id, params[:deletion_request_reason]).deliver
+    end
+
+  end
+
   def about
   end
 

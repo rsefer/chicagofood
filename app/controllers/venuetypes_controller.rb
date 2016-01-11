@@ -48,9 +48,11 @@ class VenuetypesController < ApplicationController
   end
 
   def destroy
-    @venuetype.destroy
-    respond_to do |format|
-      format.html { redirect_to venuetypes_url }
+    if current_user.try(:admin?)
+      @venuetype.destroy
+      respond_to do |format|
+        format.html { redirect_to venuetypes_url }
+      end
     end
   end
 

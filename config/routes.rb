@@ -41,6 +41,8 @@ Chicagofood::Application.routes.draw do
   get 'search' => 'welcome#search'
   get 'map' => 'welcome#map'
   get 'about' => 'welcome#about'
+  get 'deletion_request' => 'welcome#deletion_request'
+  put 'deletion_request' => 'welcome#deletion_request'
   get 'venues_controller/update_item_rating_display', to: 'venues#update_item_rating_display'
   get 'venues_controller/new_venue_search_display', to: 'venues#new_venue_search_display'
 

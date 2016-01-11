@@ -48,9 +48,11 @@ class NeighborhoodsController < ApplicationController
   end
 
   def destroy
-    @neighborhood.destroy
-    respond_to do |format|
-      format.html { redirect_to neighborhoods_url }
+    if current_user.try(:admin?)
+      @neighborhood.destroy
+      respond_to do |format|
+        format.html { redirect_to neighborhoods_url }
+      end
     end
   end
 
