@@ -15,27 +15,3 @@ $width-md: 992px;
 $width-sm: 768px;
 
 $font-main: 'proxima-nova', sans-serif;
-
-@mixin custom-bootstrap-btn($name: 'default', $background-color: #000000, $color: null) {
-
-  .btn-#{$name} {
-
-    @if $color != null { color: $color; }
-    background-color: $background-color;
-    border-color: darken($background-color, 6%);
-
-    &:hover,
-    &:focus,
-    &:active {
-      @if $color != null { color: $color; }
-      background-color: darken($background-color, 10%);
-      border-color: darken($background-color, 12%);
-    }
-
-    &:active {
-      background-color: lighten($background-color, 10%);
-    }
-
-  }
-
-}
