@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require turbolinks_transitions
+//= require bootstrap-buttons
 //= require bootstrap-datepicker
 //= require markerclusterer
 //= require scripts
