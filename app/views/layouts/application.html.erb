@@ -4,14 +4,16 @@
   <title><%= yield(:title) %><% if !current_page?(root_url) %> | <% end %>Chicago Food</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+  <%= csrf_meta_tags %>
   <link rel="apple-touch-icon-precomposed" href="<%= asset_path('favicons/favicon_800.jpg') %>" />
   <link rel="shortcut icon" href="<%= asset_path('favicons/favicon_144.jpg') %>" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
-  <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyA4I-MLFSK8kX16-GrXDCE-a6aN4ZbYUbo"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4I-MLFSK8kX16-GrXDCE-a6aN4ZbYUbo"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-  <script type="text/javascript" src="//use.typekit.net/mkb5nxi.js"></script>
+  <script type="text/javascript" src="https://use.typekit.net/mkb5nxi.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -21,7 +23,6 @@
 
     ga('create', 'UA-3797528-18', 'auto');
     ga('send', 'pageview');
-
   </script>
 </head>
 <body>
