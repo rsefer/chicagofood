@@ -11,15 +11,21 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label :venue_id, 'Venue' %><br>
-    <%= f.select :venue_id, Venue.all.sort{|a,b| a.sortable_name <=> b.sortable_name }.collect {|n| [ n.name, n.id ] }, {}, { :class => 'form-control' } %>
-  </div>
-  <div class="form-group">
-    <%= f.label :date, 'Date (optional)' %>
-    <div class="input-group">
-      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-      <%= f.text_field :date, :placeholder => 'YYYY-MM-DD', class: 'form-control datepicker' %>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <%= f.label :venue_id, 'Venue' %><br>
+        <%= f.select :venue_id, Venue.all.sort{|a,b| a.sortable_name <=> b.sortable_name }.collect {|n| [ n.name, n.id ] }, {}, { :class => 'form-control' } %>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group">
+        <%= f.label :date, 'Date (optional)' %>
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+          <%= f.text_field :date, :placeholder => 'YYYY-MM-DD', class: 'form-control datepicker' %>
+        </div>
+      </div>
     </div>
   </div>
   <div class="form-group">
