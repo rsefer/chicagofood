@@ -24,9 +24,9 @@
 										<% if @venue.hasaddress %>
 										<address>
 											<% if current_user.try(:hasaddress) %>
-											<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.name + ' ') %><%= to_url(@addressWorking.to_s) %>/"><%= @addressDisplay.html_safe %></a>
+											<a href="http://www.google.com/maps/dir/<%= to_url(current_user.fulladdress) %>/<%= to_url(@venue.name + ' ') %><%= to_url(@venue.fulladdress.to_s) %>/"><%= @venue.addressDisplay.html_safe %></a>
 											<% else %>
-											<a href="http://maps.google.com/maps?q=<%= to_url(@venue.name + ' ') + to_url(@addressWorking.to_s) %>"><%= @addressDisplay.html_safe %></a>
+											<a href="http://maps.google.com/maps?q=<%= to_url(@venue.name + ' ') + to_url(@venue.fulladdress.to_s) %>"><%= @venue.addressDisplay.html_safe %></a>
 											<% end %>
 										</address>
 										<% end %>
