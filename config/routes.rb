@@ -48,4 +48,19 @@ Chicagofood::Application.routes.draw do
 
 	root "welcome#index"
 
+  namespace :api, defaults: { format: 'json' } do
+    namespace :v1 do
+      resources :venues
+      resources :neighborhoods
+      resources :venuetypes
+      resources :users do
+        resources :comments
+        resources :ratings
+        resources :tries
+        resources :item_ratings
+        resources :lists
+      end
+    end
+  end
+
 end
