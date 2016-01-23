@@ -37,6 +37,8 @@ class ApplicationController < ActionController::Base
         else
           sorted_object_list = object_list.sort_by { |t| t.venue.sortable_name }
         end
+      elsif params[:sort] == 'byob'
+        sorted_object_list = object_list.sort_by { |v| v.byob ? 0 : 1 }
       elsif params[:sort] == 'name'
 				sorted_object_list = object_list.sort_by { |v| v.sortable_name }
       else
