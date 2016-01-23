@@ -55,7 +55,7 @@
 										elsif activity.kind_of? List %><% if activity.updated_at == activity.created_at %>Created<% else %>Updated<% end %> the <%= link_to activity.title, user_list_path(@user, activity) %> list.<%
 										elsif activity.kind_of? Rating %>Rated <%= link_to venue_path(activity.venue_id) do %><%= activity.venue.name %><% end %> <%= pluralize(activity.rating, 'star') %>.<%
 										elsif activity.kind_of? Comment %>Commented on <%= link_to venue_path(activity.venue_id) do %><%= activity.venue.name %><% end %>:
-										<div class="activity-comment"><%= wrap_quotes(activity.body).html_safe %></div><%
+										<div class="activity-comment"><i class="fa fa-fw left"></i><%= wrap_quotes(activity.body).html_safe %></div><%
 										elsif activity.kind_of? ItemRating
 											if activity.eat.present? %>Had and <% end %><% if activity.liked %>Liked<% else %>Disliked<% end %> the <%= activity.item.name %> at <%= link_to activity.item.venue.name, activity.item.venue %>.<%
 										elsif activity.kind_of? Eat %>Had the <%= activity.item.name %> at <%= link_to activity.item.venue.name, activity.item.venue %>.<%
