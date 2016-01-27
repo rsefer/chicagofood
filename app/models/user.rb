@@ -21,7 +21,8 @@ class User < ActiveRecord::Base
 		:default_url => ActionController::Base.helpers.asset_path('default-avatar.jpg'),
 		:storage => :s3,
 		:s3_credentials => "#{Rails.root}/config/aws.yml",
-    :s3_region => ENV['AWS_REGION']
+    :s3_region => ENV['AWS_REGION'],
+    :s3_protocol => :https
 
   def user_public_comment_count
   	Comment.where(user_id: self.id).where(private: false).count
