@@ -25,8 +25,4 @@ class Api::V1::ListsController < Api::ApiController
       @list = List.find(params[:id])
     end
 
-    def set_display_user
-			@user = User.find(params[:user_id])
-		end
-
 end

@@ -6,9 +6,4 @@ class Api::V1::ItemRatingsController < Api::ApiController
     respond_with @itemratings
   end
 
-  private
-    def set_display_user
-			@user = User.find(params[:user_id])
-		end
-
 end

@@ -21,10 +21,6 @@ class EatsController < ApplicationController
   end
 
   private
-    def set_display_user
-      @user = User.find(params[:user_id])
-    end
-
     def eat_params
       params.require(:eat).permit(:item_id, :user_id)
     end

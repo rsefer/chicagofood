@@ -22,8 +22,4 @@ class Api::V1::CommentsController < Api::ApiController
       @comment = Comment.find(params[:id])
     end
 
-    def set_display_user
-			@user = User.find(params[:user_id])
-		end
-
 end

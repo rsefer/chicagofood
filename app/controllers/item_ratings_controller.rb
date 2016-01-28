@@ -50,10 +50,6 @@ class ItemRatingsController < ApplicationController
       @item_rating = ItemRating.find(params[:id])
     end
 
-    def set_display_user
-      @user = User.find(params[:user_id])
-    end
-
     def item_rating_params
       params.require(:item_rating).permit(:item_id, :user_id, :liked)
     end

@@ -55,6 +55,18 @@ class ApplicationController < ActionController::Base
 
   protected
 
+    def set_display_user
+      @user = User.find(params[:user_id])
+    end
+
+    def set_display_list
+      @list = List.find(params[:list_id])
+    end
+
+    def set_venue
+      @venue = Venue.find(params[:venue_id])
+    end
+
 	  def configure_permitted_parameters
 	    devise_parameter_sanitizer.for(:sign_up) do |u|
 	      u.permit(:email, :password, :password_confirmation, :firstname, :lastname, :avatar, :street, :city, :state)

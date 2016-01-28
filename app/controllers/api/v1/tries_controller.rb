@@ -6,9 +6,4 @@ class Api::V1::TriesController < Api::ApiController
     respond_with @tries
   end
 
-  private
-    def set_display_user
-			@user = User.find(params[:user_id])
-		end
-
 end

@@ -29,10 +29,6 @@ class ListItemsController < ApplicationController
       @list_item = ListItem.find(params[:id])
     end
 
-    def set_display_list
-      @list = List.find(params[:list_id])
-    end
-
     def list_item_params
       params.require(:list_item).permit(:list_id, :venue_id, :date, :notes)
     end

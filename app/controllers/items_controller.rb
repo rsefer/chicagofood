@@ -51,10 +51,6 @@ class ItemsController < ApplicationController
       @item = Item.find(params[:id])
     end
 
-    def set_venue
-      @venue = Venue.find(params[:venue_id])
-    end
-
     def item_params
       params.require(:item).permit(:venue_id, :name)
     end
