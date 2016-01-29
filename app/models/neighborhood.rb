@@ -21,6 +21,10 @@ class Neighborhood < ActiveRecord::Base
     end
   end
 
+  def children
+    Neighborhood.where(parent_neighborhood_id: self.id)
+  end
+
   def venues_with_children
     tempNeighborhoodList = Set.new [self]
     Neighborhood.where(parent_neighborhood_id: self.id).each do |n|

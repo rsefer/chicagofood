@@ -36,13 +36,13 @@ module ApplicationHelper
 
 	def render_venuetype_hierarchy(parent_id, listClasses = '')
 		listcontent = '<ul class="' + listClasses + '">'
-		Venuetype.find(parent_id).childTypes.each do |venuetype|
+		Venuetype.find(parent_id).children.each do |venuetype|
 			listcontent += '<li>'
 			if parent_id != 1 and parent_id != 2
 				listcontent += '<i class="fa fa-fw fa-rotate-90 fa-level-up"></i>'
 			end
 			listcontent += '<a href="' + venuetype_path(venuetype.id) + '">' + venuetype.name + '</a>'
-			if venuetype.childTypes.present?
+			if venuetype.children.present?
 				listcontent += render_venuetype_hierarchy(venuetype.id, 'venue-type-list')
 			end
 			listcontent += '</li>'

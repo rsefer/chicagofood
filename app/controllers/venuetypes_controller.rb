@@ -7,15 +7,7 @@ class VenuetypesController < ApplicationController
   end
 
   def show
-  	@scopeTop = Venue.where(venuetype_id: @venuetype.id)
-		@scope2nd = Venue.where(venuetype_id: Venuetype.where(parent_type_id: @venuetype.id))
-		@scope3rd = Venue.where(venuetype_id: Venuetype.where(parent_type_id: Venuetype.where(parent_type_id: @venuetype.id)))
-		@scope4th = Venue.where(venuetype_id: Venuetype.where(parent_type_id: Venuetype.where(parent_type_id: Venuetype.where(parent_type_id: @venuetype.id))))
-
-		@scopeTotal = @scopeTop + @scope2nd + @scope3rd + @scope4th
-
-    @scopeTotal = sortable_venues_array(@scopeTotal)
-  	@childTypes = Venuetype.where(parent_type_id: @venuetype.id)
+    @venues = sortable_venues_array(@venuetype.venues_with_children)
   end
 
   def new

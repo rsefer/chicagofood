@@ -21,8 +21,38 @@ class Venuetype < ActiveRecord::Base
     end
   end
 
-  def childTypes
+  def children
     Venuetype.where(parent_type_id: self.id)
+  end
+
+  def venues_with_children
+    tempVenuetypeList = Set.new [self]
+    Venuetype.where(parent_type_id: self.id).each do |n|
+      tempVenuetypeList.add(n)
+      Venuetype.where(parent_type_id: n.id).each do |n2|
+        tempVenuetypeList.add(n2)
+        Venuetype.where(parent_type_id: n2.id).each do |n3|
+          tempVenuetypeList.add(n3)
+          Venuetype.where(parent_type_id: n3.id).each do |n4|
+            tempVenuetypeList.add(n4)
+            Venuetype.where(parent_type_id: n4.id).each do |n5|
+              tempVenuetypeList.add(n5)
+            end
+          end
+        end
+      end
+    end
+    venuesListSet = Set.new
+    tempVenuetypeList.each do |n|
+      n.venues.each do |v|
+        venuesListSet.add(v)
+      end
+    end
+    venuesList = []
+    venuesListSet.each do |v|
+      venuesList.push(v)
+    end
+    venuesList
   end
 
   def isBar

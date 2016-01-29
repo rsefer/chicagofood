@@ -10,8 +10,8 @@
 				<% else %>
 				<h2><%= @venuetype.name %></h2>
 				<% end %>
-				<p><% if @venuetype.hasParent %>Part of <%= link_to @venuetype.parent do %><%= @venuetype.parent.name %><% end %>. <% end %><% if !@childTypes.empty? %>Includes <%= @childTypes.map { |vtype| link_to vtype.name, vtype }.join(', ').html_safe %>.<% end %></p>
-				<% if !@scopeTotal.empty? %>
+				<p><% if @venuetype.hasParent %>Part of <%= link_to @venuetype.parent do %><%= @venuetype.parent.name %><% end %>. <% end %><% if !@venuetype.children.empty? %>Includes <%= @venuetype.children.map { |vtype| link_to vtype.name, vtype }.join(', ').html_safe %>.<% end %></p>
+				<% if !@venues.empty? %>
 				<div class="row">
 					<div class="col-md-8">
 						<table class="table">
@@ -26,7 +26,7 @@
 						    </tr>
 						  </thead>
 						  <tbody>
-								<% @scopeTotal.each do |venue| %>
+								<% @venues.each do |venue| %>
 					      <tr>
 					        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
 					        <% if @venuetype.id == 1 || @venuetype.id == 2 %><td><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td><% end %>
@@ -52,4 +52,4 @@
 	</div>
 </section>
 
-<%= render 'layouts/mapscript', :mapvenues => @scopeTotal %>
+<%= render 'layouts/mapscript', :mapvenues => @venues %>

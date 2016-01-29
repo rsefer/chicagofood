@@ -7,15 +7,7 @@ class NeighborhoodsController < ApplicationController
   end
 
   def show
-  	@scopeTop = Venue.where(neighborhood_id: @neighborhood.id)
-		@scope2nd = Venue.where(neighborhood_id: Neighborhood.where(parent_neighborhood_id: @neighborhood.id))
-		@scope3rd = Venue.where(neighborhood_id: Neighborhood.where(parent_neighborhood_id: Neighborhood.where(parent_neighborhood_id: @neighborhood.id)))
-		@scope4th = Venue.where(neighborhood_id: Neighborhood.where(parent_neighborhood_id: Neighborhood.where(parent_neighborhood_id: Neighborhood.where(parent_neighborhood_id: @neighborhood.id))))
-
-		@scopeTotal = @scopeTop + @scope2nd + @scope3rd + @scope4th
-
-    @scopeTotal = sortable_venues_array(@scopeTotal)
-		@childTypes = Neighborhood.where(parent_neighborhood_id: @neighborhood.id)
+    @venues = sortable_venues_array(@neighborhood.venues_with_children)
   end
 
   def new
