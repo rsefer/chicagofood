@@ -8,22 +8,10 @@
 					<h1><%= @user.fullname %><% if is_current_user(@user) %> <small><%= link_to 'Edit Profile', edit_user_registration_path %></small><% end %></h1>
 				</div>
 				<div id="user-count-block" class="row text-center">
-					<div class="col-sm-3 col-xs-6 main">
-						<div class="user-count-number"><%= @user.user_score %></div>
-						<div class="user-count-title">User Score</div>
-					</div>
-					<div class="col-sm-3 col-xs-6">
-						<div class="user-count-number"><%= @user.user_public_comment_count %></div>
-						<div class="user-count-title sub">Public Comments</div>
-					</div>
-					<div class="col-sm-3 col-xs-6">
-						<div class="user-count-number"><%= @user.user_venue_rating_count %></div>
-						<div class="user-count-title">Venue Ratings</div>
-					</div>
-					<div class="col-sm-3 col-xs-6">
-						<div class="user-count-number"><%= @user.user_item_rating_count %></div>
-						<div class="user-count-title">Menu Item Ratings</div>
-					</div>
+					<%= score_display(@user.user_score, 'User Score') %>
+					<%= score_display(@user.user_public_comment_count, 'Public Comments') %>
+					<%= score_display(@user.user_venue_rating_count, 'Venue Ratings') %>
+					<%= score_display(@user.user_item_rating_count, 'Menu Item Ratings') %>
 				</div>
 				<div class="row">
 					<div class="col-sm-4">
@@ -36,31 +24,13 @@
 					<div class="col-sm-8">
 						<hr class="visible-xs">
 						<h2>Recent Activity</h2>
-						<% if @userRecentActivity.empty? %>
+						<% if @user.recentActivity.empty? %>
 						<p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> no recent activity.</p>
 						<% else %>
 						<ul class="activity-list nolast">
-							<% @userRecentActivity.first(recent_activity_count).each do |activity| %>
+							<% @user.recentActivity.each do |activity| %>
 								<% if (activity.kind_of? Comment and (!activity.private or (activity.private and is_current_user(activity.user, true)))) or (!activity.kind_of? Comment and !activity.kind_of? Eat) or (activity.kind_of? Eat and !activity.item_rating.present?) or (activity.kind_of? List) or (activity.kind_of? ListItem) %>
-								<li<% if activity.kind_of? Comment and activity.private %> class="private"<% end %>>
-									<div class="activity-date pull-right"><small><%= time_ago_in_words(activity.updated_at).titleize %> ago</small></div>
-									<%
-										if activity.kind_of? Try %><i class="fa fa-fw fa-plus left"></i><%
-										elsif activity.kind_of? List %><i class="fa fa-fw fa-list left"></i><%
-										elsif activity.kind_of? Rating %><i class="fa fa-fw fa-star left"></i><%
-										elsif activity.kind_of? Comment %><i class="fa fa-fw fa-quote-left left"></i><%
-										elsif activity.kind_of? ItemRating %><i class="fa fa-fw <% if activity.liked %>fa-thumbs-up green<% else %>fa-thumbs-down red<% end %> left"></i><%
-										elsif activity.kind_of? Eat %><i class="fa fa-fw fa-coffee left"></i><% end
-										if activity.kind_of? Try %>Added <%= link_to venue_path(activity.venue_id) do %><%= activity.venue.name %><% end %> to the <%= link_to user_tries_path(@user.id) do %>list of places to try<% end %>.<%
-										elsif activity.kind_of? List %><% if activity.updated_at == activity.created_at %>Created<% else %>Updated<% end %> the <%= link_to activity.title, user_list_path(@user, activity) %> list.<%
-										elsif activity.kind_of? Rating %>Rated <%= link_to venue_path(activity.venue_id) do %><%= activity.venue.name %><% end %> <%= pluralize(activity.rating, 'star') %>.<%
-										elsif activity.kind_of? Comment %>Commented on <%= link_to venue_path(activity.venue_id) do %><%= activity.venue.name %><% end %>:
-										<div class="activity-comment"><i class="fa fa-fw left"></i><%= wrap_quotes(activity.body).html_safe %></div><%
-										elsif activity.kind_of? ItemRating
-											if activity.eat.present? %>Had and <% end %><% if activity.liked %>Liked<% else %>Disliked<% end %> the <%= activity.item.name %> at <%= link_to activity.item.venue.name, activity.item.venue %>.<%
-										elsif activity.kind_of? Eat %>Had the <%= activity.item.name %> at <%= link_to activity.item.venue.name, activity.item.venue %>.<%
-										end %>
-								</li>
+								<%= display_activity(activity) %>
 								<% end %>
 							<% end %>
 						</ul>

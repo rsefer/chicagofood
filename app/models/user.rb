@@ -64,4 +64,9 @@ class User < ActiveRecord::Base
 		end
 	end
 
+  def recentActivity
+    unsortedActivity = self.lists + self.tries + self.ratings + self.comments + self.item_ratings + self.eats
+    unsortedActivity.sort{ |a,b| b.updated_at <=> a.updated_at }.first(20)
+  end
+
 end
