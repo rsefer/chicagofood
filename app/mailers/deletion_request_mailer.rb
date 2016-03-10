@@ -27,7 +27,7 @@ class DeletionRequestMailer < ActionMailer::Base
     ses.send_email({
       source: "Chicago Food <chicagofood@seferdesign.com>",
       destination: {
-        to_addresses: ["chicagofood@seferdesign.com"]
+        to_addresses: ["Robert Sefer <rsefer@gmail.com>"]
       },
       message: {
         subject: {
