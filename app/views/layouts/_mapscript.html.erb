@@ -62,8 +62,8 @@ if (locations.length >= 1) {
     map.setZoom(15);
   } else {
     var markerCluster = new MarkerClusterer(map, markerList, {
-      maxZoom: 13,
-      gridSize: 35,
+      maxZoom: 15,
+      gridSize: 30,
       minimumClusterSize: 2,
       styles: [{
         url: '<%= asset_path("circle.svg") %>',
