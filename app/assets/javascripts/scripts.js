@@ -171,4 +171,13 @@ jQuery(document).ready(function($) {
 		$('form#new_try').submit();
 	});
 
+  $('#manual-entry-toggle').click(function(e) {
+    e.preventDefault();
+    $('#list_item_venue_id').remove();
+    $('#list-item-auto-entry').hide();
+    $(this).hide();
+    $('#list-item-manual-entry').removeClass('hidden');
+    $('#list_item_manual_entry').attr('value', 'true');
+  });
+
 });

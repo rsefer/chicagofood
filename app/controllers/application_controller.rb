@@ -15,9 +15,9 @@ class ApplicationController < ActionController::Base
         if params[:sort] == 'price'
           sorted_object_list = object_list.sort_by { |t| t.venue.price }
         elsif params[:sort] == 'vt_name'
-          sorted_object_list = object_list.sort_by { |t| t.venue.venuetype.sortable_name }
+          sorted_object_list = object_list.sort_by { |t| if t.manual_entry then t.venuetype.sortable_name else t.venue.venuetype.sortable_name end }
         elsif params[:sort] == 'neighborhood_name'
-          sorted_object_list = object_list.sort_by { |t| t.venue.neighborhood.sortable_name }
+          sorted_object_list = object_list.sort_by { |t| if t.manual_entry then t.neighborhood.sortable_name else t.venue.neighborhood.sortable_name end }
         elsif params[:sort] == 'updated_at'
           sorted_object_list = object_list.sort_by { |t| t.updated_at }
         elsif params[:sort] == 'date'
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
             sorted_object_list = object_list.sort_by { |ir| ir.item.venue.sortable_name }
           end
         else
-          sorted_object_list = object_list.sort_by { |t| t.venue.sortable_name }
+          sorted_object_list = object_list.sort_by { |t| if t.manual_entry then t.sortable_name else t.venue.sortable_name end }
         end
       elsif params[:sort] == 'byob'
         sorted_object_list = object_list.sort_by { |v| v.byob ? 0 : 1 }

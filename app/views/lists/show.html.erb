@@ -34,15 +34,21 @@
 						  <tbody>
 						    <% @sorted_list.each do |list_item| %>
 						    <tr>
+									<% if list_item.manual_entry %>
+									<td><%= list_item.venue_name %></td>
+									<td><%= link_to Venuetype.find(list_item.venuetype_id).name, Venuetype.find(list_item.venuetype_id) %></td>
+									<td><%= link_to Neighborhood.find(list_item.neighborhood_id).name, Neighborhood.find(list_item.neighborhood_id) %></td>
+									<% else %>
 									<td><%= link_to list_item.venue.name, list_item.venue %></td>
 									<td><%= link_to list_item.venue.venuetype.name, list_item.venue.venuetype %></td>
 									<td><%= link_to list_item.venue.neighborhood.name, list_item.venue.neighborhood %></td>
+									<% end %>
 									<% if @list.hasDates %>
 									<td class="hidden-xs"><% if list_item.date %><%= list_item.date %><% else %>&mdash;<% end %></td>
 									<% end %>
 									<% if is_current_user(list_item.list.user) or user_signed_in? %><td class="text-center">
 						    		<% if is_current_user(list_item.list.user) %>
-						    			<%= link_to user_list_list_item_path(list_item.list.user, list_item.list, list_item), title: "Remove #{list_item.venue.name} from your list?", method: :delete, class: 'red' do %><i class="fa fa-times fa-lg"></i><% end %><% end %>
+						    			<%= link_to user_list_list_item_path(list_item.list.user, list_item.list, list_item), title: "Remove this item from your list?", method: :delete, class: 'red' do %><i class="fa fa-times fa-lg"></i><% end %><% end %>
 						    	</td><% end %>
 						    </tr>
 						    <% end %>
