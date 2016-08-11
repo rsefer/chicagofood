@@ -13,7 +13,7 @@ class ListItemsController < ApplicationController
   def create
     @list_item = ListItem.new(list_item_params)
     @list_item.list_id = @list.id
-    if params[:manual_entry] == 'true' or true
+    if params[:manual_entry] == 'true' or params[:manual_entry] == true
       @list_item.manual_entry = true
       @list_item.venue_id = nil
       @list_item.venue_name = params[:venue_name]
