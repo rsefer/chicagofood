@@ -14,7 +14,7 @@ module UsersHelper
 
     if activity.kind_of? Try
       fa_icon = 'plus'
-      sentence = 'Added ' + link_to(activity.venue.name, venue_path(activity)) + ' to the ' + link_to('list of places to try', user_tries_path(activity.user)) + '.'
+      sentence = 'Added ' + link_to(activity.venue.name, venue_path(activity.venue)) + ' to the ' + link_to('list of places to try', user_tries_path(activity.user)) + '.'
     elsif activity.kind_of? List
       fa_icon = 'list'
       if activity.updated_at == activity.created_at
@@ -25,10 +25,10 @@ module UsersHelper
       sentence += ' the ' + link_to(activity.title, user_list_path(activity.user, activity)) + ' list.'
     elsif activity.kind_of? Rating
       fa_icon = 'star'
-      sentence = 'Rated ' + link_to(activity.venue.name, venue_path(activity)) + ' ' + pluralize(activity.rating, "star") + '.'
+      sentence = 'Rated ' + link_to(activity.venue.name, venue_path(activity.venue)) + ' ' + pluralize(activity.rating, "star") + '.'
     elsif activity.kind_of? Comment
       fa_icon = 'quote-left'
-      sentence = 'Commented on ' + link_to(activity.venue.name, venue_path(activity)) + ':'
+      sentence = 'Commented on ' + link_to(activity.venue.name, venue_path(activity.venue)) + ':'
       sentence += '<div class="activity-comment"><i class="fa fa-fw left"></i>' + wrap_quotes(activity.body).html_safe  + '</div>'
     elsif activity.kind_of? ItemRating
       if activity.liked
