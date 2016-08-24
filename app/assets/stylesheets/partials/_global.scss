@@ -66,6 +66,22 @@ h1 {
 	margin-top: 0px;
 }
 
+.pagination-list {
+
+	text-align: center;
+
+	li {
+		display: inline-block;
+		vertical-align: middle;
+		margin: 0px 0.25rem;
+	}
+
+	.active {
+		text-decoration: underline;
+	}
+
+}
+
 .navbar {
 
 	margin-bottom: 0px;
