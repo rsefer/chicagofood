@@ -44,4 +44,4 @@
 	</div>
 </section>
 
-<%= render 'layouts/mapscript', :mapvenues => @venues %>
+<%= render 'layouts/mapscript', :mapvenues => @venues_unpaginated.present? ? @venues_unpaginated : @venues %>

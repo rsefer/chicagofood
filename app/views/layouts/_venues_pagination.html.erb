@@ -1,0 +1,7 @@
+<ul class="pagination-list">
+  <li><% if @current_page > 1 %><%= link_to raw('&lt;'), params.merge(:page => (@current_page - 1).to_i), :class => '' %><% else %>&lt;<% end %></li>
+  <% for page_num in 1..@total_pages do %>
+  <li><% if @current_page == page_num %><%= page_num %><% else %><%= link_to page_num, params.merge(:page => page_num) %><% end %></li>
+  <% end %>
+  <li><% if @current_page < @total_pages %><%= link_to raw('&gt;'), params.merge(:page => (@current_page + 1).to_i), :class => '' %><% else %>&gt;<% end %></li>
+</ul>

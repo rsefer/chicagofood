@@ -7,6 +7,23 @@ class ApplicationController < ActionController::Base
 
   helper_method :sort_column, :sort_direction
 
+  def paginate_venues(venues_array)
+    results_per_page = 25
+    if params[:page].present?
+      @current_page = params[:page].to_i
+    else
+      @current_page = 1
+    end
+
+    if venues_array.count > results_per_page
+      @isPaginated = true
+    end
+
+    @total_pages = (venues_array.count.to_f / results_per_page.to_f).ceil
+    @venues_unpaginated = sortable_venues_array(venues_array)
+    @venues = @venues_unpaginated.drop((@current_page - 1) * results_per_page).take(results_per_page)
+  end
+
   def sortable_venues_array(object_list, other_model = false)
 		sorted_object_list = []
     other_model_options = ['try', 'rating', 'list', 'list_item', 'item_rating']

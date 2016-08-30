@@ -7,7 +7,7 @@ class VenuetypesController < ApplicationController
   end
 
   def show
-    @venues = sortable_venues_array(@venuetype.venues_with_children)
+    paginate_venues(@venuetype.venues_with_children)
   end
 
   def new

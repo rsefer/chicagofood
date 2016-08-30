@@ -4,15 +4,7 @@ class VenuesController < ApplicationController
 	after_action :update_geocoder, only: [:create, :update]
 
   def index
-    results_per_page = 25
-    if params[:page].present?
-      @current_page = params[:page].to_i
-    else
-      @current_page = 1
-    end
-
-    @total_pages = (Venue.all.count / results_per_page).ceil
-    @venues = sortable_venues_array(Venue.all).drop((@current_page - 1) * results_per_page).take(results_per_page)
+    paginate_venues(Venue.all)
   end
 
   def show
