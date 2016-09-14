@@ -31,6 +31,8 @@
   			<%= f.label :latenight, 'Late Night' %>
   			<%= check_box(:venue, :cashonly, {}, 'true', 'false') %>
   			<%= f.label :cashonly, 'Cash Only' %>
+				<%= check_box(:venue, :outdoor, {}, 'true', 'false') %>
+  			<%= f.label :outdoor, 'Outdoor/Patio' %>
 		  </div>
 		</div>
 		<div class="col-sm-6">
