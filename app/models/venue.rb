@@ -61,7 +61,7 @@ class Venue < ActiveRecord::Base
 	end
 
 	def hasExtras
-		if self.byob or self.craftbeer or self.cocktails or self.latenight or self.cashonly
+		if self.byob or self.craftbeer or self.cocktails or self.latenight or self.cashonly or self.outdoor
 			true
 		end
 	end
