@@ -4,7 +4,7 @@ class ListItem < ActiveRecord::Base
   belongs_to :venuetype
   belongs_to :neighborhood
 
-  validates_uniqueness_of :venue_id, scope: :list_id, :message => 'Venue already exists in this list.'
+  validates_uniqueness_of :venue_id, :allow_nil => true, scope: :list_id, :message => 'Venue already exists in this list.'
 
   default_scope { order('date DESC') }
 
