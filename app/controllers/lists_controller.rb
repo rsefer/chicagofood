@@ -16,8 +16,12 @@ class ListsController < ApplicationController
   end
 
   def show
-    @sorted_list = sortable_venues_array(@list.list_items, 'list_item')
-    respond_with(@list.user, @list)
+    if @user != @list.user
+      redirect_to user_list_path(@list.user, @list)
+    else
+      @sorted_list = sortable_venues_array(@list.list_items, 'list_item')
+      respond_with(@list.user, @list)
+    end
   end
 
   def new
