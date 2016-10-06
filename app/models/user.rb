@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 			:medium => '300x300#',
 			:thumb => '100x100#'
 		},
-		:default_url => ActionController::Base.helpers.asset_path('default-avatar.jpg'),
+		:default_url => -> (attachment) { ActionController::Base.helpers.asset_path('default-avatar.jpg') },
 		:storage => :s3,
 		:s3_credentials => "#{Rails.root}/config/aws.yml",
     :s3_region => ENV['AWS_REGION'],
