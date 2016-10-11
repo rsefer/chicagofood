@@ -1,23 +1,24 @@
-development:
+default: &default
   adapter: postgresql
   encoding: unicode
-  database: chicagofood_development
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
+
+development:
+  <<: *default
+  database: chicagofood_development
   username: rsefer
   password:
 
 test:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: chicagofood_test
-  pool: 5
   username: rsefer
   password:
 
 production:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: chicagofood_production
-  pool: 5
-  username: chicagofood
-  password:
+  username: pguser
+  password: pguser
