@@ -20,5 +20,5 @@ test:
 production:
   <<: *default
   database: chicagofood_production
-  username: pguser
-  password: pguser
+  username: postgres
+  password: postgres
