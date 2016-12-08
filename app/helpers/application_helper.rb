@@ -47,6 +47,21 @@ module ApplicationHelper
 		listcontent.html_safe
 	end
 
+  def render_neighborhood_hierarchy(parent_id, listClasses = '')
+		listcontent = '<ul class="' + listClasses + '">'
+		Neighborhood.find(parent_id).children.each do |neighborhood|
+			listcontent += '<li>'
+      listcontent += '<i class="fa fa-fw fa-rotate-90 fa-level-up"></i>'
+			listcontent += '<a href="' + neighborhood_path(neighborhood.id) + '">' + neighborhood.name + '</a>'
+			if neighborhood.children.present?
+				listcontent += render_neighborhood_hierarchy(neighborhood.id, 'neighborhood-list')
+			end
+			listcontent += '</li>'
+		end
+		listcontent += '</ul>'
+		listcontent.html_safe
+	end
+
 	def render_price(price)
 		if price == 4
 			'<i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i>'.html_safe

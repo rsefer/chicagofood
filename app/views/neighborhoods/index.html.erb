@@ -4,13 +4,22 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<h1>Neighborhoods</h1>
+				<p><% if params[:alphabetical] == 'true' %><%= link_to neighborhoods_path() do %><i class="fa fa-sort-amount-asc left" aria-hidden="true"></i>Sort Hierarchically<% end %><% else %><%= link_to neighborhoods_path(:alphabetical => 'true') do %><i class="fa fa-sort-alpha-asc left" aria-hidden="true"></i>Sort Alphabetically<% end %><% end %></p>
 				<div class="row">
 					<div class="col-md-6">
+						<% if params[:alphabetical] == 'true' %>
 						<ul class="neighborhoods-list cols2">
 							<% @neighborhoods.each do |neighborhood| %>
 							<li><%= link_to neighborhood_path(neighborhood), title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
 							<% end %>
 						</ul>
+						<% else %>
+              <ul class="neighborhoods-list cols2">
+							<% Neighborhood.where(parent_neighborhood_id: nil).order('name ASC').each do |neighborhood| %>
+	            <li><%= link_to neighborhood.name, neighborhood %><%= render_neighborhood_hierarchy(neighborhood.id) %></li>
+							<% end %>
+            </ul>
+						<% end %>
 					</div>
 					<div class="col-md-6">
 						<div id="google-map" class="map map-all map-neighborhood"></div>

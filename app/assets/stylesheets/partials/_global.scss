@@ -209,11 +209,13 @@ ul {
 		list-style-type: disc;
 	}
 
-	&.venue-type-list {
+	&.venue-type-list,
+	&.neighborhood-list {
 
 		padding-left: 0rem;
 
-		.venue-type-list {
+		.venue-type-list,
+		&.neighborhood-list {
 			padding-left: 2rem;
 		}
 
