@@ -59,6 +59,30 @@ class VenuesController < ApplicationController
   	render :json => data, :status => :ok
   end
 
+	def find_nearby_neighborhoods
+    currentStreet = params[:currentStreet]
+    currentCity = params[:currentCity]
+    currentState = params[:currentState]
+    if currentStreet.present? and currentCity.present?
+      temp_location = "#{currentStreet} #{currentCity} #{currentState}"
+      s = Geocoder.search(temp_location)
+      if !s.empty?
+        venue_location = []
+        venue_location[0] = s[0].latitude
+        venue_location[1] = s[0].longitude
+        data = { }
+        nearest_venues = Venue.near(venue_location, 0.75, :units => :mi).limit(20)
+        neighborhood_list = []
+        nearest_venues.each do |venue|
+          neighborhood_list.push({ id: venue.neighborhood.id, name: venue.neighborhood.name })
+        end
+        neighborhood_list  = neighborhood_list.uniq
+        data = { :neighborhoods => neighborhood_list }
+      	render :json => data, :status => :ok
+      end
+    end
+  end
+
   def new_venue_search_display
     query = params[:q].downcase
     query.slice! 'the '

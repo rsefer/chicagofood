@@ -180,4 +180,41 @@ jQuery(document).ready(function($) {
     $('#list_item_manual_entry').attr('value', 'true');
   });
 
+  $('#find-neighborhood-by-street').click(function(e) {
+    e.preventDefault();
+    if ($('input#venue_street').val().length > 2) {
+      $.ajax({
+        url: '/venues_controller/find_nearby_neighborhoods',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          currentStreet: $('#venue_street').val(),
+          currentCity: $('#venue_city').val(),
+          currentState: $('#venue_state').val()
+        },
+        success: function(result, status, xhr) {
+          if (result.neighborhoods.length > 0) {
+            var content = '<p>Suggestions: ';
+            for (var i = 0; i < result.neighborhoods.length; i++) {
+              content += '<a href="#" class="suggested-neighborhood-item" data-neighborhood-id="' + result.neighborhoods[i].id + '">' + result.neighborhoods[i].name + '</a>';
+              if (i < result.neighborhoods.length - 1) {
+                content += ', ';
+              }
+            }
+            content += '</p>';
+            $('.suggested-neighborhoods').html(content).promise().done(function() {
+              $('.suggested-neighborhoods a').click(function(e) {
+                e.preventDefault();
+                var thisID = $(this).attr('data-neighborhood-id');
+                $('#venue_neighborhood_id').val(thisID);
+              });
+            });
+          } else {
+            $('.suggested-neighborhoods').html('<p>No nearby neighborhoods found.</p>');
+          }
+        }
+      });
+    }
+  });
+
 });
