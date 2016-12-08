@@ -183,6 +183,7 @@ jQuery(document).ready(function($) {
   $('#find-neighborhood-by-street').click(function(e) {
     e.preventDefault();
     if ($('input#venue_street').val().length > 2) {
+      $(this).append('<i class="fa fa-refresh fa-spin fa-fw"></i>');
       $.ajax({
         url: '/venues_controller/find_nearby_neighborhoods',
         type: 'GET',
@@ -193,6 +194,7 @@ jQuery(document).ready(function($) {
           currentState: $('#venue_state').val()
         },
         success: function(result, status, xhr) {
+          $('#find-neighborhood-by-street .fa-refresh').remove();
           if (result.neighborhoods.length > 0) {
             var content = '<p>Suggestions: ';
             for (var i = 0; i < result.neighborhoods.length; i++) {

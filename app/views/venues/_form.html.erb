@@ -63,7 +63,7 @@
 				</div>
 			</div>
       <div class="form-group">
-		    <%= f.label :neighborhood_id, 'Neighborhood' %> <a href="#" id="find-neighborhood-by-street"><small>Find based on street address</small></a><br>
+		    <%= f.label :neighborhood_id, 'Neighborhood' %> <a id="find-neighborhood-by-street" class="find-neighborhood-by-street"><small>Find based on street address</small></a><br>
         <div class="suggested-neighborhoods"></div>
 		    <% if params[:neighborhood_id] %>
 		    <%= select(:venue, :neighborhood_id, Neighborhood.all.collect {|n| [ n.name, n.id ] }, { :selected => params[:neighborhood_id] }, { :class => 'form-control' }) %>

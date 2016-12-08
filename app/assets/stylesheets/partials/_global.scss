@@ -223,6 +223,14 @@ ul {
 
 }
 
+.find-neighborhood-by-street {
+
+  &:hover {
+    cursor: pointer;
+  }
+  
+}
+
 ul.cols2,
 ol.cols2 {
 	columns: 2;

@@ -64,7 +64,7 @@ class VenuesController < ApplicationController
     currentCity = params[:currentCity]
     currentState = params[:currentState]
     if currentStreet.present? and currentCity.present?
-      temp_location = "#{currentStreet} #{currentCity} #{currentState}"
+      temp_location = "#{currentStreet}, #{currentCity} #{currentState}"
       s = Geocoder.search(temp_location)
       if !s.empty?
         venue_location = []
