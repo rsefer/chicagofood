@@ -137,7 +137,7 @@ function changeRatingStars(whichStars, starNum) {
 	thisStar.nextAll(whichStars + ' i.fa').removeClass().addClass('fa fa-star-o');
 }
 
-jQuery(document).ready(function($) {
+jQuery(document).on('turbolinks:load', function() {
 
 	$('.datepicker').datepicker({
 		format: 'yyyy-mm-dd'
