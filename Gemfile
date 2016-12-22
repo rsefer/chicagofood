@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'puma'
-gem 'rails', '~> 4.2.5'
+gem 'rails', '~> 5.0.1'
 gem 'pg'
 gem 'sass-rails'
 gem 'uglifier'

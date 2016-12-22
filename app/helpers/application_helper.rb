@@ -27,7 +27,7 @@ module ApplicationHelper
 	  css_class = column == sort_column ? "sortablecol current #{sort_direction}" : "sortablecol"
 	  direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
 	  carets = title + '<i class="fa fa-caret-down right"></i><i class="fa fa-caret-up right"></i>'.html_safe
-	  link_to raw(carets), params.merge(:sort => column, :direction => direction), { :class => css_class }
+	  link_to raw(carets), params.permit(:sort, :direction).merge(:sort => column, :direction => direction), { :class => css_class }
 	end
 
 	def render_venuetype_hierarchy(parent_id, listClasses = '')
