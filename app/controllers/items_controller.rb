@@ -42,7 +42,7 @@ class ItemsController < ApplicationController
   def destroy
     @item.destroy
     respond_to do |format|
-      format.html { redirect_to @venuel, notice: 'Item was successfully destroyed.' }
+      format.html { redirect_to @venue, notice: 'Item was successfully destroyed.' }
     end
   end
 
