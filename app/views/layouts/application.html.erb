@@ -4,6 +4,7 @@
   <title><%= yield(:title) %><% if !current_page?(root_url) %> | <% end %>Chicago Food</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <%= csrf_meta_tags %>
   <link rel="apple-touch-icon-precomposed" href="<%= asset_path('favicons/favicon_800.jpg') %>" />
   <link rel="shortcut icon" href="<%= asset_path('favicons/favicon_144.jpg') %>" />
