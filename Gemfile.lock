@@ -308,7 +308,7 @@ DEPENDENCIES
   jquery-rails
   paperclip!
   pg
-  puma
+  puma (~> 3.6.2)
   rails (~> 5.0.1)
   rails_12factor
   roadie (~> 3.1.1)
@@ -318,5 +318,8 @@ DEPENDENCIES
   turbolinks
   uglifier
 
+RUBY VERSION
+   ruby 2.3.1p112
+
 BUNDLED WITH
-   1.13.2
+   1.13.7
