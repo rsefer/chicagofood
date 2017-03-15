@@ -20,6 +20,9 @@ class WelcomeController < ApplicationController
       query = params[:q].downcase.split(' ').map(&:strip).uniq
 
       query.delete('the')
+      query.delete('a')
+      query.delete('and')
+      query.delete('&')
 
       byob_results = Set.new
       if query.include? 'byob'
@@ -62,11 +65,11 @@ class WelcomeController < ApplicationController
       elsif byob_results.length > 0 and n_results.length > 0
         searchresultsSet = byob_results.to_a & n_results.to_a
       elsif n_results.length > 0 and vtypes_results.length > 0
-        searchresultsSet = n_results.to_a & vtypes_results.to_a
+        searchresultsSet = n_results.to_a | vtypes_results.to_a
       elsif n_results.length > 0 and v_results.length > 0
-        searchresultsSet = n_results.to_a & v_results.to_a
+        searchresultsSet = n_results.to_a | v_results.to_a
       elsif v_results.length > 0 and vtypes_results.length > 0
-        searchresultsSet = v_results.to_a & vtypes_results.to_a
+        searchresultsSet = v_results.to_a | vtypes_results.to_a
       elsif v_results.length > 0
         searchresultsSet = v_results
       elsif byob_results.length > 0
