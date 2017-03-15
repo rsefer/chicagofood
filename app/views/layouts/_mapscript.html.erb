@@ -7,7 +7,12 @@ var markerList = [];
 var infowindow;
 
 locations = [
-  <% mapvenues.each do |venue| %>
+  <%
+  mapvenues.each do |venue|
+    if venue.kind_of? Try
+      venue = venue.venue
+    end
+  %>
   {
     id: <%= venue.id %>,
     lat: <%= venue.latitude %>,

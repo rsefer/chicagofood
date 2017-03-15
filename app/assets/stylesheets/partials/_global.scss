@@ -164,7 +164,8 @@ header {
 	width: 100%;
 	min-height: 200px;
 
-	&.map-neighborhood {
+	&.map-neighborhood,
+	&.map-tries {
 		height: 400px;
 	}
 
