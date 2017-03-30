@@ -20,6 +20,9 @@
 								<%= user.user_venue_rating_count %> Venue Ratings
 								<br>
 								<%= user.user_item_rating_count %> Menu Item Ratings
+								<% if current_user.try(:admin?) %><br>
+								<%= link_to "Delete User?", user, method: :delete, data: { confirm: "You sure?" } %>
+								<% end %>
 							</div>
 						</div>
 					</li>

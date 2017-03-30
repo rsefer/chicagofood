@@ -26,6 +26,7 @@ Chicagofood::Application.routes.draw do
       resources :list_items
     end
   end
+  match 'u/:id' => 'users#destroy', :via => :delete, :as => :admin_destroy_user
 
   resources :venues do
   	resources :comments
