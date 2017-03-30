@@ -20,7 +20,7 @@
 								<%= user.user_venue_rating_count %> Venue Ratings
 								<br>
 								<%= user.user_item_rating_count %> Menu Item Ratings
-								<% if current_user.try(:admin?) %><br>
+								<% if current_user.try(:admin?) and current_user != user %><br>
 								<%= link_to "Delete User?", user, method: :delete, data: { confirm: "You sure?" } %>
 								<% end %>
 							</div>
