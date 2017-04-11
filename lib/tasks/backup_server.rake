@@ -16,10 +16,9 @@ namespace :pg do
     sh "cp #{backup_file_location} #{backup_file_location_tmp_dir}"
     backup_file_location_tmp = "#{backup_file_location_tmp_dir}#{backup_file_name}"
 
-    credentials = YAML.load(File.read('config/aws.yml'))
     s3 = Aws::S3::Client.new(
-      region: ENV['AWS_REGION'],
-      credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+      region: Figaro.env.aws_region,
+      credentials: Aws::Credentials.new(Figaro.env.aws_access_key_id, Figaro.env.aws_secret_access_key)
     )
     bucket_name = 'ChicagoFood'
 
@@ -29,6 +28,7 @@ namespace :pg do
       :body => IO.read(backup_file_location_tmp)
     )
     puts 'File added to S3.'
+    sh "rm #{backup_file_location_tmp}"
 
   end
 end
