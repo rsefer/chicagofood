@@ -642,6 +642,26 @@ form.new_comment {
 
 @media screen and (max-width: 767px) {
 
+	.map-filters {
+
+		.btn {
+			margin-bottom: 1rem;
+		}
+
+		.btn-group {
+
+			display: block;
+
+			.btn {
+				display: table-cell;
+				float: none;
+				width: 1%;
+			}
+
+		}
+
+	}
+
 	.eats-section {
 		margin-top: $margin;
 	}
