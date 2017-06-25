@@ -1,28 +1,28 @@
 <% provide(:title, "#{@user.fullname}'s Ratings") %>
-<section id="user-ratings" class="pad">
+<section>
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
+		<div class="pure-g">
+			<div class="pure-u-1-1">
 				<h1>Ratings <small>from <%= link_to @user, title: @user.fullname do %><%= @user.fullname %><% end %></small></h1>
 				<% if @ratings.empty? %>
 				<p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> not rated any venues.</p>
 				<% else %>
-				<table class="table">
+				<table>
 				  <thead>
 				    <tr>
-				      <th><%= sortable 'name', 'Name' %></th>
-				      <th class="text-center"><%= sortable 'rating', 'Rating' %></th>
-				      <th class="hidden-xs"><%= sortable 'vt_name', 'Type' %></th>
-				      <th class="hidden-xs text-center"><%= sortable 'updated_at', 'Date Added' %></th>
+				      <th class="col-name"><%= sortable 'name', 'Name' %></th>
+				      <th class="col-type"><%= sortable 'vt_name', 'Type' %></th>
+							<th class="col-rating"><%= sortable 'rating', 'Rating' %></th>
+				      <th class="col-date"><%= sortable 'updated_at', 'Date Added' %></th>
 				    </tr>
 				  </thead>
 				  <tbody>
 				    <% @ratings.each do |rating| %>
 				    <tr>
-				    	<td><%= link_to venue_path(rating.venue_id), title: rating.venue.name do %><%= rating.venue.name %><% end %></td>
-				    	<td class="text-center"><%= rating.rating %></td>
-				    	<td class="hidden-xs"><%= link_to venuetype_path(rating.venue.venuetype_id), title: rating.venue.venuetype.name do %><%= rating.venue.venuetype.name %><% end %></td>
-				    	<td class="hidden-xs text-center"><%= rating.updated_at.strftime('%B %e, %Y') %></td>
+				    	<td class="col-name"><%= link_to venue_path(rating.venue_id), title: rating.venue.name do %><%= rating.venue.name %><% end %></td>
+				    	<td class="col-type"><%= link_to venuetype_path(rating.venue.venuetype_id), title: rating.venue.venuetype.name do %><%= rating.venue.venuetype.name %><% end %></td>
+							<td class="col-rating"><%= rating.rating %></td>
+				    	<td class="col-date"><%= rating.updated_at.strftime('%B %e, %Y') %></td>
 				    </tr>
 				    <% end %>
 				  </tbody>

@@ -1,88 +1,78 @@
-<section id="home-main" class="pad">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
-				<% if !user_signed_in? %>
-				<div class="text-center"><p class="lead">New? Welcome! <%= link_to 'Read about Chicago Food here', about_path %> and then <%= link_to 'register your account', new_user_registration_path %>.</p></div><hr>
+<section>
+	<% if !user_signed_in? %>
+	<div class="welcome-message">
+		<p class="lead">New? Welcome! <%= link_to 'Read about Chicago Food here', about_path %> and then <%= link_to 'register your account', new_user_registration_path %>.</p>
+		<p class="lead">If you have an account, <%= link_to new_user_session_path, title: 'Sign In' do %>sign in here<% end %>.</p>
+	</div>
+	<% end %>
+	<div class="pure-g">
+		<div class="pure-u-1-1 pure-u-lg-1-2 pure-u-xl-5-8">
+			<%= link_to new_venue_path, { :class => 'btn btn-lg btn-block btn-success' } do %><%= inline_icon('plus', 'Add a new Venue', 'left') %><% end %>
+			<%= render 'searchinput' %>
+			<a href="/venuetypes/1" class="pure-u-1-1 pure-u-md-1-2 btn all-restaurants btn-lg btn-warning"><%= inline_icon('spoon-fork', 'All Restaurants', 'left') %></a><a href="/venuetypes/2" class="pure-u-1-1 pure-u-md-1-2 btn all-bars btn-lg btn-info"><%= inline_icon('beer', 'All Bars', 'left') %></a>
+			<h4>Types</h4>
+			<ul class="venue-types-list cols4">
+				<% @venuetypes.each do |vtype| %>
+				<li><%= link_to vtype, title: vtype.name do %><%= vtype.name %><% end %></li>
 				<% end %>
-				<div class="row">
-					<div class="col-md-8 col-md-push-4">
-						<%= link_to new_venue_path, { :class => 'btn btn-lg btn-block btn-success margin-down' } do %><i class="fa fa-plus left"></i>Add a new Venue<% end %>
-						<div class="row">
-							<div class="col-sm-6">
-								<a href="/venuetypes/1" class="btn btn-lg btn-block btn-warning margin-down-xs"><i class="fa fa-cutlery left"></i>All Restaurants</a>
-							</div>
-							<div class="col-sm-6">
-								<a href="/venuetypes/2" class="btn btn-lg btn-block btn-info"><i class="fa fa-beer left"></i>All Bars</a>
-							</div>
-						</div>
-						<%= render 'searchinput' %>
-						<hr>
-						<h4 class="text-center">Types</h4>
-						<ul class="types-list cols4">
-							<% @venuetypes.each do |vtype| %>
-							<li><%= link_to vtype, title: vtype.name do %><%= vtype.name %><% end %></li>
-							<% end %>
-						</ul>
-						<hr>
-						<h4 class="text-center">Neighborhoods</h4>
-						<ul class="neighborhoods-list cols4">
-							<% @neighborhoods.each do |neighborhood| %>
-							<li><%= link_to neighborhood, title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
-							<% end %>
-						</ul>
-					</div>
-					<div class="col-md-4 col-md-pull-8">
-						<hr class="hidden-md hidden-lg">
-						<h3 class="text-center">Recent Activity</h3>
-						<% if @recentActivity.empty? %>
-						<p>No recent activity.</p>
-						<% else %>
-						<ul class="activity-list nolast">
-							<% @recentActivity.first(15).each do |activity| %>
-								<% if !activity.kind_of? Comment or (activity.kind_of? Comment and (!activity.private or is_current_user(activity.user, true))) %>
-									<li<% if activity.kind_of? Comment and activity.private %> class="private"<% end %>><%
-										if activity.kind_of? Venue or activity.kind_of? Neighborhood or activity.kind_of? Venuetype
+			</ul>
+			<hr>
+			<h4>Neighborhoods</h4>
+			<ul class="neighborhoods-list cols4">
+				<% @neighborhoods.each do |neighborhood| %>
+				<li><%= link_to neighborhood, title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
+				<% end %>
+			</ul>
+		</div>
+		<div class="pure-u-1-1 pure-u-lg-1-2 pure-u-xl-3-8">
+			<aside>
+				<h4>Recent Activity</h4>
+				<% if @recentActivity.empty? %>
+				<p>No recent activity.</p>
+				<% else %>
+				<ul class="activity-list">
+					<% @recentActivity.first(15).each do |activity| %>
+						<% if !activity.kind_of? Comment or (activity.kind_of? Comment and (!activity.private or is_current_user(activity.user, true))) %>
+							<li<% if activity.kind_of? Comment and activity.private %> class="private"<% end %>><%
+								if activity.kind_of? Venue or activity.kind_of? Neighborhood or activity.kind_of? Venuetype
 
-											if activity.kind_of? Venue %><i class="fa fa-fw fa-home left"></i><%= link_to activity do %><%= activity.name %><% end
-											elsif activity.kind_of? Neighborhood %><i class="fa fa-fw fa-map-marker left"></i><%= link_to activity do %><%= activity.name %><% end
-											elsif activity.kind_of? Venuetype %><i class="fa fa-fw fa-cutlery left"></i><%= link_to activity do %><%= activity.name %><% end
-											end
+									if activity.kind_of? Venue %><%= inline_icon('spoon-fork', '', 'left') %><%= link_to activity do %><%= activity.name %><% end
+									elsif activity.kind_of? Neighborhood %><%= inline_icon('map-pin', '', 'left') %><%= link_to activity do %><%= activity.name %><% end
+									elsif activity.kind_of? Venuetype %><%= inline_icon('grid', '', 'left') %><%= link_to activity do %><%= activity.name %><% end
+									end
 
-											if activity.updated_at == activity.created_at %> added<% else %> updated<%
-											end %>.<%
+									if activity.updated_at == activity.created_at %> added<% else %> updated<%
+									end %>.<%
 
-										elsif activity.kind_of? List or activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment or activity.kind_of? ItemRating
+								elsif activity.kind_of? List or activity.kind_of? Try or activity.kind_of? Rating or activity.kind_of? Comment or activity.kind_of? ItemRating
 
-											if activity.kind_of? Try %><i class="fa fa-fw fa-plus left"></i><%
-											elsif activity.kind_of? List %><i class="fa fa-fw fa-list left"></i><%
-											elsif activity.kind_of? Rating %><i class="fa fa-fw fa-star left"></i><%
-											elsif activity.kind_of? Comment %><i class="fa fa-fw fa-quote-left left"></i><%
-											elsif activity.kind_of? ItemRating %><i class="fa fa-fw fa-thumbs-<% if activity.liked %>up green <% else %>down red<% end %> left"></i><%
-											end
+									if activity.kind_of? Try %><%= inline_icon('plus', '', 'left') %><%
+									elsif activity.kind_of? List %><%= inline_icon('list', '', 'left') %><%
+									elsif activity.kind_of? Rating %><%= inline_icon('star', '', 'left fill') %><%
+									elsif activity.kind_of? Comment %><%= inline_icon('message-circle', '', 'left') %><%
+									elsif activity.kind_of? ItemRating %><%= inline_icon(activity.liked ? 'thumbs-up' : 'thumbs-down', '', activity.liked ? 'left green' : 'left red') %><%
+									end
 
-											if is_current_user(activity.user, true) %>You<% else %><%= link_to activity.user do %><%= activity.user.firstname %><% end
+									if is_current_user(activity.user, true) %>You<% else %><%= link_to activity.user do %><%= activity.user.firstname %><% end
 
-										end
+								end
 
-										if activity.kind_of? Try %> added <%= link_to activity.venue do %><%= activity.venue.name %><% end %> to the 'To Try' list.<%
-										elsif activity.kind_of? List %> <% if activity.updated_at == activity.created_at %>created<% else %>updated<% end %> the <%= link_to activity.title, user_list_path(activity.user, activity) %> list.<%
-										elsif activity.kind_of? Rating %> rated <%= link_to activity.venue do %><%= activity.venue.name %><%
-										end
-										%> <%= pluralize(activity.rating, 'star') %>.<%
-										elsif activity.kind_of? Comment %> commented on <%= link_to activity.venue.name, activity.venue %>.<%
-										elsif activity.kind_of? ItemRating %> <% if activity.liked %>liked<% else %>disliked<% end %> the <%= activity.item.name %> at <%= link_to activity.item.venue.name, activity.item.venue %>.<%
-										end
+								if activity.kind_of? Try %> added <%= link_to activity.venue do %><%= activity.venue.name %><% end %> to the 'To Try' list.<%
+								elsif activity.kind_of? List %> <% if activity.updated_at == activity.created_at %>created<% else %>updated<% end %> the <%= link_to activity.title, user_list_path(activity.user, activity) %> list.<%
+								elsif activity.kind_of? Rating %> rated <%= link_to activity.venue do %><%= activity.venue.name %><%
+								end
+								%> <%= pluralize(activity.rating, 'star') %>.<%
+								elsif activity.kind_of? Comment %> commented on <%= link_to activity.venue.name, activity.venue %>.<%
+								elsif activity.kind_of? ItemRating %> <% if activity.liked %>liked<% else %>disliked<% end %> the <%= activity.item.name %> at <%= link_to activity.item.venue.name, activity.item.venue %>.<%
+								end
 
-									end %>
-								</li>
-								<% end %>
-							<% end %>
-						</ul>
+							end %>
+						</li>
 						<% end %>
-					</div>
-				</div>
-			</div>
+					<% end %>
+				</ul>
+				<% end %>
+			</aside>
 		</div>
 	</div>
 </section>

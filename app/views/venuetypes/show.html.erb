@@ -1,39 +1,37 @@
 <% provide(:title, "#{@venuetype.name} | Venue Types") %>
-<section id="venuetype-<%= @venuetype.id %>" class="pad">
+<section>
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
+		<div class="pure-g">
+			<div class="pure-u-1-1">
 				<% if @venuetype.id == 1 || @venuetype.id == 2 %>
-				<h2>
-					<%= pluralize_without_count(2, @venuetype.name) %>
-				</h2>
+				<h2><%= pluralize_without_count(2, @venuetype.name) %></h2>
 				<% else %>
 				<h2><%= @venuetype.name %></h2>
 				<% end %>
 				<p><% if @venuetype.hasParent %>Part of <%= link_to @venuetype.parent do %><%= @venuetype.parent.name %><% end %>. <% end %><% if !@venuetype.children.empty? %>Includes <%= @venuetype.children.map { |vtype| link_to vtype.name, vtype }.join(', ').html_safe %>.<% end %></p>
 				<% if !@venues.empty? %>
-				<div class="row">
-					<div class="col-md-8">
-						<table class="table">
+				<div class="pure-g">
+					<div class="pure-u-1-1 pure-u-md-2-3">
+						<table>
 						  <thead>
 						    <tr>
-						      <th><%= sortable 'name', 'Name' %></th>
-						      <% if @venuetype.id == 1 || @venuetype.id == 2 %><th><%= sortable 'vt_name', 'Type' %></th><% end %>
-						      <th class="hidden-xs"><%= sortable 'neighborhood_name', 'Neighborhood' %></th>
-						      <th class="hidden-xs text-center"><%= sortable 'rating', 'Rating' %></th>
-						      <th class="text-center"><%= sortable 'price', 'Price' %></th>
-						      <th class="hidden-xs text-center"><%= sortable 'byob', 'BYOB?' %></th>
+						      <th class="col-name"><%= sortable 'name', 'Name' %></th>
+						      <% if @venuetype.id == 1 || @venuetype.id == 2 %><th class="col-type"><%= sortable 'vt_name', 'Type' %></th><% end %>
+						      <th class="col-neighborhood"><%= sortable 'neighborhood_name', 'Neighborhood' %></th>
+						      <th class="col-rating"><%= sortable 'rating', 'Rating' %></th>
+						      <th class="col-price"><%= sortable 'price', 'Price' %></th>
+						      <% if @venuetype.id != 2 and @venuetype.parent_type_id != 2 %><th class="col-byob"><%= sortable 'byob', 'BYOB?' %></th><% end %>
 						    </tr>
 						  </thead>
 						  <tbody>
 								<% @venues.each do |venue| %>
 					      <tr>
-					        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
-					        <% if @venuetype.id == 1 || @venuetype.id == 2 %><td><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td><% end %>
-					        <td class="hidden-xs"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
-					        <td class="hidden-xs text-center"><%= rating_display(venue) %></td>
-					        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
-					        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
+					        <td class="col-name"><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
+					        <% if @venuetype.id == 1 || @venuetype.id == 2 %><td class="col-type"><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td><% end %>
+					        <td class="col-neighborhood"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
+					        <td class="col-rating"><%= rating_display(venue) %></td>
+					        <td class="col-price"><%= render_price(venue.price) %></td>
+					        <% if @venuetype.id != 2 and @venuetype.parent_type_id != 2 %><td class="col-byob"><% if venue.byob %><%= inline_icon('check', '', 'green') %><% else %><%= render_dash %><% end %></td><% end %>
 					      </tr>
 						    <% end %>
 						  </tbody>
@@ -42,7 +40,7 @@
 						<%= render 'layouts/venues_pagination' %>
 						<% end %>
 					</div>
-					<div class="col-md-4">
+					<div class="pure-u-1-1 pure-u-md-1-3">
 						<div id="google-map" class="map map-neighborhood"></div>
 					</div>
 				</div>

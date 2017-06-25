@@ -6,4 +6,20 @@ class Item < ActiveRecord::Base
 
   scope :alpha, -> { order('name ASC') }
 
+  def totalRatings
+    ItemRating.where(item_id: self.id).count
+  end
+
+  def totalLikes
+    ItemRating.where(item_id: self.id).where(liked: true).count
+  end
+
+  def percentLiked
+    if totalRatings > 0
+      self.totalLikes.to_f / self.totalRatings.to_f
+    else
+      false
+    end
+  end
+
 end

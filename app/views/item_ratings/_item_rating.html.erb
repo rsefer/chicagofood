@@ -1,16 +1,16 @@
 <% userRating = item.item_ratings.where(user_id: current_user.id).first %>
-<div class="input-group likedislike">
+<div class="like-dislike">
 <%
   if userRating
     if userRating.liked %>
-      <div class="input-group-addon selected liked"><i class="fa fa-fw fa-thumbs-up"></i></div>
-      <%= link_to item_rating_path(userRating, :liked => false), { :method => :put , class: 'input-group-addon' } do %><i class="fa fa-fw fa-thumbs-o-down"></i><% end %><%
+      <div class="input-group-addon selected liked"><%= inline_icon('thumbs-up', '', 'green') %></div>
+      <%= link_to item_rating_path(userRating, :liked => false), { :method => :put , class: 'input-group-addon' } do %><%= inline_icon('thumbs-down') %><% end %><%
     else %>
-      <%= link_to item_rating_path(userRating, :liked => true), { :method => :put , class: 'input-group-addon' } do %><i class="fa fa-fw fa-thumbs-o-up"></i><% end %>
-      <div class="input-group-addon selected disliked"><i class="fa fa-fw fa-thumbs-down"></i></div><%
+      <%= link_to item_rating_path(userRating, :liked => true), { :method => :put , class: 'input-group-addon' } do %><%= inline_icon('thumbs-up') %><% end %>
+      <div class="input-group-addon selected disliked"><%= inline_icon('thumbs-down', '', 'red') %></div><%
     end
   else %>
-    <%= link_to item_ratings_path(:item_rating => { :item_id => item.id, :user_id => current_user.id, :liked => true }), { :method => 'post', class: 'input-group-addon' } do %><i class="fa fa-fw fa-thumbs-o-up"></i><% end %>
-    <%= link_to item_ratings_path(:item_rating => { :item_id => item.id, :user_id => current_user.id, :liked => false }), { :method => 'post', class: 'input-group-addon' } do %><i class="fa fa-fw fa-thumbs-o-down"></i><% end
+    <%= link_to item_ratings_path(:item_rating => { :item_id => item.id, :user_id => current_user.id, :liked => true }), { :method => 'post', class: 'input-group-addon' } do %><%= inline_icon('thumbs-up') %><% end %>
+    <%= link_to item_ratings_path(:item_rating => { :item_id => item.id, :user_id => current_user.id, :liked => false }), { :method => 'post', class: 'input-group-addon' } do %><%= inline_icon('thumbs-down') %><% end
   end %>
 </div>

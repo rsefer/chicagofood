@@ -37,9 +37,10 @@ end
 
 gem 'geocoder'
 gem 'devise'
-gem 'paperclip', github: 'thoughtbot/paperclip'
+gem 'paperclip'
 gem 'aws-sdk', '~> 2.2.5'
 gem 'figaro'
+gem 'purecss-sass'
 gem 'autoprefixer-rails'
 gem 'roadie', '~> 3.1.1'
 gem 'recaptcha', require: 'recaptcha/rails'

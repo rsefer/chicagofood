@@ -1,18 +1,18 @@
-<% provide(:title, "Users") %>
-<section id="users-all" class="pad">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
-				<ul class="user-list">
-					<% @users.each do |user| %>
-			    <li>
-						<div class="row">
-							<div class="col-sm-3 col-xs-5">
-								<%= link_to user_path(user), title: user.fullname do %><img class="user-avatar" src="<%= user.avatar.url(:medium) %>" /><% end %>
-							</div>
-							<div class="col-sm-9 col-xs-7">
-								<%= link_to user.fullname, user, title: user.fullname %>
-								<br>
+<% provide(:title, 'Users') %>
+<section>
+	<div class="pure-g">
+		<div class="pure-u-1-1">
+			<h1>Users</h1>
+			<ul class="user-list cols2">
+				<% @users.each do |user| %>
+		    <li>
+					<div class="pure-g">
+						<div class="pure-u-5-12 pure-u-sm-1-4">
+							<%= link_to user_path(user), title: user.fullname do %><img class="user-avatar" src="<%= user.avatar.url(:medium) %>" /><% end %>
+						</div>
+						<div class="pure-u-7-12 pure-u-sm-3-4">
+							<div class="user-meta">
+								<%= link_to user.fullname, user, title: user.fullname, class: 'user-name' %>
 								<strong><%= user.user_score %> User Score</strong>
 								<br>
 								<%= user.user_public_comment_count %> Comments
@@ -25,10 +25,10 @@
 								<% end %>
 							</div>
 						</div>
-					</li>
-			    <% end %>
-				</ul>
-			</div>
+					</div>
+				</li>
+		    <% end %>
+			</ul>
 		</div>
 	</div>
 </section>

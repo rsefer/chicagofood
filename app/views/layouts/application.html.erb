@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= yield(:title) %><% if !current_page?(root_url) %> | <% end %>Chicago Food</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <%= csrf_meta_tags %>
+  <title><%= yield(:title) %><% if !current_page?(root_url) %> | <% end %>Chicago Food</title>
   <link rel="apple-touch-icon-precomposed" href="<%= asset_path('favicons/favicon_800.jpg') %>" />
   <link rel="shortcut icon" href="<%= asset_path('favicons/favicon_144.jpg') %>" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4I-MLFSK8kX16-GrXDCE-a6aN4ZbYUbo"></script>
   <%= javascript_include_tag "application" %>
-  <script type="text/javascript" src="https://use.typekit.net/mkb5nxi.js"></script>
-  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
-<body>
+<body class="<%= controller_name %>-<%= action_name %>">
 
 <%= render 'layouts/header' %>
 
-<div id="transition-wrap">
+<main>
   <% if current_user.try(:admin?) and (notice or alert) %>
-  <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <% if notice %><p class="notice"><%= notice %></p><% end %>
-          <% if alert %><p class="alert"><%= alert %></p><% end %>
-        </div>
-      </div>
+  <div class="pure-g">
+    <div class="pure-u-1-1">
+      <% if notice %><p class="notice"><%= notice %></p><% end %>
+      <% if alert %><p class="alert"><%= alert %></p><% end %>
     </div>
-  </section>
+  </div>
   <% end %>
-  <%= yield %>
-  <%= render 'layouts/footer' %>
-</div>
+  <div class="pure-g">
+    <div class="pure-u-1-1">
+      <%= yield %>
+    </div>
+  </div>
+</main>
+
+<%= render 'layouts/footer' %>
 
 </body>
 </html>

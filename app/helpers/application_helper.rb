@@ -1,5 +1,32 @@
 module ApplicationHelper
 
+	def inline_icon(filename, text = '', svgClass = nil)
+		svgIcon(filename, svgClass) + text
+  end
+
+	def svgIcon(filename, svgClass = nil)
+		File.open('app/assets/images/icons/' + filename + '.svg', "rb") do |file|
+			doc = Nokogiri::HTML open(file)
+			svg = doc.at_css 'svg'
+			svg['class'] = 'icon icon-' + filename
+			svg['width'] = nil
+			svg['height'] = nil
+			svg['stroke'] = nil
+			if svgClass.present?
+				svg['class'] = svg['class'] + ' ' + svgClass
+			end
+	    raw svg
+		end
+	end
+
+	def svg(filename)
+		File.open('app/assets/images/' + filename + '.svg', "rb") do |file|
+			doc = Nokogiri::HTML open(file)
+			svg = doc.at_css 'svg'
+	    raw svg
+		end
+	end
+
 	def is_current_user(user, isUserID = false)
 		if isUserID
 			user = User.find(user)
@@ -26,78 +53,102 @@ module ApplicationHelper
 	  title ||= column.titleize
 	  css_class = column == sort_column ? "sortablecol current #{sort_direction}" : "sortablecol"
 	  direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
-	  carets = title + '<i class="fa fa-caret-down right"></i><i class="fa fa-caret-up right"></i>'.html_safe
+	  carets = title + self.inline_icon('chevron-down', '', 'right') + self.inline_icon('chevron-up', '', 'right')
 	  link_to raw(carets), params.permit(:sort, :direction).merge(:sort => column, :direction => direction), { :class => css_class }
 	end
 
 	def render_venuetype_hierarchy(parent_id, listClasses = '')
-		listcontent = '<ul class="' + listClasses + '">'
-		Venuetype.find(parent_id).children.each do |venuetype|
-			listcontent += '<li>'
-			if parent_id != 1 and parent_id != 2
-				listcontent += '<i class="fa fa-fw fa-rotate-90 fa-level-up"></i>'
+		children = Venuetype.find(parent_id).children
+		if children.present?
+			listcontent = '<ul'
+			if listClasses.present?
+				listcontent += ' class="' + listClasses + '"'
 			end
-			listcontent += '<a href="' + venuetype_path(venuetype.id) + '">' + venuetype.name + '</a>'
-			if venuetype.children.present?
-				listcontent += render_venuetype_hierarchy(venuetype.id, 'venue-type-list')
+			listcontent += '>'
+			children.each do |venuetype|
+				listcontent += '<li>'
+				if parent_id != 1 and parent_id != 2
+					listcontent += self.inline_icon('corner-down-right', '', 'left')
+				end
+				listcontent += '<a href="' + venuetype_path(venuetype.id) + '">' + venuetype.name + '</a>'
+				if venuetype.children.present?
+					listcontent += render_venuetype_hierarchy(venuetype.id)
+				end
+				listcontent += '</li>'
 			end
-			listcontent += '</li>'
+			listcontent += '</ul>'
 		end
-		listcontent += '</ul>'
-		listcontent.html_safe
+		if listcontent.present?
+			listcontent.html_safe
+		end
 	end
 
   def render_neighborhood_hierarchy(parent_id, listClasses = '')
-		listcontent = '<ul class="' + listClasses + '">'
-		Neighborhood.find(parent_id).children.each do |neighborhood|
-			listcontent += '<li>'
-      listcontent += '<i class="fa fa-fw fa-rotate-90 fa-level-up"></i>'
-			listcontent += '<a href="' + neighborhood_path(neighborhood.id) + '">' + neighborhood.name + '</a>'
-			if neighborhood.children.present?
-				listcontent += render_neighborhood_hierarchy(neighborhood.id, 'neighborhood-list')
+		children = Neighborhood.find(parent_id).children
+		if children.present?
+			listcontent = '<ul'
+			if listClasses.present?
+				listcontent += ' class="' + listClasses + '"'
 			end
-			listcontent += '</li>'
+			listcontent += '>'
+			children.each do |neighborhood|
+				listcontent += '<li>'
+	      listcontent += self.inline_icon('corner-down-right', '', 'left')
+				listcontent += '<a href="' + neighborhood_path(neighborhood.id) + '">' + neighborhood.name + '</a>'
+				if neighborhood.children.present?
+					listcontent += render_neighborhood_hierarchy(neighborhood.id)
+				end
+				listcontent += '</li>'
+			end
+			listcontent += '</ul>'
 		end
-		listcontent += '</ul>'
-		listcontent.html_safe
+		if listcontent.present?
+			listcontent.html_safe
+		end
 	end
 
 	def render_price(price)
 		if price == 4
-			'<i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i>'.html_safe
+			'$$$$'.html_safe
 		elsif price == 3
-			'<i class="fa fa-usd"></i><i class="fa fa-usd"></i><i class="fa fa-usd"></i>'.html_safe
+			'$$$'.html_safe
 		elsif price == 2
-			'<i class="fa fa-usd"></i><i class="fa fa-usd"></i>'.html_safe
+			'$$'.html_safe
 		elsif price == 1
-			'<i class="fa fa-usd"></i>'.html_safe
+			'$'.html_safe
+		else
+			render_dash
 		end
 	end
 
 	def render_stars(star_rating)
 		if star_rating >= 4.8
-			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>'.html_safe
+			(inline_icon('star', '', 'fill') * 5).html_safe
 		elsif star_rating >= 4.3
-			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i>'.html_safe
+			(inline_icon('star', '', 'fill') * 4 + inline_icon('star-half') * 1).html_safe
 		elsif star_rating >= 3.8
-			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i>'.html_safe
+			(inline_icon('star', '', 'fill') * 4 + inline_icon('star') * 1).html_safe
 		elsif star_rating >= 3.3
-			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i>'.html_safe
+			(inline_icon('star', '', 'fill') * 3 + inline_icon('star-half') * 1 + inline_icon('star') * 1).html_safe
 		elsif star_rating >= 2.8
-			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+			(inline_icon('star', '', 'fill') * 3 + inline_icon('star') * 2).html_safe
 		elsif star_rating >= 2.3
-			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+			(inline_icon('star', '', 'fill') * 2 + inline_icon('star-half') * 1 + inline_icon('star') * 2).html_safe
 		elsif star_rating >= 1.8
-			'<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+			(inline_icon('star', '', 'fill') * 2 + inline_icon('star') * 3).html_safe
 		elsif star_rating >= 1.3
-			'<i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+			(inline_icon('star', '', 'fill') * 1 + inline_icon('star-half') * 1 + inline_icon('star') * 3).html_safe
 		elsif star_rating >= 0.8
-			'<i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+			(inline_icon('star', '', 'fill') * 1 + inline_icon('star') * 4).html_safe
 		elsif star_rating >= 0.3
-			'<i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+			(inline_icon('star-half') * 1 + inline_icon('star') * 4).html_safe
 		else
-			'<i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>'.html_safe
+			(inline_icon('star') * 5).html_safe
 		end
+	end
+
+	def render_dash
+		'<span class="dash">&mdash;</span>'.html_safe
 	end
 
 	def us_states

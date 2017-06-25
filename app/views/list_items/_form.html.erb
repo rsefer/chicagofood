@@ -2,7 +2,6 @@
   <% if @list_item.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@list_item.errors.count, "error") %> prohibited this list_item from being saved:</h2>
-
       <ul>
       <% @list_item.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -11,11 +10,11 @@
     </div>
   <% end %>
 
-  <div class="row">
-    <div class="col-sm-6">
+  <div class="pure-g">
+    <div class="pure-u-1-1 pure-u-sm-11-24">
       <div id="list-item-auto-entry">
         <div class="form-group">
-          <%= f.label :venue_id, 'Venue' %><br>
+          <%= f.label :venue_id, 'Venue' %>
           <%= f.select :venue_id, Venue.all.sort{|a,b| a.sortable_name <=> b.sortable_name }.collect {|n| [ n.name, n.id ] }, {}, { :class => 'form-control' } %>
         </div>
         <div class="form-group">
@@ -24,35 +23,35 @@
       </div>
       <div id="list-item-manual-entry" class="hidden">
         <div class="form-group">
-          <%= f.label :venue_name, 'Venue Name' %><br>
+          <%= f.label :venue_name, 'Venue Name' %>
           <%= f.text_field :venue_name, class: 'form-control' %>
         </div>
         <div class="form-group">
-          <%= f.label :neighborhood_id, 'Venue Neighborhood' %><br>
+          <%= f.label :neighborhood_id, 'Venue Neighborhood' %>
           <%= collection_select(:list_item, 'neighborhood_id', Neighborhood.order('name ASC'), :id, :name, { :include_blank => '' }, { :class => 'form-control' }) %>
         </div>
         <div class="form-group">
-          <%= f.label :venuetype_id, 'Venue Type' %><br>
+          <%= f.label :venuetype_id, 'Venue Type' %>
           <%= collection_select(:list_item, 'venuetype_id', Venuetype.order('name ASC'), :id, :name, { :include_blank => '' }, { :class => 'form-control' }) %>
         </div>
       </div>
       <%= f.hidden_field :manual_entry %>
     </div>
-    <div class="col-sm-6">
+    <div class="pure-u-sm-1-12"></div>
+    <div class="pure-u-1-1 pure-u-sm-11-24">
       <div class="form-group">
         <%= f.label :date, 'Date (optional)' %>
         <div class="input-group">
-          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
           <%= f.text_field :date, :placeholder => 'YYYY-MM-DD', class: 'form-control datepicker' %>
         </div>
       </div>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :notes %><br>
+    <%= f.label :notes %>
     <%= f.text_area :notes, class: 'form-control' %>
   </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-success"><i class="fa fa-save left"></i>Save</button>
+    <button type="submit" class="btn btn-success"><%= inline_icon('save', 'Save', 'left')%></button>
   </div>
 <% end %>

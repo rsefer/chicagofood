@@ -1,23 +1,21 @@
 <% provide(:title, "#{@user.fullname}'s Comments") %>
-<section id="user-comments" class="pad">
+<section>
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
+		<div class="pure-g">
+			<div class="pure-u-1-1">
 				<h1>Comments <small>from <%= link_to user_path(@user.id), title: @user.fullname do %><%= @user.fullname %><% end %></small></h1>
 				<% if @comments.empty? %>
 				<p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> not made any comments.</p>
 				<% else %>
-				<ul class="comments-list nolast">
+				<ul class="comments-list">
 					<% @comments.each do |comment| %>
 						<% if !comment.private or (comment.private and is_current_user(comment.user, true)) %>
 						<li class="comment<% if comment.private %> private<% end %>">
 							<% if is_current_user(comment.user_id, true) %>
-							<%= link_to comment_path(comment), method: :delete, data: { confirm: "Are you sure you would like to delete this comment?" } do %><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><% end %>
+							<%= link_to comment_path(comment), method: :delete, data: { confirm: "Are you sure you would like to delete this comment?" } do %>&times;<% end %>
 							<% end %>
-							<%= link_to venue_path(comment.venue_id), title: comment.venue.name do %><%= comment.venue.name %><% end %> on <%= comment.updated_at.strftime('%B %e, %Y %l:%M %P') %>
-							<br>
-							<% if comment.private %><p><i class="fa fa-lock left"></i><strong>Private</strong></p><% end %>
-							<%= wrap_quotes(comment.body).html_safe %>
+							<p><%= link_to venue_path(comment.venue_id), title: comment.venue.name do %><%= comment.venue.name %><% end %> on <%= comment.updated_at.strftime('%B %e, %Y %l:%M %P') %></p>
+							<p><% if comment.private %><%= inline_icon('lock', '', 'left') %><strong>Private</strong> <% end %><%= wrap_quotes(comment.body).html_safe %></p>
 						</li>
 						<% end %>
 					<% end %>

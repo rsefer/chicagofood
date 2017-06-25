@@ -1,17 +1,28 @@
 $black: #000000;
 $white: #ffffff;
 $grey: #808080;
+$grey-trans: transparentize($grey, 0.5);
 $turqoise: #009999;
 $red: #e20048;
-$orange: #ffd040;
+$yellow: #ffd040;
+$orange: #e48e48;
 $green: #5cb85c;
 
-$disabled: rgba(0,0,0,0.3);
+$font-size-base: 16px;
+$font-size-base-rem: 1rem;
 
-$margin: 20px;
+$pure-grid-sm: 35.5rem;
+$pure-grid-md: 48rem;
+$pure-grid-lg: 64rem;
+$pure-grid-xl: 80rem;
 
-$width-lg: 1200px;
-$width-md: 992px;
-$width-sm: 768px;
+$pure-grid-sm-px: 568px;
+$pure-grid-md-px: 768px;
+$pure-grid-lg-px: 1024px;
+$pure-grid-xl-px: 1280px;
 
-$font-main: 'proxima-nova', sans-serif;
+$pure-grid-breakpoint: $pure-grid-md;
+
+$border-radius: 0.25rem;
+
+$font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;

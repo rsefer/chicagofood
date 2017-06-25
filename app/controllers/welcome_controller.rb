@@ -119,11 +119,6 @@ class WelcomeController < ApplicationController
     else
       @venues = @restaurants
     end
-
-    @restaurantsButtonHTML = 'Restaurants<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
-    @tryButtonHTML = 'To Try<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
-    @byobButtonHTML = '<i class="fa fa-fw fa-beer left"></i>BYOB<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
-    @outdoorButtonHTML = '<i class="fa fa-fw fa-sun-o left"></i>Outdoor/Patio<i class="fa fa-fw fa-check right"></i><i class="fa fa-fw fa-circle-o right"></i>'
   end
 
   def deletion_request

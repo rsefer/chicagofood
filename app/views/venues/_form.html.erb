@@ -11,15 +11,15 @@
     </div>
   <% end %>
 
-  <div class="row">
-  	<div class="col-sm-6">
+  <div class="pure-g">
+  	<div class="pure-u-1-1 pure-u-sm-11-24">
 		  <div class="form-group venue-name-input-wrap">
-		    <%= f.label :name %><br>
+		    <%= f.label :name %>
 		    <%= f.text_field :name, { :class => 'form-control', :required => 'required', :autocomplete => 'off' } %>
 				<div id="search-results" class="hidden venue-name-search-wrap"></div>
 		  </div>
       <%= render :partial => 'typeandprice' %>
-		  <div class="form-group">
+		  <div class="form-group form-group-multiple-options">
 		  	<label>Good For</label><br>
 		  	<%= check_box(:venue, :byob, {}, 'true', 'false') %>
   			<%= f.label :byob, 'BYOB?' %>
@@ -35,15 +35,16 @@
   			<%= f.label :outdoor, 'Outdoor/Patio' %>
 		  </div>
 		</div>
-		<div class="col-sm-6">
+    <div class="pure-u-sm-1-12"></div>
+		<div class="pure-u-1-1 pure-u-sm-11-24">
 		  <div class="form-group">
-		    <%= f.label :street, 'Street Address' %><br>
+		    <%= f.label :street, 'Street Address' %>
 		    <%= f.text_field :street, { :class => 'form-control', :required => 'required' } %>
 		  </div>
-			<div class="row">
-				<div class="col-md-6">
+			<div class="pure-g">
+				<div class="pure-u-1-1 pure-u-md-1-2">
 				  <div class="form-group">
-				    <%= f.label :city %><br>
+				    <%= f.label :city %>
 				    <% if @venue.state %>
 				    <%= f.text_field :city, { :class => 'form-control', :required => 'required' } %>
 				    <% else %>
@@ -51,9 +52,9 @@
 				    <% end %>
 				  </div>
 				</div>
-				<div class="col-md-6">
+				<div class="pure-u-1-1 pure-u-md-1-2">
 				  <div class="form-group">
-				    <%= f.label :state %><br>
+				    <%= f.label :state %>
 				    <% if @venue.state.blank? %>
 				    <%= select(:venue, 'state', us_states, { :selected => 'IL' }, { :class => 'form-control' }) %>
 				    <% else %>
@@ -63,7 +64,7 @@
 				</div>
 			</div>
       <div class="form-group">
-		    <%= f.label :neighborhood_id, 'Neighborhood' %> <a id="find-neighborhood-by-street" class="find-neighborhood-by-street"><small>Find based on street address</small></a><br>
+		    <%= f.label :neighborhood_id, 'Neighborhood' %> <a id="find-neighborhood-by-street" class="find-neighborhood-by-street"><small>Find based on street address</small><%= inline_icon('refresh', '', 'right') %></a><br>
         <div class="suggested-neighborhoods"></div>
 		    <% if params[:neighborhood_id] %>
 		    <%= select(:venue, :neighborhood_id, Neighborhood.all.collect {|n| [ n.name, n.id ] }, { :selected => params[:neighborhood_id] }, { :class => 'form-control' }) %>
@@ -74,6 +75,6 @@
 		</div>
 	</div>
   <div class="form-group">
-		<button type="submit" class="btn btn-success"><i class="fa fa-save left"></i>Save</button>
+		<button type="submit" class="btn btn-success"><%= inline_icon('save', 'Save', 'left')%></button>
 	</div>
 <% end %>

@@ -12,11 +12,11 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :name %><br>
+    <%= f.label :name %>
     <%= f.text_field :name, :class => 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :parent_type_id, 'Parent Type' %><br>
+    <%= f.label :parent_type_id, 'Parent Type' %>
     <% if !@venuetype.parent_type_id.nil? %>
     <%= collection_select(:venuetype, 'parent_type_id', Venuetype.order('name ASC'), :id, :name, {}, { :class => 'form-control' } ) %>
     <% else %>
@@ -24,6 +24,6 @@
     <% end %>
   </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-success"><i class="fa fa-save left"></i>Save</button>
+    <button type="submit" class="btn btn-success"><%= inline_icon('save', 'Save', 'left')%></button>
   </div>
 <% end %>

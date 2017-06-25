@@ -1,26 +1,26 @@
 <% provide(:title, "#{@user.fullname}'s Menu Item Ratings") %>
-<section id="user-item-ratings" class="pad">
+<section>
   <div class="container">
-    <div class="row">
-      <div class="col-sm-12">
+    <div class="pure-g">
+      <div class="pure-u-1-1">
         <h1>Menu Item Ratings <small>from <%= link_to @user, title: @user.fullname do %><%= @user.fullname %><% end %></small></h1>
         <% if @item_ratings.empty? %>
         <p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> not rated any menu items.</p>
         <% else %>
-        <table class="table">
+        <table>
           <thead>
             <tr>
-              <th><%= sortable 'name', 'Menu Item' %></th>
-              <th><%= sortable 'venue_name', 'Venue' %></th>
-              <th class="text-center">Rating</th>
+              <th class="col-name"><%= sortable 'name', 'Menu Item' %></th>
+              <th class="col-name"><%= sortable 'venue_name', 'Venue' %></th>
+              <th class="col-rating">Rating</th>
             </tr>
           </thead>
           <tbody>
             <% @item_ratings.each do |item_rating| %>
             <tr>
-              <td><%= item_rating.item.name %></td>
-              <td><%= link_to item_rating.item.venue.name, item_rating.item.venue %></td>
-              <td class="text-center"><% if item_rating.liked %><i class="fa fa-thumbs-up green"></i><% else %><i class="fa fa-thumbs-down red"></i><% end %></td>
+              <td class="col-name"><%= item_rating.item.name %></td>
+              <td class="col-name"><%= link_to item_rating.item.venue.name, item_rating.item.venue %></td>
+              <td class="col-rating"><% if item_rating.liked %><%= inline_icon('thumbs-up', '', 'green') %><% else %><%= inline_icon('thumbs-down', '', 'red') %><% end %></td>
             </tr>
             <% end %>
           </tbody>

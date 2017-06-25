@@ -1,24 +1,18 @@
 <% provide(:title, "Deletion Request") %>
-<section id="deletion-request" class="pad">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
-				<h1>Deletion Request for <%= @requested.name %></h1>
-				<% if request.method == 'POST' %>
-				<p>Your deletion request has been submitted. Thank you for the help.</p>
-				<% else %>
-					<p>Fill out the form below to submit a deletion request for the <%= @requested.name %> <%= @requested_text_label %>.</p>
-					<%= form_tag(request.original_url, method: :put) do %>
-						<div class="form-group">
-							<label for="deletion_request_reason">Reason for Request</label><br>
-							<textarea id="deletion_request_reason" name="deletion_request_reason" class="form-control" placeholder="ex. This restaurant has closed. http://chicago.eater.com/2016/1/5/10717232/paris-club-closing-il-porcellino-replacing" required="required"></textarea>
-						</div>
-						<div class="form-group">
-					    <button type="submit" class="btn btn-success">Submit</button>
-					  </div>
-					<% end %>
-				<% end%>
+<section>
+	<h1>Deletion Request for <%= @requested.name %></h1>
+	<% if request.method == 'POST' %>
+	<p>Your deletion request has been submitted. Thank you for the help.</p>
+	<% else %>
+		<p>Fill out the form below to submit a deletion request for the <%= @requested.name %> <%= @requested_text_label %>.</p>
+		<%= form_tag(request.original_url, method: :put) do %>
+			<div class="form-group">
+				<label for="deletion_request_reason">Reason for Request</label>
+				<textarea id="deletion_request_reason" name="deletion_request_reason" class="form-control" placeholder="ex. This restaurant has closed. http://chicago.eater.com/2016/1/5/10717232/paris-club-closing-il-porcellino-replacing" required="required"></textarea>
 			</div>
-		</div>
-	</div>
+			<div class="form-group">
+		    <button type="submit" class="btn btn-success">Submit</button>
+		  </div>
+		<% end %>
+	<% end%>
 </section>

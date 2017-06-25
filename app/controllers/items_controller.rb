@@ -1,13 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_venue
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
-
-  def index
-    @items = Item.where(venue_id: params[:venue_id])
-  end
-
-  def show
-  end
+  before_action :set_item, only: [:edit, :update, :destroy]
 
   def new
     @item = Item.new
@@ -22,7 +15,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
-        format.html { redirect_to venue_items_path, notice: 'Item was successfully created.' }
+        format.html { redirect_to @venue, notice: 'Item added.' }
       else
         format.html { render :new }
       end

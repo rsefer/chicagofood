@@ -1,24 +1,24 @@
 <% provide(:title, "#{@user.fullname}'s Lists") %>
-<section id="user-lists" class="pad">
+<section>
   <div class="container">
-    <div class="row">
-      <div class="col-sm-12">
+    <div class="pure-g">
+      <div class="pure-u-1-1">
         <h1>Lists <small>from <%= link_to @user, title: @user.fullname do %><%= @user.fullname %><% end %></small></h1>
         <% if @lists.empty? %>
         <p><% if is_current_user(@user) %>You have<% else %><%= @user.firstname %> has<% end %> no public lists.</p>
         <% else %>
-        <table class="table">
+        <table>
           <thead>
             <tr>
-              <th><%= sortable 'name', 'Name' %></th>
-              <th class="text-center"><%= sortable 'venue_count', 'Venues' %></th>
+              <th class="col-name"><%= sortable 'name', 'Name' %></th>
+              <th class="col-venue-count"><%= sortable 'venue_count', 'Venues' %></th>
             </tr>
           </thead>
           <tbody>
             <% @lists.each do |list| %>
             <tr>
-              <td><% if list.private %><i class="fa fa-lock left"></i><% end %><%= link_to list.title, user_list_path(@user, list) %></td>
-              <td class="text-center"><%= list.venue_count %></td>
+              <td class="col-name"><% if list.private %><%= inline_icon('lock', '', 'left') %><% end %><%= link_to list.title, user_list_path(@user, list) %></td>
+              <td class="col-venue-count"><%= list.venue_count %></td>
             </tr>
             <% end %>
           </tbody>
@@ -26,7 +26,7 @@
         <% end %>
         <% if is_current_user(@user) %>
         <hr>
-				<%= link_to new_user_list_path, :class => 'btn btn-success' do %><i class="fa fa-plus left"></i>New List<% end %>
+				<%= link_to new_user_list_path, :class => 'btn btn-success' do %><%= inline_icon('plus', 'New List', 'left') %><% end %>
         <% end %>
       </div>
     </div>

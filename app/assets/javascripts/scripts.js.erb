@@ -143,6 +143,15 @@ jQuery(document).on('turbolinks:load', function() {
 		format: 'yyyy-mm-dd'
 	});
 
+  $('.nav-toggle').click(function() {
+    if ($(this).hasClass('active')) {
+      $('header nav').slideUp();
+    } else {
+      $('header nav').slideDown();
+    }
+    $(this).toggleClass('active');
+  });
+
 	var myratingHTML = $('#myrating').html();
 
 	$('#myrating i.fa').click(function() {
@@ -183,7 +192,7 @@ jQuery(document).on('turbolinks:load', function() {
   $('#find-neighborhood-by-street').click(function(e) {
     e.preventDefault();
     if ($('input#venue_street').val().length > 2) {
-      $(this).append('<i class="fa fa-refresh fa-spin fa-fw"></i>');
+      $(this).find('.icon-refresh').addClass('spin');
       $.ajax({
         url: '/venues_controller/find_nearby_neighborhoods',
         type: 'GET',
@@ -194,7 +203,7 @@ jQuery(document).on('turbolinks:load', function() {
           currentState: $('#venue_state').val()
         },
         success: function(result, status, xhr) {
-          $('#find-neighborhood-by-street .fa-refresh').remove();
+          $('#find-neighborhood-by-street .icon-refresh').removeClass('spin');
           if (result.neighborhoods.length > 0) {
             var content = '<p>Suggestions: ';
             for (var i = 0; i < result.neighborhoods.length; i++) {

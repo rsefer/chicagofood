@@ -1,33 +1,31 @@
 <% provide(:title, "Neighborhoods") %>
-<section id="neighborhoods-all" class="pad">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
-				<h1>Neighborhoods</h1>
-				<p><% if params[:alphabetical] == 'true' %><%= link_to neighborhoods_path() do %><i class="fa fa-sort-amount-asc left" aria-hidden="true"></i>Sort Hierarchically<% end %><% else %><%= link_to neighborhoods_path(:alphabetical => 'true') do %><i class="fa fa-sort-alpha-asc left" aria-hidden="true"></i>Sort Alphabetically<% end %><% end %></p>
-				<div class="row">
-					<div class="col-md-6">
-						<% if params[:alphabetical] == 'true' %>
-						<ul class="neighborhoods-list cols2">
-							<% @neighborhoods.each do |neighborhood| %>
-							<li><%= link_to neighborhood_path(neighborhood), title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
-							<% end %>
-						</ul>
-						<% else %>
-              <ul class="neighborhoods-list cols2">
-							<% Neighborhood.where(parent_neighborhood_id: nil).order('name ASC').each do |neighborhood| %>
-	            <li><%= link_to neighborhood.name, neighborhood %><%= render_neighborhood_hierarchy(neighborhood.id) %></li>
-							<% end %>
-            </ul>
+<section>
+	<div class="pure-g">
+		<div class="pure-u-1-1">
+			<h1>Neighborhoods</h1>
+			<p><% if params[:alphabetical] == 'true' %><%= link_to neighborhoods_path() do %><%= inline_icon('align-left', 'Sort Hierarchically', 'left') %><% end %><% else %><%= link_to neighborhoods_path(:alphabetical => 'true') do %><%= inline_icon('list', 'Sort Alphabetically', 'left') %><% end %><% end %></p>
+			<div class="pure-g">
+				<div class="pure-u-1-1 pure-u-md-1-2">
+					<% if params[:alphabetical] == 'true' %>
+					<ul class="neighborhoods-list cols2">
+						<% @neighborhoods.each do |neighborhood| %>
+						<li><%= link_to neighborhood_path(neighborhood), title: neighborhood.name do %><%= neighborhood.name %><% end %></li>
 						<% end %>
-					</div>
-					<div class="col-md-6">
-						<div id="google-map" class="map map-all map-neighborhood"></div>
-					</div>
+					</ul>
+					<% else %>
+            <ul class="neighborhoods-list cols2">
+						<% Neighborhood.where(parent_neighborhood_id: nil).order('name ASC').each do |neighborhood| %>
+            <li><%= link_to neighborhood.name, neighborhood %><%= render_neighborhood_hierarchy(neighborhood.id) %></li>
+						<% end %>
+          </ul>
+					<% end %>
 				</div>
-				<hr>
-				<%= link_to new_neighborhood_path, :class => 'btn btn-success' do %><i class="fa fa-plus left"></i>New Neighborhood<% end %>
+				<div class="pure-u-1-1 pure-u-md-1-2">
+					<div id="google-map" class="map map-all map-neighborhood"></div>
+				</div>
 			</div>
+			<hr>
+			<%= link_to new_neighborhood_path, :class => 'btn btn-success' do %><%= inline_icon('plus', 'New Neighborhood', 'left') %><% end %>
 		</div>
 	</div>
 </section>

@@ -1,37 +1,34 @@
 <% provide(:title, "Venues") %>
-<section id="venues-all" class="pad">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
-				<h1>All Venues</h1>
-				<table class="table">
-				  <thead>
-				    <tr>
-				      <th><%= sortable 'name', 'Name' %></th>
-				      <th><%= sortable 'vt_name', 'Type' %></th>
-				      <th class="hidden-xs"><%= sortable 'neighborhood_name', 'Neighborhood' %></th>
-				      <th class="hidden-xs text-center"><%= sortable 'rating', 'Rating' %></th>
-				      <th class="text-center"><%= sortable 'price', 'Price' %></th>
-				      <th class="hidden-xs text-center"><%= sortable 'byob', 'BYOB?' %></th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <% @venues.each do |venue| %>
-			      <tr>
-			        <td><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
-			        <td><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td>
-			        <td class="hidden-xs"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
-			        <td class="hidden-xs text-center"><%= rating_display(venue) %></td>
-			        <td class="text-center"><% if venue.price %><%= render_price(venue.price) %><% else %>&mdash;<% end %></td>
-			        <td class="hidden-xs text-center"><% if venue.byob %><i class="fa fa-check green"></i><% end %></td>
-			      </tr>
-				    <% end %>
-				  </tbody>
-				</table>
-				<%= render 'layouts/venues_pagination' %>
-				<hr>
-				<%= link_to new_venue_path, :class => 'btn btn-success' do %><i class="fa fa-plus left"></i>New Venue<% end %>
-			</div>
+<section>
+	<div class="pure-g">
+		<div class="pure-u-1-1">
+			<h1>All Venues</h1>
+			<table>
+			  <thead>
+			    <tr>
+						<th class="col-name"><%= sortable 'name', 'Name' %></th>
+						<th class="col-type"><%= sortable 'vt_name', 'Type' %></th>
+			      <th class="col-neighborhood"><%= sortable 'neighborhood_name', 'Neighborhood' %></th>
+			      <th class="col-rating"><%= sortable 'rating', 'Rating' %></th>
+			      <th class="col-price"><%= sortable 'price', 'Price' %></th>
+			      <th class="col-byob"><%= sortable 'byob', 'BYOB?' %></th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <% @venues.each do |venue| %>
+		      <tr>
+		        <td class="col-name"><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
+		        <td class="col-type"><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td>
+		        <td class="col-neighborhood"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
+		        <td class="col-rating"><%= rating_display(venue) %></td>
+		        <td class="col-price"><%= render_price(venue.price) %></td>
+		        <td class="col-byob"><% if venue.byob %><%= inline_icon('check', '', 'green') %><% else %><%= render_dash %><% end %></td>
+		      </tr>
+			    <% end %>
+			  </tbody>
+			</table>
+			<%= render 'layouts/venues_pagination' %>
+			<%= link_to new_venue_path, :class => 'btn btn-success' do %><%= inline_icon('plus', 'New Venue', 'left') %><% end %>
 		</div>
 	</div>
 </section>
