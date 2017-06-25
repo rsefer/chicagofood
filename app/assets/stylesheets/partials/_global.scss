@@ -1107,7 +1107,13 @@ aside {
 
 	.your-rating,
 	.our-rating {
+
 		margin-bottom: 1rem;
+
+		.icon-star:hover {
+			cursor: pointer;
+		}
+
 	}
 
 	.extras-list {
