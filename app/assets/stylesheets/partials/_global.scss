@@ -215,7 +215,7 @@ nav {
 
 header {
 
-	padding: 0.5rem;
+	padding: 0.5rem 1rem;
 	color: $white;
 	background: $red;
 
@@ -730,6 +730,7 @@ form {
 	select {
 		display: block;
 		width: 100%;
+		-webkit-appearance: none;
 	}
 
 	input[type="checkbox"],
