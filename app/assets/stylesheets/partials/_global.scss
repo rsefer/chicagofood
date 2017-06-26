@@ -497,8 +497,20 @@ header {
 	}
 
 	&-warning {
-		color: $white;
+
+		color: $black;
 		background: $yellow;
+
+		svg.icon {
+
+			path,
+			circle,
+			line {
+				stroke: $black;
+			}
+
+		}
+
 	}
 
 	&-danger {

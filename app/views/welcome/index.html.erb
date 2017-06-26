@@ -9,7 +9,7 @@
 		<div class="pure-u-1-1 pure-u-lg-1-2 pure-u-xl-5-8">
 			<%= link_to new_venue_path, { :class => 'btn btn-lg btn-block btn-success' } do %><%= inline_icon('plus', 'Add a new Venue', 'left') %><% end %>
 			<%= render 'searchinput' %>
-			<a href="/venuetypes/1" class="pure-u-1-1 pure-u-md-1-2 btn all-restaurants btn-lg btn-warning"><%= inline_icon('spoon-fork', 'All Restaurants', 'left') %></a><a href="/venuetypes/2" class="pure-u-1-1 pure-u-md-1-2 btn all-bars btn-lg btn-info"><%= inline_icon('beer', 'All Bars', 'left') %></a>
+			<a href="/venuetypes/1" class="pure-u-1-1 pure-u-md-1-2 btn all-restaurants btn-lg btn-info"><%= inline_icon('spoon-fork', 'All Restaurants', 'left') %></a><a href="/venuetypes/2" class="pure-u-1-1 pure-u-md-1-2 btn all-bars btn-lg btn-warning"><%= inline_icon('beer', 'All Bars', 'left') %></a>
 			<h4>Types</h4>
 			<ul class="venue-types-list cols4">
 				<% @venuetypes.each do |vtype| %>
