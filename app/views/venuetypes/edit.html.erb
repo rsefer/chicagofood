@@ -5,7 +5,7 @@
 			<div class="col-sm-12">
 				<h1>Editing <%= @venuetype.name %></h1>
 				<%= render 'form' %>
-				<%= link_to @venuetype, title: 'Show', class: 'btn btn-primary' do %><%= inline_icon('corner-up-left', 'Show', 'left') %><% end %>&nbsp;<% if current_user.try(:admin?) %><%= link_to venuetype_path(@venuetype), title: 'Delete', method: :delete, data: { confirm: "Are you sure you would like to delete #{@venuetype.name}?" }, class: 'btn btn-danger' do %><%= inline_icon('trash', 'Delete', 'left') %><% end %><% else %><% end %><%= link_to deletion_request_path(:id => @venuetype.id, :type => 'venuetype'), title: 'Request Deletion', class: 'btn btn-danger' do %><%= inline_icon('trash', 'Request Deletion', 'left') %><% end %>
+				<%= link_to @venuetype, title: 'Show', class: 'btn btn-primary' do %><%= inline_icon('corner-up-left', 'Show', 'left') %><% end %>&nbsp;<% if current_user.try(:admin?) %><%= link_to venuetype_path(@venuetype), title: 'Delete', method: :delete, data: { confirm: "Are you sure you would like to delete #{@venuetype.name}?" }, class: 'btn btn-danger' do %><%= inline_icon('trash', 'Delete', 'left') %><% end %><% else %><%= link_to deletion_request_path(:id => @venuetype.id, :type => 'venuetype'), title: 'Request Deletion', class: 'btn btn-danger' do %><%= inline_icon('trash', 'Request Deletion', 'left') %><% end %><% end %>
 			</div>
 		</div>
 	</div>

@@ -6,10 +6,8 @@
 				<h1>Venue Types</h1>
 				<h3><%= link_to 'Restaurants', venuetype_path(1) %></h3>
 				<%= render_venuetype_hierarchy(1, 'venue-types-list cols3') %>
-				<hr>
 				<h3><%= link_to 'Bars', venuetype_path(2) %></h3>
 				<%= render_venuetype_hierarchy(2, 'venue-types-list') %>
-	      <hr>
 	      <%= link_to new_venuetype_path, :class => 'btn btn-success' do %><%= inline_icon('plus', 'New Venue Type', 'left') %><% end %>
 			</div>
 		</div>

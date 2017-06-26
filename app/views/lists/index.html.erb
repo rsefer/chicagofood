@@ -25,7 +25,6 @@
         </table>
         <% end %>
         <% if is_current_user(@user) %>
-        <hr>
 				<%= link_to new_user_list_path, :class => 'btn btn-success' do %><%= inline_icon('plus', 'New List', 'left') %><% end %>
         <% end %>
       </div>

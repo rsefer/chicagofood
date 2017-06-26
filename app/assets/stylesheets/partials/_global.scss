@@ -691,6 +691,10 @@ table {
 
 	}
 
+	.venue-types-list {
+		margin-bottom: 2rem;
+	}
+
 }
 
 .map {
@@ -956,6 +960,35 @@ footer {
 	ul {
 		margin-top: 0.5rem;
 		padding-left: 1rem;
+	}
+
+}
+
+.neighborhoods-index,
+.venuetypes-index {
+
+	.neighborhoods-list,
+	.venue-types-list {
+		margin-bottom: 1rem;
+	}
+
+}
+
+.lists-index {
+
+	table {
+		margin-bottom: 1rem;
+	}
+
+}
+
+.registrations-new,
+.registrations-edit {
+
+	form .user-avatar {
+		display: block;
+		margin: 0px auto 1rem;
+		max-width: 150px;
 	}
 
 }
@@ -1289,6 +1322,8 @@ aside {
 }
 
 .cols4 {
+
+	columns: 2;
 
 	@media screen and (min-width: $pure-grid-sm) {
 		columns: 4;
