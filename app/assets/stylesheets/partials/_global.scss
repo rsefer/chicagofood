@@ -453,7 +453,7 @@ header {
 	@extend .pure-button;
 	border-radius: $border-radius;
 	color: $white;
-	
+
 	&:hover {
 		text-decoration: none;
 	}
@@ -994,10 +994,18 @@ footer {
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
+	line-height: 1.5;
 
 	li {
 
-		padding: 0.75rem 0.25rem;
+		position: relative;
+		padding: 0.75rem 0.25rem 0.75rem 1.25rem;
+
+		.icon {
+			position: absolute;
+			top: 1rem;
+			left: 0px;
+		}
 
 		&:not(:last-child) {
 			border-bottom: 1px solid $grey-trans;
