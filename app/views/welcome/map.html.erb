@@ -11,7 +11,7 @@
     </div>
     <%= link_to outdoorButtonHTML, params.permit(@paramsOptions).except(:outdoor).merge(:outdoor => ('1' if params[:outdoor] != '1')), :class => filterButtonClassConditional(params[:outdoor] == '1'), :title => 'Outdoor?' %>
     <div class="btn-group btn-group-thirds" role="group">
-      <%= link_to outdoorButtonHTML, params.permit(@paramsOptions).except(:byob, :craftbeer, :cocktails).merge(:byob => ('1' if params[:byob] != '1')), :class => filterButtonClassConditional(params[:byob] == '1'), :title => 'BYOB?' %>
+      <%= link_to byobButtonHTML, params.permit(@paramsOptions).except(:byob, :craftbeer, :cocktails).merge(:byob => ('1' if params[:byob] != '1')), :class => filterButtonClassConditional(params[:byob] == '1'), :title => 'BYOB?' %>
       <%= link_to craftbeerButtonHTML, params.permit(@paramsOptions).except(:byob, :craftbeer, :cocktails).merge(:craftbeer => ('1' if params[:craftbeer] != '1')), :class => filterButtonClassConditional(params[:craftbeer] == '1'), :title => 'Craft Beer?' %>
       <%= link_to cocktailsButtonHTML, params.permit(@paramsOptions).except(:byob, :craftbeer, :cocktails).merge(:cocktails => ('1' if params[:cocktails] != '1')), :class => filterButtonClassConditional(params[:cocktails] == '1'), :title => 'Cocktails?' %>
     </div>
