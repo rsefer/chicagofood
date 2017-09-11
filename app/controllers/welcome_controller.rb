@@ -89,6 +89,15 @@ class WelcomeController < ApplicationController
   end
 
   def map
+    @paramsOptions = [
+      :totry,
+      :byob,
+      :craftbeer,
+      :cocktails,
+      :outdoor,
+      :maxPrice
+    ]
+
     @restaurants = []
     if params[:maxPrice].to_f >= 1 and params[:maxPrice].to_f <= 3
       @restaurants = Venue.where("price <= ?", params[:maxPrice].to_f)
@@ -105,6 +114,16 @@ class WelcomeController < ApplicationController
     @byob = []
     if params[:byob] == '1'
       @restaurants = @restaurants & Venue.where(byob: true)
+    end
+
+    @craftbeer = []
+    if params[:craftbeer] == '1'
+      @restaurants = @restaurants & Venue.where(craftbeer: true)
+    end
+
+    @cocktails = []
+    if params[:cocktails] == '1'
+      @restaurants = @restaurants & Venue.where(cocktails: true)
     end
 
     @tries = []

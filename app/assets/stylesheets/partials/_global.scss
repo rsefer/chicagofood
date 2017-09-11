@@ -458,6 +458,10 @@ header {
 		text-decoration: none;
 	}
 
+	&-sm {
+		font-size: 85%;
+	}
+
 	&-group {
 
 		@extend .pure-button-group;
@@ -792,10 +796,15 @@ form {
 
 		display: block;
 		margin-bottom: 1rem;
+		font-size: 75%;
 
 		@media screen and (min-width: $pure-grid-breakpoint) {
 			display: inline-block;
 			margin-bottom: 0px;
+		}
+
+		@media screen and (min-width: $pure-grid-lg) {
+			font-size: 100%;
 		}
 
 		&-danger {
@@ -831,6 +840,20 @@ form {
 				margin-bottom: 0px;
 				width: 25%;
 				border-right: 0px;
+			}
+
+			&-thirds .btn {
+
+				width: percentage(1/3);
+
+				@media screen and (max-width: $pure-grid-sm-px - 1) {
+
+					.icon.left {
+						display: none;
+					}
+
+				}
+
 			}
 
 			@media screen and (min-width: $pure-grid-breakpoint) {

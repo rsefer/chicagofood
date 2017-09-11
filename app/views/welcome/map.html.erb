@@ -2,27 +2,18 @@
 <section>
   <div class="map-filters">
     <% if user_signed_in? %>
-      <% if params[:totry] == '1' %>
-      <%= link_to tryButtonHTML, params.permit(:totry, :byob, :outdoor, :maxPrice).except(:totry), :class => 'btn btn-success', :title => 'On Your To Try List?' %>
-      <% else %>
-      <%= link_to tryButtonHTML, params.permit(:totry, :byob, :outdoor, :maxPrice).except(:totry).merge(:totry => 1), :class => 'btn btn-danger isHidden', :title => 'On Your To Try List?' %>
+      <%= link_to tryButtonHTML, params.permit(@paramsOptions).except(:totry).merge(:totry => ('1' if params[:totry] != '1')), :class => filterButtonClassConditional(params[:totry]), :title => 'On Your To Try List?' %>
+    <% end %>
+    <div class="btn-group btn-group-price" role="group">
+      <% (1..4).each do |i| %>
+      <%= link_to params.permit(@paramsOptions).except(:maxPrice).merge(:maxPrice => i), :class => filterButtonClassConditional((@includeAllPrices or params[:maxPrice].to_f >= i)) do %><%= render_price(i) %><% end %>
       <% end %>
-    <% end %>
-    <% if params[:byob] == '1' %>
-    <%= link_to byobButtonHTML, params.permit(:totry, :byob, :outdoor, :maxPrice).except(:byob), :class => 'btn btn-success', :title => 'BYOB?' %>
-    <% else %>
-    <%= link_to byobButtonHTML, params.permit(:totry, :byob, :outdoor, :maxPrice).except(:byob).merge(:byob => 1), :class => 'btn btn-danger isHidden', :title => 'BYOB?' %>
-    <% end %>
-    <% if params[:outdoor] == '1' %>
-    <%= link_to outdoorButtonHTML, params.permit(:totry, :byob, :outdoor, :maxPrice).except(:outdoor), :class => 'btn btn-success', :title => 'Outdoor?' %>
-    <% else %>
-    <%= link_to outdoorButtonHTML, params.permit(:totry, :byob, :outdoor, :maxPrice).except(:outdoor).merge(:outdoor => 1), :class => 'btn btn-danger isHidden', :title => 'Outdoor?' %>
-    <% end %>
-    <div class="btn-group" role="group">
-      <%= link_to params.permit(:totry, :byob, :outdoor, :maxPrice).except(:maxPrice).merge(:maxPrice => 1), :class => ((@includeAllPrices or params[:maxPrice].to_f >= 1) ? 'btn btn-success' : 'btn btn-default') do %><%= render_price(1) %><% end %>
-      <%= link_to params.permit(:totry, :byob, :outdoor, :maxPrice).except(:maxPrice).merge(:maxPrice => 2), :class => ((@includeAllPrices or params[:maxPrice].to_f >= 2) ? 'btn btn-success' : 'btn btn-default') do %><%= render_price(2) %><% end %>
-      <%= link_to params.permit(:totry, :byob, :outdoor, :maxPrice).except(:maxPrice).merge(:maxPrice => 3), :class => ((@includeAllPrices or params[:maxPrice].to_f >= 3) ? 'btn btn-success' : 'btn btn-default') do %><%= render_price(3) %><% end %>
-      <%= link_to params.permit(:totry, :byob, :outdoor, :maxPrice).except(:maxPrice).merge(:maxPrice => 4), :class => ((@includeAllPrices or params[:maxPrice].to_f >= 4) ? 'btn btn-success' : 'btn btn-default') do %><%= render_price(4) %><% end %>
+    </div>
+    <%= link_to outdoorButtonHTML, params.permit(@paramsOptions).except(:outdoor).merge(:outdoor => ('1' if params[:outdoor] != '1')), :class => filterButtonClassConditional(params[:outdoor] == '1'), :title => 'Outdoor?' %>
+    <div class="btn-group btn-group-thirds" role="group">
+      <%= link_to outdoorButtonHTML, params.permit(@paramsOptions).except(:byob, :craftbeer, :cocktails).merge(:byob => ('1' if params[:byob] != '1')), :class => filterButtonClassConditional(params[:byob] == '1'), :title => 'BYOB?' %>
+      <%= link_to craftbeerButtonHTML, params.permit(@paramsOptions).except(:byob, :craftbeer, :cocktails).merge(:craftbeer => ('1' if params[:craftbeer] != '1')), :class => filterButtonClassConditional(params[:craftbeer] == '1'), :title => 'Craft Beer?' %>
+      <%= link_to cocktailsButtonHTML, params.permit(@paramsOptions).except(:byob, :craftbeer, :cocktails).merge(:cocktails => ('1' if params[:cocktails] != '1')), :class => filterButtonClassConditional(params[:cocktails] == '1'), :title => 'Cocktails?' %>
     </div>
   </div>
   <div id="google-map" class="map map-all"></div>
