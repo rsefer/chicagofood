@@ -977,8 +977,14 @@ footer {
 	}
 
 	ul {
+
 		margin-top: 0.5rem;
 		padding-left: 1rem;
+
+		ul {
+			padding-left: 1.25rem;
+		}
+
 	}
 
 }
