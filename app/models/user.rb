@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
 		:storage => :s3,
 		:s3_credentials => "#{Rails.root}/config/aws.yml",
     :s3_region => ENV['AWS_REGION'],
+		:region => ENV['AWS_REGION'],
     :s3_protocol => :https
 
   def user_public_comment_count

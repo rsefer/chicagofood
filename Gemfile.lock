@@ -178,7 +178,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     orm_adapter (0.5.0)
-    paperclip (5.1.0)
+    paperclip (5.2.1)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
       cocaine (~> 0.5.5)
@@ -304,7 +304,7 @@ DEPENDENCIES
   hirb
   jbuilder
   jquery-rails
-  paperclip
+  paperclip (~> 5.2.0)
   pg
   puma (~> 3.6.2)
   purecss-sass
@@ -319,4 +319,4 @@ DEPENDENCIES
   uglifier
 
 BUNDLED WITH
-   1.14.6
+   1.16.1

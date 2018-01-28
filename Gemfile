@@ -37,7 +37,7 @@ end
 
 gem 'geocoder'
 gem 'devise'
-gem 'paperclip'
+gem 'paperclip', '~> 5.2.0'
 gem 'aws-sdk', '~> 2.2.5'
 gem 'figaro'
 gem 'purecss-sass'
