@@ -1,6 +1,6 @@
 class EatsController < ApplicationController
   protect_from_forgery prepend: true, with: :exception
-  before_filter :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index]
   before_action :set_display_user, only: [:index]
 
   def index
