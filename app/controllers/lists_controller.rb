@@ -1,4 +1,5 @@
 class ListsController < ApplicationController
+  protect_from_forgery prepend: true, with: :exception
   before_filter :authenticate_user!, except: [:index, :show]
   before_action :set_display_user
   before_action :set_list, only: [:show, :edit, :update, :destroy]

@@ -1,4 +1,5 @@
 class VenuesController < ApplicationController
+	protect_from_forgery prepend: true, with: :exception
 	before_filter :authenticate_user!, except: [:index, :show]
   before_action :set_venue, only: [:show, :edit, :update, :destroy]
 	after_action :update_geocoder, only: [:create, :update]

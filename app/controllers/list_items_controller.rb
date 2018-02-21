@@ -1,4 +1,5 @@
 class ListItemsController < ApplicationController
+  protect_from_forgery prepend: true, with: :exception
   before_filter :authenticate_user!
   before_action :set_list_item, only: [:destroy]
   before_action :set_display_list
