@@ -29,7 +29,7 @@ module ApplicationHelper
 
 	def is_current_user(user, isUserID = false)
 		if isUserID
-			user = User.find(user)
+			user = User.find(user.id)
 		end
 
 		if !current_user.nil? && user.id == current_user.id
