@@ -91,7 +91,7 @@
 								<% if !comment.private or comment.user == current_user %>
 								<li class="comment<% if comment.private %> private<% end %>">
 									<div class="comment-user-info">
-										<% if is_current_user(comment.user_id, true) %>
+										<% if is_current_user(comment.user, true) %>
 										<%= link_to comment, method: :delete, data: { confirm: "Are you sure you would like to delete this comment?" } do %>&times;<% end %>
 										<% end %>
 										<%= link_to comment.user do %><img class="user-avatar user-avatar-thumb" src="<%= comment.user.avatar.url(:thumb) %>"><%= comment.user.fullname %><% end %> <% if @venue.ratings.where(user_id: comment.user.id).exists? %>(<%= render_stars(@venue.ratings.where(user_id: comment.user.id).first.rating) %>) <% end %>on <%= comment.updated_at.strftime('%B %e, %Y') %>

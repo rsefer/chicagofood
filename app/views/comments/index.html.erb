@@ -11,7 +11,7 @@
 					<% @comments.each do |comment| %>
 						<% if !comment.private or (comment.private and is_current_user(comment.user, true)) %>
 						<li class="comment<% if comment.private %> private<% end %>">
-							<% if is_current_user(comment.user_id, true) %>
+							<% if is_current_user(comment.user, true) %>
 							<%= link_to comment_path(comment), method: :delete, data: { confirm: "Are you sure you would like to delete this comment?" } do %>&times;<% end %>
 							<% end %>
 							<p><%= link_to venue_path(comment.venue_id), title: comment.venue.name do %><%= comment.venue.name %><% end %> on <%= comment.updated_at.strftime('%B %e, %Y %l:%M %P') %></p>
