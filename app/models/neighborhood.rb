@@ -1,4 +1,7 @@
 class Neighborhood < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, :use => :slugged
+
   has_many :venues
 
   default_scope { order('name ASC') }

@@ -8,7 +8,7 @@ class TagsController < ApplicationController
   end
 
   def show
-    paginate_venues(@tag.venues_with_children)
+    paginate_venues(Tag.friendly.find(params[:id]).venues_with_children)
   end
 
   def new
@@ -20,6 +20,7 @@ class TagsController < ApplicationController
 
   def create
     @tag = Tag.new(tag_params)
+    @tag.slug = @tag.name.parameterize
 
     respond_to do |format|
       if @tag.save
@@ -51,10 +52,10 @@ class TagsController < ApplicationController
 
   private
     def set_tag
-      @tag = Tag.find(params[:id])
+      @tag = Tag.friendly.find(params[:id])
     end
 
     def tag_params
-      params.require(:tag).permit(:name, :parent_tag_id)
+      params.require(:tag).permit(:name, :slug, :parent_tag_id)
     end
 end

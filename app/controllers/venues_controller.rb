@@ -20,6 +20,7 @@ class VenuesController < ApplicationController
 
   def create
     @venue = Venue.new(venue_params)
+		@venue.slug = @venue.name.parameterize
 		@venue.street = @venue.street.titlecase
 
     respond_to do |format|
@@ -102,7 +103,7 @@ class VenuesController < ApplicationController
 
   private
     def set_venue
-      @venue = Venue.find(params[:id])
+      @venue = Venue.friendly.find(params[:id])
     end
 
 		def update_geocoder
@@ -116,6 +117,6 @@ class VenuesController < ApplicationController
 		end
 
     def venue_params
-      params.require(:venue).permit(:name, :tags, :street, :city, :state, :neighborhood_id, :byob, :craftbeer, :cocktails, :latenight, :cashonly, :outdoor, :price)
+      params.require(:venue).permit(:name, :slug, :tags, :street, :city, :state, :neighborhood_id, :byob, :craftbeer, :cocktails, :latenight, :cashonly, :outdoor, :price)
     end
 end

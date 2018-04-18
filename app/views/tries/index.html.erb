@@ -13,7 +13,7 @@
 						  <thead>
 						    <tr>
 						      <th class="col-name"><%= sortable 'name', 'Name' %></th>
-						      <th class="col-type"><%= sortable 'tag_name', 'Type' %></th>
+						      <th class="col-tags"><%= sortable 'tag_name', 'Type' %></th>
 						      <th class="col-neighborhood"><%= sortable 'neighborhood_name', 'Neighborhood' %></th>
 						      <th class="col-price"><%= sortable 'price', 'Price' %></th>
 						      <th class="col-date"><%= sortable 'updated_at', 'Date Added' %></th>
@@ -24,7 +24,7 @@
 						    <% @tries.each do |try| %>
 						    <tr>
 						    	<td class="col-name"><%= link_to venue_path(try.venue_id), title: try.venue.name do %><%= try.venue.name %><% end %></td>
-						    	<td class="col-type"><%= link_to tag_path(try.venue.tags), title: try.venue.tag.name do %><%= try.venue.tag.name %><% end %></td>
+						    	<td class="col-tags">[tags]</td>
 						    	<td class="col-neighborhood"><%= link_to try.venue.neighborhood do %><%= try.venue.neighborhood.name %><% end %></td>
 						    	<td class="col-price"><%= render_price(try.venue.price) %></td>
 						    	<td class="col-date"><%= try.updated_at.strftime('%B %e, %Y') %></td>

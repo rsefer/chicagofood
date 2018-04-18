@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180418035830) do
+ActiveRecord::Schema.define(version: 20180418042943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,18 @@ ActiveRecord::Schema.define(version: 20180418035830) do
     t.index ["item_id"], name: "index_eats_on_item_id"
     t.index ["item_rating_id"], name: "index_eats_on_item_rating_id"
     t.index ["user_id"], name: "index_eats_on_user_id"
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
   create_table "item_ratings", id: :serial, force: :cascade do |t|
@@ -87,6 +99,7 @@ ActiveRecord::Schema.define(version: 20180418035830) do
     t.integer "parent_neighborhood_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "slug"
   end
 
   create_table "ratings", id: :serial, force: :cascade do |t|
@@ -103,6 +116,7 @@ ActiveRecord::Schema.define(version: 20180418035830) do
     t.integer "parent_tag_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "slug"
   end
 
   create_table "to_tries", id: :serial, force: :cascade do |t|
@@ -169,6 +183,7 @@ ActiveRecord::Schema.define(version: 20180418035830) do
     t.float "latitude"
     t.float "longitude"
     t.boolean "outdoor"
+    t.string "slug"
   end
 
   add_foreign_key "list_items", "neighborhoods"

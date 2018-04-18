@@ -8,7 +8,7 @@ class NeighborhoodsController < ApplicationController
   end
 
   def show
-    @venues = sortable_venues_array(@neighborhood.venues_with_children)
+    @venues = sortable_venues_array(Neighborhood.friendly.find(params[:id]).venues_with_children)
   end
 
   def new
@@ -20,6 +20,7 @@ class NeighborhoodsController < ApplicationController
 
   def create
     @neighborhood = Neighborhood.new(neighborhood_params)
+    @neighborhood.slug = @neighborhood.name.parameterize
 
     respond_to do |format|
       if @neighborhood.save
@@ -51,10 +52,10 @@ class NeighborhoodsController < ApplicationController
 
   private
     def set_neighborhood
-      @neighborhood = Neighborhood.find(params[:id])
+      @neighborhood = Neighborhood.friendly.find(params[:id])
     end
 
     def neighborhood_params
-      params.require(:neighborhood).permit(:name, :parent_neighborhood_id)
+      params.require(:neighborhood).permit(:name, :slug, :parent_neighborhood_id)
     end
 end
