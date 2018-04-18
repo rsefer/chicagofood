@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
         if params[:sort] == 'price'
           sorted_object_list = object_list.sort_by { |t| t.venue.price }
         elsif params[:sort] == 'vt_name'
-          sorted_object_list = object_list.sort_by { |t| if t[:manual_entry] then t.venuetype.sortable_name else t.venue.venuetype.sortable_name end }
+          sorted_object_list = object_list.sort_by { |t| if t[:manual_entry] then t.tag.sortable_name else t.venue.tag.sortable_name end }
         elsif params[:sort] == 'neighborhood_name'
           sorted_object_list = object_list.sort_by { |t| if t[:manual_entry] then t.neighborhood.sortable_name else t.venue.neighborhood.sortable_name end }
         elsif params[:sort] == 'updated_at'

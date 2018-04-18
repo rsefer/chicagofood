@@ -1,14 +1,14 @@
-<% provide(:title, "#{@venuetype.name} | Venue Types") %>
+<% provide(:title, "#{@tag.name} | Tags") %>
 <section>
 	<div class="container">
 		<div class="pure-g">
 			<div class="pure-u-1-1">
-				<% if @venuetype.id == 1 || @venuetype.id == 2 %>
-				<h1><%= pluralize_without_count(2, @venuetype.name) %></h1>
+				<% if @tag.id == 1 || @tag.id == 2 %>
+				<h1><%= pluralize_without_count(2, @tag.name) %></h1>
 				<% else %>
-				<h1><%= @venuetype.name %></h1>
+				<h1><%= @tag.name %></h1>
 				<% end %>
-				<p><% if @venuetype.hasParent %>Part of <%= link_to @venuetype.parent do %><%= @venuetype.parent.name %><% end %>. <% end %><% if !@venuetype.children.empty? %>Includes <%= @venuetype.children.map { |vtype| link_to vtype.name, vtype }.join(', ').html_safe %>.<% end %></p>
+				<p><% if @tag.hasParent %>Part of <%= link_to @tag.parent do %><%= @tag.parent.name %><% end %>. <% end %><% if !@tag.children.empty? %>Includes <%= @tag.children.map { |tag| link_to tag.name, tag }.join(', ').html_safe %>.<% end %></p>
 				<% if !@venues.empty? %>
 				<div class="pure-g">
 					<div class="pure-u-1-1 pure-u-md-2-3">
@@ -16,22 +16,22 @@
 						  <thead>
 						    <tr>
 						      <th class="col-name"><%= sortable 'name', 'Name' %></th>
-						      <% if @venuetype.id == 1 || @venuetype.id == 2 %><th class="col-type"><%= sortable 'vt_name', 'Type' %></th><% end %>
+						      <% if @tag.id == 1 || @tag.id == 2 %><th class="col-type"><%= sortable 'vt_name', 'Type' %></th><% end %>
 						      <th class="col-neighborhood"><%= sortable 'neighborhood_name', 'Neighborhood' %></th>
 						      <th class="col-rating"><%= sortable 'rating', 'Rating' %></th>
 						      <th class="col-price"><%= sortable 'price', 'Price' %></th>
-						      <% if @venuetype.id != 2 and @venuetype.parent_type_id != 2 %><th class="col-byob"><%= sortable 'byob', 'BYOB?' %></th><% end %>
+						      <% if @tag.id != 2 and @tag.parent_type_id != 2 %><th class="col-byob"><%= sortable 'byob', 'BYOB?' %></th><% end %>
 						    </tr>
 						  </thead>
 						  <tbody>
 								<% @venues.each do |venue| %>
 					      <tr>
 					        <td class="col-name"><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
-					        <% if @venuetype.id == 1 || @venuetype.id == 2 %><td class="col-type"><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td><% end %>
+					        <% if @tag.id == 1 || @tag.id == 2 %><td class="col-type"><%= link_to venue.tag do %><%= venue.tag.name %><% end %></td><% end %>
 					        <td class="col-neighborhood"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
 					        <td class="col-rating"><%= rating_display(venue) %></td>
 					        <td class="col-price"><%= render_price(venue.price) %></td>
-					        <% if @venuetype.id != 2 and @venuetype.parent_type_id != 2 %><td class="col-byob"><% if venue.byob %><%= inline_icon('check', '', 'green') %><% else %><%= render_dash %><% end %></td><% end %>
+					        <% if @tag.id != 2 and @tag.parent_type_id != 2 %><td class="col-byob"><% if venue.byob %><%= inline_icon('check', '', 'green') %><% else %><%= render_dash %><% end %></td><% end %>
 					      </tr>
 						    <% end %>
 						  </tbody>
@@ -46,7 +46,7 @@
 				</div>
 				<% end %>
 				<p class="text-center">
-					<%= link_to 'Edit', edit_venuetype_path(@venuetype) %>&nbsp;&bull;&nbsp;<%= link_to new_venue_path({ :venuetype_id => @venuetype.id }) do %>Add a new <%= @venuetype.name %> venue<% end %>
+					<%= link_to 'Edit', edit_tag_path(@tag) %>&nbsp;&bull;&nbsp;<%= link_to new_venue_path({ :tag_id => @tag.id }) do %>Add a new <%= @tag.name %> venue<% end %>
 				</p>
 			</div>
 		</div>

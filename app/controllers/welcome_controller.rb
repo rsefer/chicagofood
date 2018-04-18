@@ -1,13 +1,13 @@
 class WelcomeController < ApplicationController
 
   def index
-  	@venuetypes = Venuetype.all
+  	@tags = Tag.all
   	@neighborhoods = Neighborhood.all
 
     if user_signed_in?
-      @recentActivity = List.recent + Venue.recent + Neighborhood.recent + Venuetype.recent + Try.recent + Rating.recent + Comment.recent + ItemRating.recent
+      @recentActivity = List.recent + Venue.recent + Neighborhood.recent + Tag.recent + Try.recent + Rating.recent + Comment.recent + ItemRating.recent
     else
-      @recentActivity = Venue.recent + Neighborhood.recent + Venuetype.recent
+      @recentActivity = Venue.recent + Neighborhood.recent + Tag.recent
     end
     @recentActivity = @recentActivity.sort{ |a,b| b.updated_at <=> a.updated_at }
   end
@@ -33,7 +33,7 @@ class WelcomeController < ApplicationController
 
       v_results = Set.new
       n_results = Set.new
-      vtypes_results = Set.new
+      tags_results = Set.new
       query.each do |qw|
         Venue.where("lower(name) LIKE ?", "%#{qw}%").each do |v|
           v_results.add(v)
@@ -43,41 +43,41 @@ class WelcomeController < ApplicationController
             n_results.add(v)
           end
         end
-        Venuetype.where("lower(name) LIKE ?", "%#{qw}%").each do |vt|
+        Tag.where("lower(name) LIKE ?", "%#{qw}%").each do |vt|
           vt.venues.each do |v|
-            vtypes_results.add(v)
+            tags_results.add(v)
           end
         end
       end
 
-      if byob_results.length > 0 and v_results.length > 0 and n_results.length > 0 and vtypes_results.length > 0
-        searchresultsSet = byob_results.to_a & v_results.to_a & n_results.to_a & vtypes_results.to_a
-      elsif byob_results.length > 0 and v_results.length > 0 and vtypes_results.length > 0
-        searchresultsSet = byob_results.to_a & v_results.to_a & vtypes_results.to_a
+      if byob_results.length > 0 and v_results.length > 0 and n_results.length > 0 and tags_results.length > 0
+        searchresultsSet = byob_results.to_a & v_results.to_a & n_results.to_a & tags_results.to_a
+      elsif byob_results.length > 0 and v_results.length > 0 and tags_results.length > 0
+        searchresultsSet = byob_results.to_a & v_results.to_a & tags_results.to_a
       elsif byob_results.length > 0 and v_results.length > 0 and n_results.length > 0
         searchresultsSet = byob_results.to_a & v_results.to_a & n_results.to_a
-      elsif byob_results.length > 0 and n_results.length > 0 and vtypes_results.length > 0
-        searchresultsSet = byob_results.to_a & n_results.to_a & vtypes_results.to_a
+      elsif byob_results.length > 0 and n_results.length > 0 and tags_results.length > 0
+        searchresultsSet = byob_results.to_a & n_results.to_a & tags_results.to_a
       elsif byob_results.length > 0 and v_results.length > 0
         searchresultsSet = byob_results.to_a & v_results.to_a
-      elsif byob_results.length > 0 and vtypes_results.length > 0
-        searchresultsSet = byob_results.to_a & vtypes_results.to_a
+      elsif byob_results.length > 0 and tags_results.length > 0
+        searchresultsSet = byob_results.to_a & tags_results.to_a
       elsif byob_results.length > 0 and n_results.length > 0
         searchresultsSet = byob_results.to_a & n_results.to_a
-      elsif n_results.length > 0 and vtypes_results.length > 0
-        searchresultsSet = n_results.to_a | vtypes_results.to_a
+      elsif n_results.length > 0 and tags_results.length > 0
+        searchresultsSet = n_results.to_a | tags_results.to_a
       elsif n_results.length > 0 and v_results.length > 0
         searchresultsSet = n_results.to_a | v_results.to_a
-      elsif v_results.length > 0 and vtypes_results.length > 0
-        searchresultsSet = v_results.to_a | vtypes_results.to_a
+      elsif v_results.length > 0 and tags_results.length > 0
+        searchresultsSet = v_results.to_a | tags_results.to_a
       elsif v_results.length > 0
         searchresultsSet = v_results
       elsif byob_results.length > 0
         searchresultsSet = byob_results
       elsif n_results.length > 0
         searchresultsSet = n_results
-      elsif vtypes_results.length > 0
-        searchresultsSet = vtypes_results
+      elsif tags_results.length > 0
+        searchresultsSet = tags_results
       end
 
       searchresultsSet.each do |vs|
@@ -144,8 +144,8 @@ class WelcomeController < ApplicationController
     if params[:type] == 'venue'
       @requested = Venue.find(params[:id])
       @requested_text_label = 'venue'
-    elsif params[:type] == 'venuetype'
-      @requested = Venuetype.find(params[:id])
+    elsif params[:type] == 'tag'
+      @requested = Tag.find(params[:id])
       @requested_text_label = 'venue type'
     elsif params[:type] == 'neighborhood'
       @requested = Neighborhood.find(params[:id])

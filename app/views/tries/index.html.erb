@@ -24,7 +24,7 @@
 						    <% @tries.each do |try| %>
 						    <tr>
 						    	<td class="col-name"><%= link_to venue_path(try.venue_id), title: try.venue.name do %><%= try.venue.name %><% end %></td>
-						    	<td class="col-type"><%= link_to venuetype_path(try.venue.venuetype_id), title: try.venue.venuetype.name do %><%= try.venue.venuetype.name %><% end %></td>
+						    	<td class="col-type"><%= link_to tag_path(try.venue.tag_id), title: try.venue.tag.name do %><%= try.venue.tag.name %><% end %></td>
 						    	<td class="col-neighborhood"><%= link_to try.venue.neighborhood do %><%= try.venue.neighborhood.name %><% end %></td>
 						    	<td class="col-price"><%= render_price(try.venue.price) %></td>
 						    	<td class="col-date"><%= try.updated_at.strftime('%B %e, %Y') %></td>

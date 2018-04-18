@@ -35,11 +35,11 @@
 						    <tr>
 									<% if list_item.manual_entry %>
 									<td class="col-name"><%= list_item.venue_name %></td>
-									<td class="col-type"><%= link_to Venuetype.find(list_item.venuetype_id).name, Venuetype.find(list_item.venuetype_id) %></td>
+									<td class="col-type"><%= link_to Tag.find(list_item.tag_id).name, Tag.find(list_item.tag_id) %></td>
 									<td class="col-neighborhood"><%= link_to Neighborhood.find(list_item.neighborhood_id).name, Neighborhood.find(list_item.neighborhood_id) %></td>
 									<% else %>
 									<td class="col-name"><%= link_to list_item.venue.name, list_item.venue %></td>
-									<td class="col-type"><%= link_to list_item.venue.venuetype.name, list_item.venue.venuetype %></td>
+									<td class="col-type"><%= link_to list_item.venue.tag.name, list_item.venue.tag %></td>
 									<td class="col-neighborhood"><%= link_to list_item.venue.neighborhood.name, list_item.venue.neighborhood %></td>
 									<% end %>
 									<% if @list.hasDates %><td class="col-date"><% if list_item.date %><%= list_item.date %><% else %><%= render_dash %><% end %></td><% end %>

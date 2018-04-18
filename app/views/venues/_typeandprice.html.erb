@@ -1,9 +1,9 @@
 <div class="form-group">
-  <%= label(:venue, :venuetype_id) do %>Type<% end %>
-  <% if params[:venuetype_id] %>
-  <%= select(:venue, :venuetype_id, Venuetype.all.collect {|vt| [ vt.name, vt.id ] }, { :selected => params[:venuetype_id] }, { :class => 'form-control' }) %>
+  <%= label(:venue, :tag_id) do %>Type<% end %>
+  <% if params[:tag_id] %>
+  <%= select(:venue, :tag_id, Tag.all.collect {|vt| [ vt.name, vt.id ] }, { :selected => params[:tag_id] }, { :class => 'form-control' }) %>
   <% else %>
-  <%= collection_select(:venue, 'venuetype_id', Venuetype.order('name ASC'), :id, :name, {}, { :class => 'form-control' }) %>
+  <%= collection_select(:venue, 'tag_id', Tag.order('name ASC'), :id, :name, {}, { :class => 'form-control' }) %>
   <% end %>
 </div>
 <div class="form-group form-group-multiple-options">

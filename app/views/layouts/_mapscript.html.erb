@@ -21,7 +21,7 @@ locations = [
     path: '<%= venue_path(venue) %>',
     isTry: <% if user_signed_in? and Try.where('user_id = ? AND venue_id = ?', current_user.id, venue.id).exists? %>true<% else %>false<% end %>,
     isSolo: <% if defined? isSolo and isSolo %>true<% else %>false<% end %>,
-    isBar: <% if venue.venuetype.isBar %>true<% else %>false<% end %>
+    isBar: <% if venue.tag.isBar %>true<% else %>false<% end %>
   },
   <% end %>
 ];

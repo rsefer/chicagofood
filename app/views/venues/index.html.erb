@@ -18,7 +18,7 @@
 			    <% @venues.each do |venue| %>
 		      <tr>
 		        <td class="col-name"><%= link_to venue, title: venue.name do %><%= venue.name %><% end %></td>
-		        <td class="col-type"><%= link_to venue.venuetype do %><%= venue.venuetype.name %><% end %></td>
+		        <td class="col-type"><%= link_to venue.tag do %><%= venue.tag.name %><% end %></td>
 		        <td class="col-neighborhood"><%= link_to venue.neighborhood do %><%= venue.neighborhood.name %><% end %></td>
 		        <td class="col-rating"><%= rating_display(venue) %></td>
 		        <td class="col-price"><%= render_price(venue.price) %></td>

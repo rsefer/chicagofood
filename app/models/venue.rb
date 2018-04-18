@@ -5,7 +5,7 @@ class Venue < ActiveRecord::Base
 	has_many :items, :dependent => :destroy
 	has_many :list_items, :dependent => :destroy
 
-	belongs_to :venuetype
+	belongs_to :tag
 	belongs_to :neighborhood
 
 	validates :street, :city, :state, presence: true
@@ -33,7 +33,7 @@ class Venue < ActiveRecord::Base
 	end
 
 	def vt_name
-		self.venuetype.sortable_name
+		self.tag.sortable_name
 	end
 
 	def hasaddress

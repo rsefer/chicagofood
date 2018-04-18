@@ -20,7 +20,7 @@
 				    <% @ratings.each do |rating| %>
 				    <tr>
 				    	<td class="col-name"><%= link_to venue_path(rating.venue_id), title: rating.venue.name do %><%= rating.venue.name %><% end %></td>
-				    	<td class="col-type"><%= link_to venuetype_path(rating.venue.venuetype_id), title: rating.venue.venuetype.name do %><%= rating.venue.venuetype.name %><% end %></td>
+				    	<td class="col-type"><%= link_to tag_path(rating.venue.tag_id), title: rating.venue.tag.name do %><%= rating.venue.tag.name %><% end %></td>
 							<td class="col-rating"><%= rating.rating %></td>
 				    	<td class="col-date"><%= rating.updated_at.strftime('%B %e, %Y') %></td>
 				    </tr>

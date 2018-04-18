@@ -8,10 +8,10 @@ class DeletionRequestMailer < ActionMailer::Base
       @requested = Venue.find(requested_item_id)
       @requested_text_label = 'venue'
       @requested_link = 'venues/' + @requested.id.to_s
-    elsif requested_type == 'venuetype'
-      @requested = Venuetype.find(requested_item_id)
-      @requested_text_label = 'venue type'
-      @requested_link = 'venuetypes/' + @requested.id.to_s
+    elsif requested_type == 'tag'
+      @requested = Tag.find(requested_item_id)
+      @requested_text_label = 'tag'
+      @requested_link = 'tags/' + @requested.id.to_s
     elsif requested_type == 'neighborhood'
       @requested = Neighborhood.find(requested_item_id)
       @requested_text_label = 'neighborhood'

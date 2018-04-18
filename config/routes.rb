@@ -9,7 +9,7 @@ Chicagofood::Application.routes.draw do
   end
 
   resources :neighborhoods
-  resources :venuetypes
+  resources :tags
   resources :ratings
   resources :comments
   resources :tries
@@ -54,7 +54,7 @@ Chicagofood::Application.routes.draw do
     namespace :v1 do
       resources :venues
       resources :neighborhoods
-      resources :venuetypes
+      resources :tags
       resources :users do
         resources :comments
         resources :ratings

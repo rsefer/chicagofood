@@ -37,7 +37,7 @@ class ListItemsController < ApplicationController
     end
 
     def list_item_params
-      params.require(:list_item).permit(:list_id, :venue_id, :date, :notes, :manual_entry, :venue_name, :neighborhood_id, :venuetype_id)
+      params.require(:list_item).permit(:list_id, :venue_id, :date, :notes, :manual_entry, :venue_name, :neighborhood_id, :tag_id)
     end
 
 end

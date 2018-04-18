@@ -57,22 +57,22 @@ module ApplicationHelper
 	  link_to raw(carets), params.permit(:sort, :direction).merge(:sort => column, :direction => direction), { :class => css_class }
 	end
 
-	def render_venuetype_hierarchy(parent_id, listClasses = '')
-		children = Venuetype.find(parent_id).children
+	def render_tag_hierarchy(parent_id, listClasses = '')
+		children = Tag.find(parent_id).children
 		if children.present?
 			listcontent = '<ul'
 			if listClasses.present?
 				listcontent += ' class="' + listClasses + '"'
 			end
 			listcontent += '>'
-			children.each do |venuetype|
+			children.each do |tag|
 				listcontent += '<li>'
 				if parent_id != 1 and parent_id != 2
 					listcontent += self.inline_icon('corner-down-right', '', 'left')
 				end
-				listcontent += '<a href="' + venuetype_path(venuetype.id) + '">' + venuetype.name + '</a>'
-				if venuetype.children.present?
-					listcontent += render_venuetype_hierarchy(venuetype.id)
+				listcontent += '<a href="' + tag_path(tag.id) + '">' + tag.name + '</a>'
+				if tag.children.present?
+					listcontent += render_tag_hierarchy(tag.id)
 				end
 				listcontent += '</li>'
 			end
