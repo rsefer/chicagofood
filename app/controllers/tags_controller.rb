@@ -4,7 +4,7 @@ class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tags = Tag.where(parent_type_id: nil).sort{ |a,b| a.name <=> b.name }
+    @tags = Tag.where(parent_tag_id: nil).sort{ |a,b| a.name <=> b.name }
   end
 
   def show
@@ -55,6 +55,6 @@ class TagsController < ApplicationController
     end
 
     def tag_params
-      params.require(:tag).permit(:name, :parent_type_id)
+      params.require(:tag).permit(:name, :parent_tag_id)
     end
 end

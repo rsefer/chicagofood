@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
       if other_model_options.include?(other_model)
         if params[:sort] == 'price'
           sorted_object_list = object_list.sort_by { |t| t.venue.price }
-        elsif params[:sort] == 'vt_name'
+        elsif params[:sort] == 'tag_name'
           sorted_object_list = object_list.sort_by { |t| if t[:manual_entry] then t.tag.sortable_name else t.venue.tag.sortable_name end }
         elsif params[:sort] == 'neighborhood_name'
           sorted_object_list = object_list.sort_by { |t| if t[:manual_entry] then t.neighborhood.sortable_name else t.venue.neighborhood.sortable_name end }
@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
 	  end
 
     def sort_column
-      full_sort_list = Venue.column_names + ['rating', 'neighborhood_name', 'vt_name', 'venue_count', 'venue_name']
+      full_sort_list = Venue.column_names + ['rating', 'neighborhood_name', 'tag_name', 'venue_count', 'venue_name']
       if full_sort_list.include?(params[:sort])
         params[:sort]
       elsif params[:controller] == 'tries' or params[:controller] == 'ratings'

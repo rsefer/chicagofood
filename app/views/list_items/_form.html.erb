@@ -31,8 +31,8 @@
           <%= collection_select(:list_item, 'neighborhood_id', Neighborhood.order('name ASC'), :id, :name, { :include_blank => '' }, { :class => 'form-control' }) %>
         </div>
         <div class="form-group">
-          <%= f.label :tag_id, 'Venue Type' %>
-          <%= collection_select(:list_item, 'tag_id', Tag.order('name ASC'), :id, :name, { :include_blank => '' }, { :class => 'form-control' }) %>
+          <%= f.label :tags, 'Tags' %>
+          <%= collection_select(:list_item, 'tags', Tag.order('name ASC'), :id, :name, { :include_blank => '' }, { :class => 'form-control' }) %>
         </div>
       </div>
       <%= f.hidden_field :manual_entry %>

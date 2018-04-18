@@ -20,8 +20,7 @@ locations = [
     name: '<%= venue.name %>',
     path: '<%= venue_path(venue) %>',
     isTry: <% if user_signed_in? and Try.where('user_id = ? AND venue_id = ?', current_user.id, venue.id).exists? %>true<% else %>false<% end %>,
-    isSolo: <% if defined? isSolo and isSolo %>true<% else %>false<% end %>,
-    isBar: <% if venue.tag.isBar %>true<% else %>false<% end %>
+    isSolo: <% if defined? isSolo and isSolo %>true<% else %>false<% end %>
   },
   <% end %>
 ];
@@ -32,8 +31,6 @@ if (locations.length >= 1) {
     if (locations[i].isSolo) {
       iconSymbol = null;
       mapIsSolo = true;
-    } else if (locations[i].isBar) {
-      iconSymbol = '<%= asset_path("icons/marker-beer.svg") %>';
     } else {
       iconSymbol = '<%= asset_path("icons/marker-spoon-fork.svg") %>';
     }
@@ -45,7 +42,6 @@ if (locations.length >= 1) {
     });
     nBounds.extend(thisLatLng);
     marker.set('id', locations[i].id);
-    marker.set('isBar', locations[i].isBar);
     marker.set('isTry', locations[i].isTry);
     markerList.push(marker);
 

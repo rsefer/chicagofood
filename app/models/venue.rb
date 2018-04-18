@@ -32,7 +32,15 @@ class Venue < ActiveRecord::Base
 		self.neighborhood.sortable_name
 	end
 
-	def vt_name
+	def tag_list
+		tag_list = []
+		self.tags.each do |tag|
+			tag_list.push(Tag.find(tag))
+		end
+		tag_list
+	end
+
+	def tag_name
 		self.tag.sortable_name
 	end
 

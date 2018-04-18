@@ -2,8 +2,8 @@
 
 one:
   name: MyString
-  parent_type_id: 1
+  parent_tag_id: 1
 
 two:
   name: MyString
-  parent_type_id: 1
+  parent_tag_id: 1

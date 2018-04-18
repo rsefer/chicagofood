@@ -24,7 +24,7 @@
 						  <thead>
 						    <tr>
 						      <th class="col-name"><%= sortable 'name', 'Name' %></th>
-									<th class="col-type"><%= sortable 'vt_name', 'Type' %></th>
+									<th class="col-type"><%= sortable 'tag_name', 'Type' %></th>
 						      <th class="col-neighborhood"><%= sortable 'neighborhood_name', 'Neighborhood' %></th>
 									<% if @list.hasDates %><th class="col-date"><%= sortable 'date', 'Date' %></th><% end %>
 						      <% if is_current_user(@user) or user_signed_in? %><th class="col-delete">&nbsp;</th><% end %>
@@ -35,7 +35,7 @@
 						    <tr>
 									<% if list_item.manual_entry %>
 									<td class="col-name"><%= list_item.venue_name %></td>
-									<td class="col-type"><%= link_to Tag.find(list_item.tag_id).name, Tag.find(list_item.tag_id) %></td>
+									<td class="col-type"><%= link_to Tag.find(list_item.tags).name, Tag.find(list_item.tags) %></td>
 									<td class="col-neighborhood"><%= link_to Neighborhood.find(list_item.neighborhood_id).name, Neighborhood.find(list_item.neighborhood_id) %></td>
 									<% else %>
 									<td class="col-name"><%= link_to list_item.venue.name, list_item.venue %></td>

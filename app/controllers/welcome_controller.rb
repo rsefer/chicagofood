@@ -43,8 +43,8 @@ class WelcomeController < ApplicationController
             n_results.add(v)
           end
         end
-        Tag.where("lower(name) LIKE ?", "%#{qw}%").each do |vt|
-          vt.venues.each do |v|
+        Tag.where("lower(name) LIKE ?", "%#{qw}%").each do |tag|
+          tag.venues.each do |v|
             tags_results.add(v)
           end
         end
@@ -146,7 +146,7 @@ class WelcomeController < ApplicationController
       @requested_text_label = 'venue'
     elsif params[:type] == 'tag'
       @requested = Tag.find(params[:id])
-      @requested_text_label = 'venue type'
+      @requested_text_label = 'tag'
     elsif params[:type] == 'neighborhood'
       @requested = Neighborhood.find(params[:id])
       @requested_text_label = 'neighborhood'
