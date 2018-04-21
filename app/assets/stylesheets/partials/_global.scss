@@ -11,17 +11,30 @@ body {
 .bubble {
 
 	display: inline-block;
-	padding: 0.5em 1em;
+	padding: 0.375em 0.875em;
 	color: $white;
 	background: $turqoise;
 	font-size: 0.75rem;
 	line-height: 1;
 	text-decoration: none;
 	border-radius: 1em;
+	border: 1px solid transparent;
+	outline: 0px;
 
 	&:hover {
 		background: darken($turqoise, 5%);
 		text-decoration: none;
+	}
+
+	.form-group & {
+
+		margin: 0.25rem 0px;
+
+		&:not(.selected) {
+			opacity: 0.5;
+			background: lighten($turqoise, 10%);
+		}
+
 	}
 
 }

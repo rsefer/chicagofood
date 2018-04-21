@@ -18,7 +18,24 @@
 		    <%= f.text_field :name, { :class => 'form-control', :required => 'required', :autocomplete => 'off' } %>
 				<div id="search-results" class="hidden venue-name-search-wrap"></div>
 		  </div>
-      <%= render :partial => 'typeandprice' %>
+      <div class="form-group form-group-multiple-options">
+        <%= label(:venue, :price, value: 1) do %>Price<% end %><br>
+        <%= radio_button('venue', 'price', 1, { :required =>  'required' }) %>
+        <%= label(:venue, :price, value: 1) do %><%= render_price(1) %><% end %>
+        <%= radio_button('venue', 'price', 2, { :required =>  'required' }) %>
+        <%= label(:venue, :price, value: 2) do %><%= render_price(2) %><% end %>
+        <%= radio_button('venue', 'price', 3, { :required =>  'required' }) %>
+        <%= label(:venue, :price, value: 3) do %><%= render_price(3) %><% end %>
+        <%= radio_button('venue', 'price', 4, { :required =>  'required' }) %>
+        <%= label(:venue, :price, value: 4) do %><%= render_price(4) %><% end %>
+      </div>
+      <div class="form-group">
+        <label>Genre</label>
+        <% Tag.where(tagtype: 'genre').each do |genre| %>
+        <button class="bubble<% if @venue.tags.include? genre.id.to_s %> selected<% end %>" data-tag-id="<%= genre.id %>"><%= genre.name %></button>
+        <% end %>
+        <%= f.hidden_field :tags %>
+      </div>
 		  <div class="form-group form-group-multiple-options">
 		  	<label>Good For</label><br>
 		  	<%= check_box(:venue, :byob, {}, 'true', 'false') %>

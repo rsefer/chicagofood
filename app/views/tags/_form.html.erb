@@ -16,7 +16,7 @@
     <%= f.text_field :name, :class => 'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :parent_tag_id, 'Parent Type' %>
+    <%= f.label :parent_tag_id, 'Parent Tag' %>
     <% if !@tag.parent_tag_id.nil? %>
     <%= collection_select(:tag, 'parent_tag_id', Tag.order('name ASC'), :id, :name, {}, { :class => 'form-control' } ) %>
     <% else %>

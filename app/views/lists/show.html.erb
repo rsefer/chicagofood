@@ -24,7 +24,7 @@
 						  <thead>
 						    <tr>
 						      <th class="col-name"><%= sortable 'name', 'Name' %></th>
-									<th class="col-tags"><%= sortable 'tag_name', 'Type' %></th>
+									<th class="col-tags"><%= sortable 'tag_name', 'Tags' %></th>
 						      <th class="col-neighborhood"><%= sortable 'neighborhood_name', 'Neighborhood' %></th>
 									<% if @list.hasDates %><th class="col-date"><%= sortable 'date', 'Date' %></th><% end %>
 						      <% if is_current_user(@user) or user_signed_in? %><th class="col-delete">&nbsp;</th><% end %>

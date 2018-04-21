@@ -7,7 +7,7 @@ class Tag < ActiveRecord::Base
   include Recent
 
   def venues
-    Venue.where("array_to_string(tags, '||') ANY :id", id: self.id.to_s)
+    Venue.where("'?' = ANY (tags)", self.id)
   end
 
   def hasParent
@@ -49,9 +49,9 @@ class Tag < ActiveRecord::Base
     end
     venuesListSet = Set.new
     tempTagList.each do |n|
-      # n.venues.each do |v|
-        # venuesListSet.add(v)
-      # end
+      n.venues.each do |v|
+        venuesListSet.add(v)
+      end
     end
     venuesList = []
     venuesListSet.each do |v|
