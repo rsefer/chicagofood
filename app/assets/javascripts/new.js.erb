@@ -1,0 +1,29 @@
+jQuery(document).on('turbolinks:load', function() {
+
+  $('.genre-toggles .bubble').click(function() {
+    var currentTags = $('#venue_tags').val().split(',');
+    if (currentTags[0] == '') {
+      currentTags = [];
+    }
+    var newTags;
+    if ($(this).attr('data-status') == 'selected') {
+      $(this).attr('data-status', '');
+      var removeTag = $(this).attr('data-tag-id');
+      newTags = currentTags.filter(function(e) {
+        return e !== removeTag;
+      });
+    } else {
+      $(this).attr('data-status', 'selected');
+      newTags = currentTags;
+      newTags.push($(this).attr('data-tag-id'));
+    }
+    if ($('#venue_tags').val() == '') {
+      $('#venue_tags').val(newTags[0]);
+    } else {
+      newTagsFiltered = newTags.filter(function(e) {
+        return e !== '';
+      });
+      $('#venue_tags').val(newTags.join());
+    }
+  });
+});

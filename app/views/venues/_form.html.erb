@@ -31,10 +31,12 @@
       </div>
       <div class="form-group">
         <label>Genre</label>
-        <% Tag.where(tagtype: 'genre').each do |genre| %>
-        <button class="bubble<% if @venue.tags.include? genre.id.to_s %> selected<% end %>" data-tag-id="<%= genre.id %>"><%= genre.name %></button>
-        <% end %>
-        <%= f.hidden_field :tags %>
+        <div class="genre-toggles">
+          <% Tag.where(tagtype: 'genre').each do |genre| %>
+          <div class="bubble" data-status="<% if @venue.tags.include? genre.id.to_s %>selected<% end %>" data-tag-id="<%= genre.id %>"><%= genre.name %></div>
+          <% end %>
+        </div>
+        <input type="hidden" name="venue[tags]" id="venue_tags" value="<%= @venue.tags.join(',') %>">
       </div>
 		  <div class="form-group form-group-multiple-options">
 		  	<label>Good For</label><br>

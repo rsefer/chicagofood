@@ -36,8 +36,11 @@ class Venue < ActiveRecord::Base
 	end
 
 	def tag_list
+		logger.debug 'tags'
+		logger.debug self.tags
 		tag_list = []
 		self.tags.each do |tag|
+			logger.debug tag
 			tag_list.push(Tag.find(tag))
 		end
 		tag_list
