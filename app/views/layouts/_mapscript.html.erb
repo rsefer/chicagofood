@@ -12,6 +12,7 @@ locations = [
     if venue.kind_of? Try
       venue = venue.venue
     end
+		if venue.latitude and venue.longitude
   %>
   {
     id: <%= venue.id %>,
@@ -23,7 +24,8 @@ locations = [
     isSolo: <% if defined? isSolo and isSolo %>true<% else %>false<% end %>,
     isBar: <% if venue.venuetype.isBar %>true<% else %>false<% end %>
   },
-  <% end %>
+  <% end
+	end %>
 ];
 
 if (locations.length >= 1) {
