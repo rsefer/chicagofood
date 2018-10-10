@@ -25,7 +25,8 @@ namespace :pg do
     resp = s3.put_object(
       :bucket => bucket_name,
       :key => "backups/#{backup_file_name}",
-      :body => IO.read(backup_file_location_tmp)
+      :body => IO.read(backup_file_location_tmp),
+			:tagging => 'backupdb=backupdb'
     )
     puts 'File added to S3.'
     sh "rm #{backup_file_location_tmp}"

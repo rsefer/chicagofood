@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'puma', '~> 3.11.4'
+gem 'puma', '~> 3.12.0'
 gem 'rails', '~> 5.1.6'
 gem 'pg'
 gem 'sass-rails'
@@ -38,7 +38,7 @@ end
 gem 'geocoder'
 gem 'devise'
 gem 'paperclip', '~> 5.2.0'
-gem 'aws-sdk', '~> 2.2.5'
+gem 'aws-sdk', '~> 3'
 gem 'figaro'
 gem 'purecss-sass'
 gem 'autoprefixer-rails'
