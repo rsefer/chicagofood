@@ -9,6 +9,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder'
+gem 'bundler', '~> 1.17'
 
 group :doc do
   gem 'sdoc', require: false
