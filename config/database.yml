@@ -1,24 +1,16 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
 
 development:
   <<: *default
   database: chicagofood_development
-  username: rsefer
-  password:
 
 test:
   <<: *default
   database: chicagofood_test
-  username: rsefer
-  password:
 
 production:
   <<: *default
   database: chicagofood_production
-  username: postgres
-  password: postgres

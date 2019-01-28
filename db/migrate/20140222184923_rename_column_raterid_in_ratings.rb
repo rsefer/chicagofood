@@ -1,4 +1,4 @@
-class RenameColumnRateridInRatings < ActiveRecord::Migration
+class RenameColumnRateridInRatings < ActiveRecord::Migration[5.1]
   def self.up
     rename_column :ratings, :raterid, :user_id
   end

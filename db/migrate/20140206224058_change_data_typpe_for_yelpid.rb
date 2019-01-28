@@ -1,4 +1,4 @@
-class ChangeDataTyppeForYelpid < ActiveRecord::Migration
+class ChangeDataTyppeForYelpid < ActiveRecord::Migration[5.1]
   def self.up
     change_table :venues do |t|
       t.change :yelpid, :string

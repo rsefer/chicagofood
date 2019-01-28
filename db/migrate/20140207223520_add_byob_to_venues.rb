@@ -1,4 +1,4 @@
-class AddByobToVenues < ActiveRecord::Migration
+class AddByobToVenues < ActiveRecord::Migration[5.1]
   def change
     add_column :venues, :byob, :boolean
   end

@@ -1,4 +1,4 @@
-class AddStreetAndCityAndStateAndZipcodeToVenues < ActiveRecord::Migration
+class AddStreetAndCityAndStateAndZipcodeToVenues < ActiveRecord::Migration[5.1]
   def change
     add_column :venues, :street, :string
     add_column :venues, :city, :string

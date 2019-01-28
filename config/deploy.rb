@@ -24,11 +24,11 @@ namespace :logs do
 end
 
 # Change these
-server '104.131.172.33', port: 22, roles: [:web, :app, :db], primary: true
+server '54.196.153.47', port: 22, roles: [:web, :app, :db], primary: true
 
 set :branch, ENV['BRANCH'] if ENV['BRANCH']
 
-set :repo_url,        'git@github.com:rsefer/chicagofood.git'
+set :repo_url,        'https://github.com/rsefer/chicagofood.git'
 set :user,            'deploy'
 set :puma_threads,    [1, 8]
 set :puma_workers,    0
