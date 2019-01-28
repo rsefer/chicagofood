@@ -1,4 +1,4 @@
-class AddVenueNameTypeAndNeighborhoodToListItems < ActiveRecord::Migration
+class AddVenueNameTypeAndNeighborhoodToListItems < ActiveRecord::Migration[5.1]
   def change
     add_column :list_items, :manual_entry, :boolean, default: false
     add_column :list_items, :venue_name, :string

@@ -1,4 +1,4 @@
-class CreateTries < ActiveRecord::Migration
+class CreateTries < ActiveRecord::Migration[5.1]
   def change
     create_table :tries do |t|
       t.references :venue, index: true

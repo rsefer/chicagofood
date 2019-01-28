@@ -1,4 +1,4 @@
-class RenameNeighborhoodidToNeighborhoodIdInVenues < ActiveRecord::Migration
+class RenameNeighborhoodidToNeighborhoodIdInVenues < ActiveRecord::Migration[5.1]
   def change
     rename_column :venues, :neighborhoodid, :neighborhood_id
     rename_column :venues, :typeid, :type_id

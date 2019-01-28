@@ -1,4 +1,4 @@
-class CreateLists < ActiveRecord::Migration
+class CreateLists < ActiveRecord::Migration[5.1]
   def change
     create_table :lists do |t|
       t.references :user, index: true
