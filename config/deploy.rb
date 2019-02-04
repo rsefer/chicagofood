@@ -30,7 +30,7 @@ set :branch, ENV['BRANCH'] if ENV['BRANCH']
 
 set :repo_url,        'https://github.com/rsefer/chicagofood.git'
 set :user,            'deploy'
-set :puma_threads,    [2, 12]
+set :puma_threads,    [1, 8]
 set :puma_workers,    0
 
 #set :console_env, :production
