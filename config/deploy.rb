@@ -1,4 +1,5 @@
 # https://matthewhoelter.com/2018/09/18/deploying-ruby-on-rails-for-ubuntu-1804.html
+# https://gist.github.com/DSKonstantin/708f346f1cf62fb6d61bf6592e480781
 
 namespace :db do
   desc 'Resets DB without create/drop'
