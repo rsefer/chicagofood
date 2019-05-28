@@ -1,4 +1,4 @@
-#https://www.digitalocean.com/community/tutorials/deploying-a-rails-app-on-ubuntu-14-04-with-capistrano-nginx-and-puma#step-6-—-adding-deployment-configurations-in-the-rails-app
+# https://matthewhoelter.com/2018/09/18/deploying-ruby-on-rails-for-ubuntu-1804.html
 
 namespace :db do
   desc 'Resets DB without create/drop'
